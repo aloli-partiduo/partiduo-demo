@@ -1,35 +1,41 @@
 #!/bin/sh
 # SPDX-License-Identifier: AGPL-3.0-or-later
 #
-# scripts/demo — lance en local les dossiers fictifs de Partiduo :
+# scripts/demo — lance en local les dossiers fictifs de Partiduo avec le
+# binaire de la distribution :
 #
-#   1. dépendances (shards install) et compilation de bin/partiduo-demo si
-#      les sources ont changé ;
-#   2. bases PostgreSQL partiduo_demo_<dossier> créées (ou vidées avec
-#      --reset ; un nom sans « demo » est refusé) ;
-#   3. identifiants de test générés et écrits dans demo-identifiants.txt
-#      (non versionné) ;
-#   4. un processus par dossier : migrations, provisionnement, chargement
-#      des données par le contrat Partiduo::Api, puis serveur local, services
+#   1. binaires de la distribution : ceux du répertoire PARTIDUO_DIST_BIN,
+#      sinon construits dans ../partiduo-dist (PARTIDUO_DIST) s'ils manquent
+#      ou si ses sources ont changé ;
+#   2. dossiers validés (bin/partiduo-demo-valider, construit ici) ;
+#   3. bases PostgreSQL partiduo_demo_<dossier> créées (ou vidées avec
+#      --reset ; un nom sans « demo » est refusé), identifiants de test
+#      générés et écrits dans demo-identifiants.txt (non versionné) ;
+#   4. chaque dossier chargé (`partiduo-manage demo charger`) puis vérifié
+#      (`partiduo-manage demo verifier`) ;
+#   5. un serveur par dossier (`partiduo-server`, PARTIDUO_DEMO=1), services
 #      externes simulés.
 #
-# Adresses : http://<dossier>.partiduo.localhost:<port>/ (atelier 8300,
-# micro 8301, liberal 8302 par défaut). Arrêt : Ctrl-C, ou `scripts/demo
-# stop` depuis un autre terminal (crée le fichier d'arrêt demo.stop).
+# Adresses : http://<dossier>.partiduo.localhost:<port>/ (8300, 8301… dans
+# l'ordre des dossiers lancés). Arrêt : Ctrl-C, ou `scripts/demo stop`
+# depuis un autre terminal (crée le fichier d'arrêt demo.stop).
 set -eu
 
 ROOT=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
 cd "$ROOT"
 
-DOSSIERS_ALL="atelier micro liberal"
+DOSSIERS_ALL="atelier micro liberal foyer"
 DOSSIERS="$DOSSIERS_ALL"
 BASE_PORT=8300
 RESET=0
 BUILD=1
+SOURCE="$ROOT/dossiers"
 STOP_FILE="$ROOT/demo.stop"
 STATE_DIR="$ROOT/tmp/demo"
+LOG_DIR="$ROOT/tmp/logs"
 CREDENTIALS="$ROOT/demo-identifiants.txt"
 PG_SOCKET="${PGHOST:-/tmp}"
+DIST="${PARTIDUO_DIST:-$ROOT/../partiduo-dist}"
 
 usage() {
   cat <<'USAGE'
@@ -38,10 +44,15 @@ Usage : scripts/demo [options]          lance les dossiers de démonstration
 
 Options :
   --reset             vide les bases et recharge les dossiers (nouveaux identifiants)
-  --only LISTE        dossiers à lancer, parmi atelier,micro,liberal (défaut : tous)
-  --port N            premier port (défaut 8300 ; atelier, micro, liberal à la suite)
-  --no-build          ne recompile pas bin/partiduo-demo
+  --only LISTE        dossiers à lancer, parmi atelier,micro,liberal,foyer (défaut : tous)
+  --port N            premier port (défaut 8300 ; les dossiers lancés à la suite)
+  --no-build          ne reconstruit ni la distribution ni le validateur
   -h, --help          cette aide
+
+Environnement :
+  PARTIDUO_DIST_BIN   répertoire des binaires de la distribution (partiduo-manage,
+                      partiduo-server, partiduo-modeles-pdf) ; sinon construits dans
+  PARTIDUO_DIST       la copie de travail de partiduo-dist (défaut ../partiduo-dist)
 USAGE
 }
 
@@ -72,12 +83,11 @@ done
 case "$BASE_PORT" in '' | *[!0-9]*) die "port invalide : $BASE_PORT" ;; esac
 for dossier in $DOSSIERS; do
   case " $DOSSIERS_ALL " in *" $dossier "*) ;; *) die "dossier inconnu : $dossier ($DOSSIERS_ALL)" ;; esac
+  [ -f "$SOURCE/$dossier/dossier.yml" ] || die "dossier absent : $SOURCE/$dossier"
 done
 
 # --- Prérequis -------------------------------------------------------------------
 
-command -v crystal >/dev/null 2>&1 || die "crystal introuvable (Crystal 1.19.1 requis)"
-command -v shards >/dev/null 2>&1 || die "shards introuvable"
 for tool in createdb dropdb psql; do
   command -v "$tool" >/dev/null 2>&1 || die "$tool introuvable (clients PostgreSQL requis)"
 done
@@ -85,33 +95,67 @@ done
 export PGHOST="$PG_SOCKET"
 export SKIP_MARTEN_CLI_PRECOMPILATION=1
 
-# --- Compilation -----------------------------------------------------------------
+# --- Binaires de la distribution et validateur ---------------------------------------
 
-if [ ! -d lib ] || [ shard.yml -nt shard.lock ] || [ ! -f lib/.shards.info ]; then
-  echo "== Dépendances (shards install)"
-  shards install
-fi
-if [ "$BUILD" = 1 ]; then
-  # Sources de la démonstration et des dépôts composés (dépendances path:).
-  if [ ! -x bin/partiduo-demo ] || [ -n "$(find -L src config lib/partiduo*/src lib/partiduo*/ui lib/partiduo*/config \
-    -newer bin/partiduo-demo -name '*.cr' 2>/dev/null | head -n 1)" ]; then
-    echo "== Compilation de bin/partiduo-demo (quelques minutes la première fois)"
-    mkdir -p bin
-    crystal build src/main.cr -o bin/partiduo-demo --no-debug
+# Vrai si `cible` manque ou si un source .cr des répertoires donnés est plus
+# récent.
+stale() {
+  target="$1"
+  shift
+  [ ! -x "$target" ] || [ -n "$(find -L "$@" -newer "$target" -name '*.cr' 2>/dev/null | head -n 1)" ]
+}
+
+if [ -n "${PARTIDUO_DIST_BIN:-}" ]; then
+  BIN=$(CDPATH= cd -- "$PARTIDUO_DIST_BIN" && pwd) || die "PARTIDUO_DIST_BIN introuvable : $PARTIDUO_DIST_BIN"
+else
+  [ -f "$DIST/shard.yml" ] || die "distribution introuvable : $DIST (PARTIDUO_DIST ou PARTIDUO_DIST_BIN)"
+  DIST=$(CDPATH= cd -- "$DIST" && pwd)
+  BIN="$DIST/bin"
+  if [ "$BUILD" = 1 ]; then
+    command -v crystal >/dev/null 2>&1 || die "crystal introuvable (Crystal 1.19.1 requis)"
+    command -v shards >/dev/null 2>&1 || die "shards introuvable"
+    if [ ! -d "$DIST/lib" ] || [ ! -f "$DIST/lib/.shards.info" ]; then
+      echo "== Distribution : dépendances (shards install)"
+      (cd "$DIST" && shards install)
+    fi
+    mkdir -p "$BIN"
+    sources="$DIST/src $DIST/config $DIST/manage.cr $DIST/lib/partiduo"
+    for dir in "$DIST"/lib/partiduo-*; do sources="$sources $dir/src $dir/ui $dir/config"; done
+    # shellcheck disable=SC2086 # $sources : liste de répertoires
+    if stale "$BIN/partiduo-manage" $sources; then
+      echo "== Distribution : compilation de partiduo-manage (quelques minutes la première fois)"
+      (cd "$DIST" && crystal build manage.cr -o bin/partiduo-manage --no-debug)
+    fi
+    # shellcheck disable=SC2086
+    if stale "$BIN/partiduo-server" $sources; then
+      echo "== Distribution : compilation de partiduo-server"
+      (cd "$DIST" && crystal build src/server.cr -o bin/partiduo-server --no-debug)
+    fi
+    if stale "$BIN/partiduo-modeles-pdf" "$DIST/lib/partiduo-modeles/src" "$DIST"/lib/asciicrystal*/src; then
+      echo "== Distribution : compilation de partiduo-modeles-pdf"
+      (cd "$DIST" && crystal build lib/partiduo-modeles/src/partiduo-modeles/pdf.cr -o bin/partiduo-modeles-pdf --no-debug)
+    fi
   fi
-  # Convertisseur PDF des modèles AsciiDoc et Markdown (partiduo-modeles),
-  # cherché par le serveur à côté de son exécutable.
-  if [ ! -x bin/partiduo-modeles-pdf ] || [ -n "$(find -L lib/partiduo-modeles/src lib/asciicrystal*/src \
-    -newer bin/partiduo-modeles-pdf -name '*.cr' 2>/dev/null | head -n 1)" ]; then
-    echo "== Compilation de bin/partiduo-modeles-pdf"
-    crystal build lib/partiduo-modeles/src/partiduo-modeles/pdf.cr -o bin/partiduo-modeles-pdf --no-debug
-  fi
 fi
-[ -x bin/partiduo-demo ] || die "bin/partiduo-demo absent (relancez sans --no-build)"
+MANAGE="$BIN/partiduo-manage"
+SERVER="$BIN/partiduo-server"
+[ -x "$MANAGE" ] || die "$MANAGE absent (relancez sans --no-build, ou PARTIDUO_DIST_BIN)"
+[ -x "$SERVER" ] || die "$SERVER absent (relancez sans --no-build, ou PARTIDUO_DIST_BIN)"
+
+VALIDATOR="$ROOT/bin/partiduo-demo-valider"
+if [ "$BUILD" = 1 ] && command -v crystal >/dev/null 2>&1 && stale "$VALIDATOR" "$ROOT/src"; then
+  echo "== Validateur des dossiers (compilation)"
+  mkdir -p "$ROOT/bin"
+  crystal build "$ROOT/src/valider.cr" -o "$VALIDATOR" --no-debug
+fi
+if [ -x "$VALIDATOR" ]; then
+  # shellcheck disable=SC2086 # $DOSSIERS : liste de codes
+  "$VALIDATOR" "$SOURCE" $DOSSIERS || die "dossiers invalides (voir ci-dessus)"
+fi
 
 # --- Identifiants et clés ----------------------------------------------------------
 
-mkdir -p "$STATE_DIR" "$ROOT/tmp/media" "$ROOT/tmp/logs"
+mkdir -p "$STATE_DIR" "$ROOT/tmp/media" "$LOG_DIR"
 
 random_word() {
   if command -v openssl >/dev/null 2>&1; then
@@ -134,12 +178,14 @@ fi
 MARTEN_SECRET_KEY=$(cat "$SECRET_FILE")
 export MARTEN_SECRET_KEY
 
+# Adresses des utilisateurs d'un dossier, et ses modules et extensions
+# (PARTIDUO_MODULES), lus dans ses fichiers par la distribution.
 users_of() {
-  case "$1" in
-    atelier) echo "gerante@atelier.demo.test comptable@atelier.demo.test commercial@atelier.demo.test" ;;
-    micro) echo "nicolas@micro.demo.test" ;;
-    liberal) echo "camille@liberal.demo.test" ;;
-  esac
+  "$MANAGE" demo utilisateurs --dossier="$1" --source="$SOURCE"
+}
+
+modules_of() {
+  "$MANAGE" demo modules --dossier="$1" --source="$SOURCE"
 }
 
 # Mot de passe d'un utilisateur lu dans demo-identifiants.txt.
@@ -152,50 +198,77 @@ database_exists() {
   psql -Atqc "SELECT 1 FROM pg_database WHERE datname = '$1'" postgres 2>/dev/null | grep -q 1
 }
 
+# --- Bases, chargement et vérification -------------------------------------------------
+
+LOADING=""
+for dossier in $DOSSIERS; do
+  database="partiduo_demo_$dossier"
+  case "$database" in *demo*) ;; *) die "base refusée : $database" ;; esac
+  printf '%s' "$database" | grep -Eq '^[a-z_][a-z0-9_]*$' || die "nom de base invalide : $database"
+
+  users=$(users_of "$dossier") || die "$dossier : utilisateurs illisibles"
+  [ -n "$users" ] || die "$dossier : aucun utilisateur"
+  reset_this=$RESET
+  for email in $users; do
+    [ -n "$(password_of "$email")" ] || reset_this=1
+  done
+  [ -f "$STATE_DIR/$database.loaded" ] || reset_this=1
+  if [ "$reset_this" = 0 ]; then
+    database_exists "$database" || die "base $database absente : relancez avec --reset"
+    continue
+  fi
+
+  echo "== $dossier : base $database recréée"
+  if database_exists "$database"; then dropdb "$database"; fi
+  createdb --encoding=UTF8 "$database"
+  rm -f "$STATE_DIR/$database.loaded"
+  rm -rf "$ROOT/tmp/media/$dossier"
+  passwords=""
+  for email in $users; do
+    password=$(new_password)
+    if [ -f "$CREDENTIALS" ]; then
+      awk -v email="$email" '$1 != email' "$CREDENTIALS" >"$CREDENTIALS.tmp" && mv "$CREDENTIALS.tmp" "$CREDENTIALS"
+    fi
+    (umask 077 && printf '%s %s %s\n' "$email" "$password" "$dossier" >>"$CREDENTIALS")
+    passwords="${passwords:+$passwords,}$email=$password"
+  done
+  echo "== $dossier : chargement (journal : tmp/logs/$dossier-charger.log)"
+  (
+    export DATABASE_URL="postgres:///$database?host=$PG_SOCKET" PARTIDUO_MEDIA_ROOT="$ROOT/tmp/media/$dossier"
+    export MARTEN_ENV=development DEMO_PASSWORDS="$passwords"
+    "$MANAGE" demo charger --dossier="$dossier" --source="$SOURCE" --reset &&
+      "$MANAGE" demo verifier --dossier="$dossier" --source="$SOURCE" &&
+      date -u '+%Y-%m-%dT%H:%M:%SZ' >"$STATE_DIR/$database.loaded"
+  ) >"$LOG_DIR/$dossier-charger.log" 2>&1 &
+  LOADING="$LOADING $dossier:$!"
+done
+
+failed=0
+for item in $LOADING; do
+  dossier=${item%%:*}
+  if wait "${item#*:}"; then
+    grep -E '^== |^ÉCART' "$LOG_DIR/$dossier-charger.log" || true
+  else
+    failed=1
+    echo "scripts/demo : chargement ou vérification de $dossier en échec :" >&2
+    tail -n 20 "$LOG_DIR/$dossier-charger.log" >&2
+  fi
+done
+[ "$failed" = 0 ] || exit 1
+
+# --- Serveurs ---------------------------------------------------------------------------
+
 rm -f "$STOP_FILE"
 PIDS=""
 PORT=$BASE_PORT
 LINES=""
 for dossier in $DOSSIERS; do
   database="partiduo_demo_$dossier"
-  case "$database" in *demo*) ;; *) die "base refusée : $database" ;; esac
-  printf '%s' "$database" | grep -Eq '^[a-z_][a-z0-9_]*$' || die "nom de base invalide : $database"
-
-  reset_this=$RESET
-  passwords=""
-  for email in $(users_of "$dossier"); do
-    password=$(password_of "$email")
-    if [ -z "$password" ]; then reset_this=1; fi
-  done
-  if [ ! -f "$STATE_DIR/$database.loaded" ]; then reset_this=1; fi
-  if [ "$reset_this" = 1 ]; then
-    echo "== $dossier : base $database recréée"
-    dropdb --if-exists "$database"
-    createdb --encoding=UTF8 "$database"
-    rm -f "$STATE_DIR/$database.loaded"
-    rm -rf "$ROOT/tmp/media/$dossier"
-    for email in $(users_of "$dossier"); do
-      password=$(new_password)
-      if [ -f "$CREDENTIALS" ]; then
-        awk -v email="$email" '$1 != email' "$CREDENTIALS" >"$CREDENTIALS.tmp" && mv "$CREDENTIALS.tmp" "$CREDENTIALS"
-      fi
-      (umask 077 && printf '%s %s %s\n' "$email" "$password" "$dossier" >>"$CREDENTIALS")
-    done
-  elif ! database_exists "$database"; then
-    die "base $database absente : relancez avec --reset"
-  fi
-  for email in $(users_of "$dossier"); do
-    passwords="${passwords:+$passwords,}$email=$(password_of "$email")"
-  done
-
   rm -f "$STATE_DIR/$dossier.ready"
-  flags=""
-  [ "$reset_this" = 1 ] && flags="--reset"
-  # shellcheck disable=SC2086 # $flags : zéro ou une option
   DATABASE_URL="postgres:///$database?host=$PG_SOCKET" PARTIDUO_MEDIA_ROOT="$ROOT/tmp/media/$dossier" \
-    DEMO_PASSWORDS="$passwords" DEMO_STATE_DIR="$STATE_DIR" MARTEN_ENV=development PARTIDUO_MODELES_PDF=auto \
-    bin/partiduo-demo --dossier="$dossier" --port="$PORT" --stop-file="$STOP_FILE" \
-    --ready-file="$STATE_DIR/$dossier.ready" $flags &
+    MARTEN_ENV=development PORT="$PORT" PARTIDUO_DEMO=1 PARTIDUO_MODELES_PDF=auto PARTIDUO_MODULES="$(modules_of "$dossier")" \
+    PARTIDUO_DEMO_STOP_FILE="$STOP_FILE" PARTIDUO_DEMO_READY_FILE="$STATE_DIR/$dossier.ready" \
+    "$SERVER" >>"$LOG_DIR/$dossier-serveur.log" 2>&1 &
   PIDS="$PIDS $!"
   LINES="$LINES
   http://$dossier.partiduo.localhost:$PORT/"
@@ -210,12 +283,15 @@ stop_all() {
 }
 trap 'stop_all; exit 0' INT TERM
 
-# Attente des serveurs (le premier chargement prend une à deux minutes).
 for dossier in $DOSSIERS; do
   while [ ! -f "$STATE_DIR/$dossier.ready" ]; do
     alive=0
     for pid in $PIDS; do kill -0 "$pid" 2>/dev/null && alive=1; done
-    [ "$alive" = 1 ] || { echo "scripts/demo : un dossier n'a pas démarré (voir ci-dessus)." >&2; stop_all; exit 1; }
+    if [ "$alive" = 0 ]; then
+      echo "scripts/demo : un serveur n'a pas démarré (tmp/logs/*-serveur.log)." >&2
+      stop_all
+      exit 1
+    fi
     [ -f "$STOP_FILE" ] && { stop_all; exit 0; }
     sleep 1
   done
@@ -226,7 +302,7 @@ cat <<SUMMARY
 == Démonstration prête :$LINES
 
 Identifiants de test (fichier $CREDENTIALS, non versionné) :
-$(awk '{ printf "  %-32s %s   (%s)\n", $1, $2, $3 }' "$CREDENTIALS")
+$(for dossier in $DOSSIERS; do awk -v d="$dossier" '$3 == d { printf "  %-32s %s   (%s)\n", $1, $2, $3 }' "$CREDENTIALS"; done)
 
 Services externes simulés (plateforme agréée, TELEDEC, Chorus Pro, URSSAF,
 courriel) : rien ne sort de ce poste. Arrêt : Ctrl-C ou « scripts/demo stop ».
@@ -234,3 +310,4 @@ SUMMARY
 
 for pid in $PIDS; do wait "$pid" 2>/dev/null || true; done
 rm -f "$STOP_FILE"
+echo "== Démonstration arrêtée."

@@ -1,0 +1,10 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# Paramètres du dossier « liberal ». TELEDEC simulé : aucun identifiant ici.
+format: 1
+liberal: {profession: "Masseur-kinésithérapeute", debut_activite: "2019-09-01", rubrique_defaut: receipts}
+teledec:
+  plateforme: simulee
+  regime: bnc
+  tva: none
+  courriel: "cabinet@riviere-kine.test"
+  siret: "90372816000016"

@@ -7,11 +7,13 @@
 libre de comptabilité créé et maintenu par *Dany De Bontridder*. Partiduo
 n'est pas un projet officiel NOALYSS.
 
-Ce dépôt est une *distribution locale de démonstration* : il compose le cœur
-(`../partiduo-app`), l'interface Bulma (`../partiduo-ui-bulma`) et toutes les
-extensions en une seule application, charge des *dossiers fictifs complets*
-et les sert sur ce poste, pour essayer Partiduo dans un navigateur. Une
-commande suffit :
+Ce dépôt contient les *dossiers de démonstration* de Partiduo, un par type
+de client, décrits par des *fichiers de données déclaratifs* ; leur format ;
+un *validateur léger* qui ne dépend ni de Partiduo ni de Marten ; et
+`scripts/demo`, qui les charge, les vérifie et les sert sur ce poste avec le
+binaire de la distribution (`partiduo-dist`). Il ne contient *aucun code
+applicatif* : il ne recompile pas Partiduo, il vérifie que la démonstration
+fonctionne.
 
 [source,sh]
 ----
@@ -19,268 +21,256 @@ scripts/demo
 ----
 
 Les entreprises, personnes, adresses, SIREN et montants sont fictifs (SIREN
-à clé de Luhn valide, inventés). Les services externes — plateforme agréée
-de facturation électronique, TELEDEC, Chorus Pro, URSSAF, courriel — sont
-*simulés dans le processus* : rien ne sort du poste.
-
-== Prérequis
-
-* Crystal *1.19.1* et `shards` ;
-* PostgreSQL *18*, joignable par le socket Unix `/tmp/.s.PGSQL.5432`
-  (autre répertoire : `PGHOST`), avec le droit de créer des bases pour
-  l'utilisateur courant ; clients `createdb`, `dropdb`, `psql` ;
-* le cœur, l'interface, les extensions et les shards maison sont pris sur
-  GitHub ; pour les copies de travail voisines, voir <<_développement_local>> ;
-* `SKIP_MARTEN_CLI_PRECOMPILATION=1` pour `shards install` (le script le
-  positionne) ;
-* facultatif : `vipsthumbnail` ou `magick` (vignettes des justificatifs),
-  `soffice` ou `asciicrystal-pdf` (PDF des modèles de factures).
-
-== Lancer, arrêter, réinitialiser
-
-[source,sh]
-----
-cd prod-crystal/partiduo/partiduo-demo
-scripts/demo                     # installe, compile, crée les bases, charge et sert les trois dossiers
-scripts/demo --only atelier      # un seul dossier (atelier, micro, liberal ; liste séparée par des virgules)
-scripts/demo --port 9000         # autres ports (9000, 9001, 9002)
-scripts/demo --reset             # vide les bases, recharge les dossiers, nouveaux identifiants
-scripts/demo stop                # depuis un autre terminal : arrête la démonstration
-----
-
-Au premier lancement, la compilation prend quelques minutes, puis chaque
-dossier se charge en moins d'une minute. Le script affiche les adresses et
-les *identifiants de test* qu'il a générés, écrits dans
-`demo-identifiants.txt` (non versionné, lisible par vous seul). Un
-lancement suivant reprend les bases telles quelles, avec les mêmes
-identifiants ; `--reset` recrée tout.
-
-Arrêt : *Ctrl-C* dans le terminal du script, ou la création du fichier
-d'arrêt `demo.stop` (`scripts/demo stop`).
-
-Réinitialisation complète à la main :
-
-[source,sh]
-----
-dropdb partiduo_demo_atelier; dropdb partiduo_demo_micro; dropdb partiduo_demo_liberal
-rm -rf tmp demo-identifiants.txt
-----
-
-Le script refuse toute base dont le nom ne contient pas « demo » ; le
-programme `bin/partiduo-demo` aussi.
+à clé de Luhn valide, inventés ; adresses en `.test`). Les services externes
+— plateforme agréée de facturation électronique, TELEDEC, Chorus Pro,
+URSSAF, courriel — sont *simulés* par la distribution : rien ne sort du
+poste.
 
 == Dossiers
 
 [cols="1,2,3",options="header"]
 |===
-|Dossier et adresse |Entreprise fictive |Contenu
+|Dossier et adresse |Client fictif |Contenu
 
 |`atelier` +
 http://atelier.partiduo.localhost:8300/
-|*Menuiserie Lambert & Fils*, SARL de menuiserie et d'agencement à Tours
-(SIREN 847 315 629), régime réel, TVA mensuelle (CA3)
+|*Entreprise* : Menuiserie Lambert & Fils, SARL de menuiserie et
+d'agencement à Tours (SIREN 847 315 629), régime réel, TVA mensuelle (CA3)
 |Exercice précédent *complet* et exercice en cours jusqu'au jour du
-chargement : plan comptable, clients particuliers, entreprises et une
-commune (client public), fournisseurs dont une architecte d'intérieur
-personne physique (DAS2), articles et matières, devis (acceptés, refusés, en
-attente), factures d'acompte, factures, avoirs, règlements lettrés, relances,
-achats avec copie de la facture, banque (salaires, emprunt, frais, TVA),
-opérations diverses (paie, à-nouveaux), rapprochements bancaires mensuels,
-CA3 closes avec écriture de liquidation, analytique (activités, clé de
-répartition), stock (dépôt, fabrication, inventaire), justificatifs
-photographiés, CRM, modèles de factures, facturation électronique et Chorus
-Pro simulés, liasse, DAS2 et CA3 télétransmises au TELEDEC simulé ; un client
-livré plusieurs fois par mois (Décoration Val de Loire) et facturé en fin de
-mois : bons de livraison, facture récapitulative émise, celle du mois dernier
-proposée, encours maximum HT proche du plafond.
+chargement : plan comptable, clients (particuliers, entreprises, une commune
+servie par Chorus Pro), fournisseurs dont une architecte personne physique
+(DAS2), articles et matières, devis, acomptes, factures, avoirs, règlements
+lettrés, relances, virement retourné, achats avec copie de la facture,
+banque, paie en opérations diverses, rapprochements mensuels, CA3 closes,
+analytique, stock, justificatifs photographiés, client facturé en fin de
+mois (bons de livraison, facture récapitulative, encours maximum), CRM,
+modèles de factures, facture électronique (plateforme simulée), liasse,
+DAS2 et CA3 au TELEDEC simulé.
 
 |`micro` +
 http://micro.partiduo.localhost:8301/
-|*Cycles Perrot*, micro-entrepreneur (réparation et vente de vélos) à Angers,
-franchise en base de TVA, déclaration URSSAF trimestrielle
-|Factures « 293 B », règlements → recettes au livre, ventes au comptoir,
-registre des achats avec copies de factures, déclarations trimestrielles à
-l'URSSAF simulée, justificatifs à traiter.
+|*Auto-entrepreneur* : Cycles Perrot, réparation et vente de vélos à Angers,
+franchise en base de TVA
+|Factures « 293 B » encaissées (recettes au livre), ventes au comptoir,
+registre des achats avec copies de factures, mandats et déclarations
+trimestrielles à l'URSSAF simulée, justificatifs à traiter.
 
 |`liberal` +
 http://liberal.partiduo.localhost:8302/
-|*Camille Rivière*, masseur-kinésithérapeute à Blois (BNC, 2035), non
-assujettie à la TVA
-|Recettes et dépenses ventilées par rubrique (part privée du véhicule),
+|*Profession libérale* : Camille Rivière, masseur-kinésithérapeute à Blois
+(BNC, 2035), non assujettie à la TVA
+|Recettes et dépenses par rubrique (part privée du véhicule),
 prélèvements, immobilisations amorties, écritures générées en Comptabilité,
 exercice précédent clôturé et sa 2035 transmise au TELEDEC simulé
 (verrouillé), exercice en cours ouvert.
+
+|`foyer` +
+http://foyer.partiduo.localhost:8303/
+|*Budget familial* : foyer Lemoine à Orléans, deux adultes ; dossier de type
+`household` (ADR-011 A3), plan réduit d'un foyer
+|Compte courant, livret A, assurance-vie, prêt immobilier et résidence en
+comptes de bilan ; une année de relevés CSV fictifs (`dossiers/foyer/releves/`)
+importés par l'extension BANKIMPORT, catégorisés par des règles (salaires,
+logement, énergie, alimentation, transport, santé, enfants, loisirs,
+impôts…), transférés et pointés ; intérêts de fin d'année ; budget de
+l'année par catégorie dans les *prévisions* de la Comptabilité. Aucune
+extension d'entreprise.
 |===
+
+Les adresses ci-dessus supposent les quatre dossiers lancés dans cet ordre :
+`scripts/demo` attribue les ports à la suite, à partir de 8300, aux dossiers
+qu'il lance (`--only foyer` sert `foyer` sur 8300).
 
 Utilisateurs : `atelier` a une gérante (profil administrateur), un
 expert-comptable (profil comptable) et un commercial ; `micro` et
-`liberal`, l'exploitant. Adresses et mots de passe : `demo-identifiants.txt`.
+`liberal`, l'exploitant ; `foyer`, les deux adultes. Adresses et mots de
+passe : `demo-identifiants.txt`.
+
+=== Ce qui viendra avec partiduo-perso
+
+Le dossier `foyer` n'utilise que l'existant (Comptabilité, plan réduit d'un
+foyer, BANKIMPORT, prévisions). L'extension `partiduo-perso`, pas encore
+portée, y ajoutera :
+
+* des *budgets par catégorie* propres au foyer (enveloppes mensuelles,
+  alertes de dépassement), au lieu des prévisions de la Comptabilité ;
+* le *patrimoine net* (biens, placements et dettes valorisés dans le temps) ;
+* les *récurrences* (opérations attendues chaque mois : salaires,
+  échéances, abonnements), rapprochées des relevés importés.
+
+Le dossier sera alors complété dans ses fichiers de données.
+
+== Lancer, arrêter, réinitialiser
+
+Prérequis :
+
+* PostgreSQL *18*, joignable par le socket Unix `/tmp/.s.PGSQL.5432`
+  (autre répertoire : `PGHOST`), avec le droit de créer des bases ; clients
+  `createdb`, `dropdb`, `psql` ;
+* les binaires de la distribution : `partiduo-manage`, `partiduo-server`,
+  `partiduo-modeles-pdf`. Par défaut, `scripts/demo` les construit dans la
+  copie de travail voisine `../partiduo-dist` (autre emplacement :
+  `PARTIDUO_DIST`), ce qui demande Crystal *1.19.1* et `shards` ; ou bien
+  `PARTIDUO_DIST_BIN` désigne le répertoire de binaires déjà construits (un
+  paquet installé, par exemple) ;
+* facultatif : `vipsthumbnail` ou `magick` (vignettes des justificatifs),
+  `soffice` (PDF des modèles ODT et DOCX).
+
+[source,sh]
+----
+scripts/demo                     # construit au besoin, valide, charge, vérifie et sert les quatre dossiers
+scripts/demo --only foyer        # un seul dossier (atelier, micro, liberal, foyer ; liste séparée par des virgules)
+scripts/demo --port 9000         # autres ports (9000, 9001…)
+scripts/demo --reset             # vide les bases, recharge les dossiers, nouveaux identifiants
+scripts/demo --no-build          # ne reconstruit ni la distribution ni le validateur
+scripts/demo stop                # depuis un autre terminal : arrête la démonstration
+PARTIDUO_DIST_BIN=/usr/local/bin scripts/demo   # binaires d'une distribution installée
+----
+
+Pour chaque dossier, `scripts/demo` crée la base `partiduo_demo_<dossier>`,
+génère les *identifiants de test* (écrits dans `demo-identifiants.txt`, non
+versionné, lisible par vous seul), charge le dossier (`partiduo-manage demo
+charger`), vérifie ses grands totaux (`partiduo-manage demo verifier` : un
+écart arrête la démonstration), puis le sert (`partiduo-server`,
+`PARTIDUO_DEMO=1`). Journaux : `tmp/logs/`. Le premier lancement compile la
+distribution (quelques minutes) ; un dossier se charge ensuite en quelques
+secondes (`atelier` : une demi-minute). Un lancement suivant reprend les
+bases telles quelles, avec les mêmes identifiants ; `--reset` recrée tout.
+
+Arrêt : *Ctrl-C* dans le terminal du script, ou `scripts/demo stop`
+(fichier d'arrêt `demo.stop`).
+
+Réinitialisation complète à la main :
+
+[source,sh]
+----
+for d in atelier micro liberal foyer; do dropdb --if-exists "partiduo_demo_$d"; done
+rm -rf tmp demo-identifiants.txt
+----
+
+Le script refuse toute base dont le nom ne contient pas « demo » ; la
+distribution aussi, en mode démonstration.
 
 == Parcours conseillé
 
 `atelier` (gérante) ::
 . *Tableau de bord* : chiffre d'affaires, trésorerie, « À traiter »
-  (relances proposées, justificatifs, facture reçue par la plateforme).
+  (relances proposées, justificatifs, facture reçue par la plateforme,
+  virement retourné).
 . *Facturation* : un devis accepté, sa facture d'acompte et sa facture
-  finale (acompte déduit) ; un avoir ; le PDF/A-3 Factur-X d'une facture ;
-  les relances d'un client en retard (Restaurant La Guinguette).
-. *Bons à facturer* (menu Facturation) : les bons de livraison du mois de
-  Décoration Val de Loire, la facture récapitulative du mois dernier à
-  émettre et envoyer d'un clic ; sur sa fiche, le rythme mensuel et la jauge
-  d'encours HT.
-. *Comptabilité* : journaux, balance (exercice précédent et en cours), grand
-  livre d'un client, lettrage, *rapprochement bancaire* (un relevé par
-  mois), *TVA* (CA3 mensuelles closes et leur écriture de liquidation),
-  FEC.
-. *Analytique* (balance par activité) et *Stock* (état du dépôt, mouvements
-  de fabrication et de vente).
-. *Justificatifs à traiter* : le ticket de carburant du mois, photographié ;
-  « Saisir l'écriture ».
-. Extensions : *CRM* (`/ext/CRM/pipeline` : opportunités à toutes les
-  étapes, activités en retard, du jour et à venir), *modèles de factures*
-  (`/ext/MODELES/` : facture, devis et avoir en AsciiDoc, Markdown, ODT,
-  DOCX ; « Rendre avec un modèle » sur une facture), *EINV* (`/ext/EINV/` :
-  factures émises déposées, facture de la scierie reçue, à pré-comptabiliser),
-  *Chorus Pro* (`/ext/CHORUSPRO/` : factures à la commune), *TELEDEC*
-  (`/ext/TELEDEC/` : liasse, DAS2, CA3 accusées).
+  finale ; un avoir ; le PDF/A-3 Factur-X d'une facture ; les relances d'un
+  client en retard (Restaurant La Guinguette).
+. *Bons à facturer* : les bons de livraison du mois de Décoration Val de
+  Loire, la facture récapitulative du mois dernier à émettre ; sur sa fiche,
+  le rythme mensuel et la jauge d'encours HT.
+. *Comptabilité* : journaux, balance, grand livre, lettrage, rapprochement
+  bancaire, TVA (CA3 mensuelles closes), FEC.
+. *Analytique*, *Stock*, *Justificatifs à traiter*.
+. Extensions : *CRM* (`/ext/CRM/pipeline`), *modèles de factures*
+  (`/ext/MODELES/`), *EINV* (`/ext/EINV/`), *Chorus Pro* (`/ext/CHORUSPRO/`),
+  *TELEDEC* (`/ext/TELEDEC/`).
 . Se reconnecter comme expert-comptable : mêmes écritures, profil comptable.
 
 `micro` ::
-Tableau de bord simplifié, « Nouvelle facture » en quelques champs (mention
-« TVA non applicable, art. 293 B du CGI »), livre des recettes, registre des
-achats, URSSAF (`/ext/URSSAF/` et écran de déclaration), 2042-C-PRO, seuils.
+Tableau de bord simplifié, « Nouvelle facture » (mention « TVA non
+applicable, art. 293 B du CGI »), livre des recettes, registre des achats,
+URSSAF (`/ext/URSSAF/`), 2042-C-PRO, seuils.
 
 `liberal` ::
-Tableau de bord simplifié, recettes et dépenses par rubrique, livre-journal,
-immobilisations et amortissements, 2035 (édition PDF), TELEDEC ;
-« Clôturer l'exercice » et « Rouvrir l'exercice » sur l'exercice en cours,
-exercice précédent verrouillé (cadenas).
+Recettes et dépenses par rubrique, livre-journal, immobilisations, 2035
+(édition PDF), TELEDEC ; « Clôturer l'exercice » et « Rouvrir l'exercice »
+sur l'exercice en cours, exercice précédent verrouillé.
 
-L'interface suit le thème clair ou sombre du système ; elle s'utilise aussi
-au téléphone (même adresse, depuis ce poste).
+`foyer` ::
+Tableau de bord, *Relevés bancaires* (historique des imports, lignes
+transférées, relevés pointés ; formats et règles sous Paramètres), balance
+par catégorie (classes 6 et 7) et comptes de bilan, *Prévisions* (Éditions :
+budget de l'année, estimé et réel mois par mois).
 
-== Extensions composées
+== Données des dossiers
 
-Toutes les extensions de Partiduo se composent ensemble ; aucune n'est
-écartée.
+Chaque dossier est un répertoire `dossiers/<code>/` :
 
-[cols="1,1,3",options="header"]
-|===
-|Extension |Active dans |Service externe dans la démonstration
+[source]
+----
+dossier.yml       # société et réglages, type de dossier, modules, extensions, utilisateurs (sans mot de passe)
+referentiel.yml   # plan comptable propre, taux, tiers et fiches, articles, analytique, stock
+parametres.yml    # paramètres des modules et des extensions (services toujours simulés)
+operations.yml    # opérations datées (N-1-03-06, M-2-04, J…), puis opérations de fin
+attendus.yml      # grands totaux attendus, vérifiés après chargement
+crm.yml, releves/ # fichiers cités par les opérations
+----
 
-|DOCUMENT |atelier, micro, liberal |—
-|EINV |atelier |plateforme agréée XP Z12-013 *simulée* (hôte réservé
-`pa.test`), accusés automatiques
-|SUPERPDP, ESALINK |composées, inactives |adaptateurs d'une plateforme
-réelle : un seul adaptateur par dossier, la démonstration utilise la
-plateforme simulée d'EINV ; activés, leurs appels passent eux aussi par le
-transport simulé et n'atteignent aucun service réel
-|CHORUSPRO |atelier |Chorus Pro *simulé* (structure publique fictive)
-|TELEDEC |atelier, liberal |TELEDEC *simulé* (accusé à la première relève)
-|URSSAF |micro |URSSAF *simulée*
-|CRM, MODELES |atelier |—
-|===
+Le format, versionné (`format: 1`), est décrit dans
+link:doc/format-dossiers.adoc[]. Les montants sont des chaînes décimales,
+jamais des flottants ; les dates sont relatives au jour du chargement, si
+bien que les totaux de l'exercice complet (N-1) ne dépendent pas de ce jour
+(à partir de février : la CA3 de décembre se dépose le 15 janvier) ; les
+identifiants de test ne figurent jamais dans les fichiers : ils sont générés
+au chargement.
 
-Les doubles sont ceux des specs de chaque extension
-(`spec/support/…` des dépôts voisins), branchés au démarrage de chaque
-dossier (`src/demo/simulators.cr`). Le courriel (factures, relances) est
-gardé en mémoire, jamais envoyé.
+Les dossiers `atelier`, `micro` et `liberal` reprennent à l'identique les
+scénarios qui étaient auparavant écrits en Crystal dans ce dépôt ; leurs
+grands totaux sont inchangés (pour `atelier` : balance équilibrée, chiffre
+d'affaires des comptes 70 de 141 156,00 €, TVA collectée de 28 231,20 €,
+douze CA3 closes, 54 factures, douze relevés rapprochés, stock,
+télédéclarations accusées, un virement retourné).
 
-== Comment les dossiers sont chargés
-
-* Un processus par dossier (`bin/partiduo-demo --dossier=…`) : migrations du
-  cœur et des extensions, provisionnement (`Partiduo::Api::Core.provision`,
-  comme `bin/partiduo-provision`), utilisateurs, puis chargement.
-* Tout passe par le contrat `Partiduo::Api` et celui des extensions
-  (`Crm::Api`, `Modeles::Api`, `Teledec::Api`, `Einvoicing::Api`,
-  `Document::Api`, `Choruspro::Api`, `Urssaf::Api`) ; aucune insertion SQL.
-* Les opérations sont *datées* : une horloge déplacée
-  (`Partiduo::Config.travel_to`) place chaque saisie à son jour — émission,
-  échéances, règlements, relances, déclarations —, dans l'ordre
-  chronologique, jusqu'au jour du chargement. Les montants suivent un
-  scénario déterministe : les totaux de l'exercice complet ne dépendent pas
-  du jour du chargement.
-* Justificatifs et copies de factures : images PNG dessinées par le
-  programme (`src/demo/images.cr`).
-
-Un FEC peut aussi être repris dans une instance vierge par
-`partiduo-migrate` (FEC de démonstration `demo/732829320FEC20241231.txt` du
-dépôt `partiduo-migrate`) ; voir son README.
-
-== Specs et CI
+== Valider
 
 [source,sh]
 ----
-createdb --encoding=UTF8 partiduo_test_demo        # une fois
-DATABASE_URL='postgres:///partiduo_test_demo?host=/tmp' crystal spec
-crystal tool format src spec config manage.cr && bin/ameba
+shards build partiduo-demo-valider
+bin/partiduo-demo-valider --detail            # tous les dossiers
+bin/partiduo-demo-valider dossiers foyer      # un dossier
+crystal spec                                  # specs du validateur
 ----
 
-`spec/atelier_spec.cr` charge le dossier `atelier` dans la base de test et
-vérifie ses grands totaux sur l'exercice complet : balance équilibrée,
-chiffre d'affaires des comptes 70, TVA collectée et douze CA3 closes,
-factures en série comptabilisées, relevés rapprochés, stock,
-télédéclarations accusées. Le nom de la base doit contenir « test » et
-« demo ».
+Le validateur (`src/validation/`, bibliothèque standard de Crystal
+seulement) contrôle pour chaque dossier : le *schéma* de chaque fichier
+(champs connus et obligatoires, types, montants en chaînes décimales,
+dates relatives) ; les *références* entre fichiers (tiers, articles,
+postes, taux, documents nommés, utilisateurs, modules et extensions exigés
+par chaque opération, foyer sans module d'entreprise) ; les *écritures
+équilibrées* ; les *relevés* (chaque ligne trouve une règle, soldes qui se
+suivent) ; la *cohérence des totaux attendus* avec les opérations déclarées
+(chiffre d'affaires et TVA recalculés à partir des articles, soldes du
+foyer à partir des relevés, nombres de factures, de déclarations, de
+relevés…) ; et l'*absence de tout identifiant ou secret*.
 
-CI GitHub (`.github/workflows/ci.yml`) : format, Ameba, garde-fou de
-mention du logiciel d'origine, syntaxe des scripts, analyse des types des
-specs et de la distribution ; `shard.lock` ne doit contenir aucune
-dépendance `path:`. Lancement manuel possible (`workflow_dispatch`).
-Exécuter les specs de la démonstration dépasse la mémoire et le temps d'un
-exécuteur GitHub gratuit : elles se jouent *sur le poste* (commande
-ci-dessus) avant chaque envoi ; chaque extension garde sa propre CI complète.
+== CI
 
-== Développement local
-
-`shard.yml` et `shard.lock` référencent les shards maison sur GitHub
-(`aloli-crystal/*` et `aloli-partiduo/*`), suivis par branche. Le verrou
-versionné ne contient aucune dépendance `path:` : les ports FreeBSD et la CI
-l'exigent.
-
-Pour travailler sur les copies de travail voisines (`../../prod-crystal/<nom>`
-et `../partiduo-<dépôt>`), lancer :
-
-[source,sh]
-----
-scripts/override-local.sh
-----
-
-Le script génère un `shard.override.yml` *local et non versionné* (ignoré par
-git), installe les shards, puis remet `shard.lock` à son état versionné.
-Une copie de travail absente reste prise sur GitHub.
-
-Pour régénérer le verrou versionné, supprimer d'abord l'override local :
-
-[source,sh]
-----
-rm -f shard.override.yml
-SKIP_MARTEN_CLI_PRECOMPILATION=1 shards update
-scripts/override-local.sh   # retour au mode local
-----
-
-== Limites
-
-* Services externes *simulés* : aucun dépôt réel sur une plateforme agréée,
-  à Chorus Pro, à TELEDEC ou à l'URSSAF, aucun courriel envoyé. L'état des
-  simulateurs vit dans le processus : après un redémarrage sans `--reset`,
-  les dépôts déjà accusés restent en base, mais une nouvelle relève d'un
-  dépôt antérieur n'est plus reconnue par le simulateur.
-* Serveur de développement de Marten (HTTP, sans TLS), réservé à ce poste.
-* Identifiants de test seulement ; ne réutilisez pas ces mots de passe.
-* Anomalies relevées dans d'autres dépôts pendant la construction de la
-  démonstration : link:doc/ETAT.adoc[].
+CI GitHub (`.github/workflows/ci.yml`), quelques minutes : verrou sans
+`path:`, garde-fou de mention du logiciel d'origine, syntaxe POSIX de
+`scripts/demo`, format, construction et exécution du validateur sur les
+quatre dossiers, specs du validateur, Ameba. Elle ne compile ni Partiduo ni
+Marten. Le chargement réel se vérifie sur le poste (`scripts/demo`, qui
+appelle `demo verifier`) et à la construction des paquets FreeBSD de
+`partiduo-dist` (voir son README).
 
 == Organisation
 
 [source]
 ----
-scripts/demo                 # lancement en une commande (sh)
-scripts/override-local.sh    # mode local : override non versionné
-src/partiduo-demo.cr         # composition : interface, cœur, extensions
-src/main.cr                  # bin/partiduo-demo : charge un dossier et le sert
-src/demo/                    # dossiers (atelier, micro, liberal), agenda, images, simulateurs
-config/settings/             # applications Marten de la distribution
-manage.cr                    # ligne de commande Marten de la distribution
-spec/                        # grands totaux du dossier atelier
+dossiers/                    # atelier, micro, liberal, foyer : fichiers de données
+doc/format-dossiers.adoc     # format des dossiers (format 1)
+src/valider.cr               # bin/partiduo-demo-valider
+src/validation/              # schéma, références, relevés, secrets, totaux attendus
+spec/                        # specs du validateur
+scripts/demo                 # validation, chargement, vérification et service en une commande (sh)
 ----
+
+`shard.yml` ne dépend d'aucun shard maison (Ameba seulement, en
+développement) : il n'y a pas d'override local à générer. Anomalies relevées
+dans d'autres dépôts pendant la construction de la démonstration :
+link:doc/ETAT.adoc[].
+
+== Limites
+
+* Services externes *simulés* : aucun dépôt réel sur une plateforme agréée,
+  à Chorus Pro, à TELEDEC ou à l'URSSAF, aucun courriel envoyé. L'état des
+  simulateurs vit dans chaque processus : le serveur ne connaît pas les
+  dépôts faits pendant le chargement (ils restent en base, accusés), et une
+  nouvelle relève d'un dépôt antérieur n'est pas reconnue.
+* Serveur de développement de Marten (HTTP, sans TLS), réservé à ce poste.
+* Identifiants de test seulement ; ne réutilisez pas ces mots de passe.

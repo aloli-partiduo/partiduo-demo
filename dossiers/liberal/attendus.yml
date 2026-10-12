@@ -1,0 +1,8 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# Grands totaux attendus du dossier « liberal » (exercice N-1 complet).
+format: 1
+controles:
+  - {type: liberal_journal, exercice: N-1, recettes: "63717.00", depenses: "48947.80"}
+  - {type: balance_equilibree, exercice: N-1}
+  - {type: exercice_liberal, exercice: N-1, etat: locked}
+  - {type: teledeclarations, natures: [liasse], statut: acknowledged}

@@ -1,0 +1,38 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# Dossier « atelier » : Menuiserie Lambert & Fils (entreprise fictive).
+format: 1
+code: atelier
+profil: entreprise
+type: company
+description: "SARL de menuiserie et d'agencement à Tours, régime réel, TVA mensuelle (CA3)"
+societe:
+  nom: "Menuiserie Lambert & Fils"
+  forme_juridique: SARL
+  capital: "20000"
+  rcs: "RCS Tours 847 315 629"
+  siren: "847 315 629"
+  tva: FR13847315629
+  rue: "rue des Charpentiers"
+  numero: "14"
+  code_postal: "37100"
+  ville: Tours
+  pays: FR
+  telephone: "02 47 00 00 00"
+  courriel: "contact@menuiserie-lambert.test"
+  regime: fr
+  langue: fr
+modules: [accounting, invoicing, analytic, stock, followup]
+extensions: [document, einv, teledec, crm, modeles, choruspro]
+exercices: [N-1, "N"]
+utilisateurs:
+  - {email: "gerante@atelier.demo.test", prenom: Sophie, nom: Lambert, profil: ADMIN, role: member}
+  - {email: "comptable@atelier.demo.test", prenom: Marc, nom: Delorme, profil: ACCOUNTANT, role: accountant}
+  - {email: "commercial@atelier.demo.test", prenom: Julien, nom: Lambert, profil: ADMIN, role: member}
+parcours:
+  - "Tableau de bord : chiffre d'affaires, trésorerie, « À traiter » (relances, justificatifs, factures reçues)"
+  - "Devis et factures (menu Facturation) : devis accepté → facture d'acompte → facture finale, avoirs, relances"
+  - "Bons à facturer (menu Facturation) : Décoration Val de Loire, client livré plusieurs fois par mois et facturé en fin de mois (facture récapitulative, retour d'une étagère déduit) ; encours maximum HT sur sa fiche"
+  - "Paiement rejeté : un virement retourné impayé (« À traiter », facture de nouveau due, frais refacturés, relance proposée)"
+  - "Comptabilité : journaux, balance, grand livre, lettrage, rapprochement bancaire, TVA (CA3 mensuelles closes)"
+  - "Analytique (activités), stock (dépôt de l'atelier), justificatifs à traiter (tickets photographiés)"
+  - "Extensions : CRM (/ext/CRM/pipeline), modèles de factures (/ext/MODELES/), EINV (/ext/EINV/), TELEDEC (/ext/TELEDEC/), Chorus Pro (/ext/CHORUSPRO/)"

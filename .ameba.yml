@@ -1,4 +1,4 @@
-# Configuration d'Ameba pour partiduo-demo.
+# Configuration d'Ameba pour partiduo-demo (validateur des dossiers).
 Globs:
   - "**/*.cr"
   - "!lib"
@@ -7,7 +7,8 @@ Excluded:
   - lib/
   - tmp/
 
-# Les chargements de dossiers fictifs sont de longues listes d'opérations
-# datées : la complexité mesurée y reflète le scénario, pas une logique.
+# Le validateur aiguille chaque champ du schéma et chaque type d'opération
+# ou de contrôle : la complexité mesurée y reflète la liste des types du
+# format, pas une logique.
 Metrics/CyclomaticComplexity:
   MaxComplexity: 20

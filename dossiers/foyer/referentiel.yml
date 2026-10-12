@@ -1,0 +1,5 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# Référentiel du dossier « foyer » : plan réduit d'un foyer chargé au provisionnement,
+# complété du livret A.
+format: 1
+comptes: [{numero: "514001", libelle: "Livret A", parent: "514"}]

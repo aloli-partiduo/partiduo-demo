@@ -1,0 +1,29 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# Dossier « foyer » : budget familial fictif du foyer Lemoine (type household, ADR-011 A3).
+format: 1
+code: foyer
+profil: foyer
+type: household
+description: "Budget familial : deux adultes, compte courant, livret, assurance-vie et prêt immobilier, recettes et dépenses par catégorie"
+societe:
+  nom: "Foyer Lemoine"
+  rue: "rue de Bourgogne"
+  numero: "12"
+  code_postal: "45000"
+  ville: "Orléans"
+  pays: FR
+  courriel: "foyer.lemoine@exemple.test"
+  regime: fr
+  langue: fr
+modules: [accounting]
+extensions: [bankimport]
+exercices: [N-1, "N"]
+utilisateurs:
+  - {email: "julie@foyer.demo.test", prenom: Julie, nom: Lemoine, profil: ADMIN, role: member}
+  - {email: "thomas@foyer.demo.test", prenom: Thomas, nom: Lemoine, profil: ADMIN, role: member}
+parcours:
+  - "Tableau de bord du foyer : trésorerie du compte courant, relevés importés"
+  - "Relevés bancaires (menu Relevés bancaires) : un relevé CSV par mois importé, lignes catégorisées par les règles, transférées et pointées"
+  - "Comptabilité : balance (recettes et dépenses par catégorie, classes 6 et 7), patrimoine en comptes de bilan (livret A, assurance-vie, prêt immobilier, résidence)"
+  - "Prévisions (menu Éditions) : budget de l'année par catégorie, estimé et réel mois par mois"
+  - "Règles de catégorisation et format CSV de la banque (menu Paramètres)"

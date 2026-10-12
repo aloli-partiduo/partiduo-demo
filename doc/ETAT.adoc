@@ -2,27 +2,52 @@
 :toc: left
 :toc-title: Table des matières
 
-== Ce qui existe (29 septembre 2026)
+== Ce qui existe (12 octobre 2026)
 
-* Distribution locale composant le cœur, l'interface Bulma et les neuf
-  extensions (DOCUMENT, EINV, SUPERPDP, ESALINK, CHORUSPRO, TELEDEC, URSSAF,
-  CRM, MODELES) en dépendances `path:` ; `shard.override.yml` sur le modèle
-  des autres dépôts (sources locales de `marten`, `password-policy`, `jose`,
-  `pdf`, et des extensions dont d'autres dépendent). Aucune extension n'est
-  écartée : elles se compilent ensemble.
-* `bin/partiduo-demo` : un processus par dossier, qui migre, provisionne
-  (`Partiduo::Api::Core.provision`), crée les utilisateurs, charge le dossier
-  par le contrat, branche les services simulés et sert l'instance ; arrêt par
-  Ctrl-C ou fichier d'arrêt.
-* `scripts/demo` : dépendances, compilation, bases `partiduo_demo_<dossier>`
-  (refus d'un nom sans « demo »), identifiants générés dans
-  `demo-identifiants.txt`, clé secrète locale (`tmp/demo/secret.key`),
-  lancement et attente des trois serveurs, arrêt.
-* Dossiers `atelier` (SARL au réel, deux exercices), `micro`
-  (micro-entrepreneur) et `liberal` (BNC, 2035).
-* Spec des grands totaux du dossier `atelier`, CI GitHub.
+* Quatre dossiers de démonstration en *fichiers de données déclaratifs*
+  (`dossiers/<code>/`, format 1, link:format-dossiers.adoc[]) : `atelier`
+  (entreprise), `micro` (auto-entrepreneur), `liberal` (profession
+  libérale), convertis des scénarios Crystal d'origine à grands totaux
+  inchangés, et `foyer` (budget familial, type `household`), nouveau.
+* Validateur léger (`src/validation/`, `bin/partiduo-demo-valider`) :
+  schéma, références, équilibres, relevés, cohérence des totaux attendus,
+  aucun secret ; bibliothèque standard de Crystal seulement ; specs.
+* `scripts/demo` : binaires de `partiduo-dist` (construits dans
+  `../partiduo-dist` ou `PARTIDUO_DIST_BIN`), validation, bases
+  `partiduo_demo_<dossier>` (refus d'un nom sans « demo »), identifiants
+  générés dans `demo-identifiants.txt`, `demo charger` puis `demo
+  verifier`, un serveur par dossier (`PARTIDUO_DEMO=1`), arrêt.
+* Plus de code applicatif : le chargeur, la vérification et les simulateurs
+  sont dans `partiduo-dist` (`src/demo/`).
+* CI légère (quelques minutes) : validateur, specs, format, Ameba, garde-fou,
+  syntaxe des scripts.
 
 == Décisions
+
+D-DEMO-006 — Dossiers en données, chargeur dans la distribution (12 octobre 2026)::
+Décision de l'utilisateur : `partiduo-demo` n'a pas à recompiler tout
+Partiduo, ce n'est pas son rôle ; il vérifie que la démonstration
+fonctionne. Les dossiers deviennent des fichiers de données ; le code de
+chargement, rendu générique, part dans `partiduo-dist` (`partiduo-manage
+demo charger`), avec une vérification des grands totaux (`demo verifier`)
+et les simulateurs, activables seulement en mode démonstration. Les
+décisions D-DEMO-001 à D-DEMO-005 restent celles du chargeur (dans
+`partiduo-dist`).
+
+D-DEMO-007 — Dates relatives, montants en chaînes, opérations de fin::
+Dates relatives au jour du chargement (`N-1-03-06`, `M-2-04`, `J+4`,
+décalages `+17j`) et conditions `si: {depuis, avant}` pour ce qui dépend
+du mois du chargement (plateforme agréée les deux derniers mois, client
+facturé en fin de mois) ; montants en chaînes décimales ; opérations de fin
+(`fin:`) au jour du chargement, après l'agenda, comme l'ancien
+`after_today`.
+
+D-DEMO-008 — Foyer sur l'existant::
+`partiduo-perso` n'étant pas porté, le dossier `foyer` n'utilise que la
+Comptabilité (plan réduit d'un foyer), BANKIMPORT (relevés CSV fictifs dont
+les années s'écrivent `{N-1}`, `{N}`, règles de catégorisation) et les
+prévisions budgétaires. Budgets par catégorie, patrimoine net et
+récurrences viendront avec `partiduo-perso`.
 
 D-DEMO-001 — Provisionnement dans le processus::
 `bin/partiduo-provision` produit des fichiers de service (nginx, systemd,

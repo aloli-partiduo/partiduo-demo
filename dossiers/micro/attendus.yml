@@ -1,0 +1,7 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# Grands totaux attendus du dossier « micro » (année N-1 complète).
+format: 1
+controles:
+  - {type: micro_registres, exercice: N-1, recettes: "17540.00", achats: "10185.00"}
+  - {type: factures, exercice: N-1, nombre: 36, comptabilisees: false}
+  - {type: urssaf_declarations, exercice: N-1, nombre: 4, payees: true}

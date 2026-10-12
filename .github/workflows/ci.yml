@@ -1,8 +1,12 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 #
-# CI de partiduo-demo (distribution locale de démonstration) : format,
-# Ameba, garde-fou de mention, puis specs sur PostgreSQL (chargement du
-# dossier fictif « atelier » et contrôle de ses grands totaux).
+# CI de partiduo-demo : légère, quelques minutes. Les dossiers de
+# démonstration sont des fichiers de données ; la CI les valide sans
+# compiler ni Partiduo ni Marten (validateur : bibliothèque standard de
+# Crystal), puis contrôle format, Ameba, garde-fou de mention et syntaxe
+# des scripts. Le chargement réel se vérifie sur le poste (scripts/demo,
+# `partiduo-manage demo verifier`) et à la construction des paquets FreeBSD
+# de partiduo-dist.
 name: CI
 
 on:
@@ -12,21 +16,16 @@ on:
   # Lancement manuel (onglet Actions ou `gh workflow run ci.yml`).
   workflow_dispatch:
 
-env:
-  CRYSTAL_VERSION: "1.19.1"
-  SKIP_MARTEN_CLI_PRECOMPILATION: "1"
-
 jobs:
-  qualite:
-    name: Format, Ameba
+  dossiers:
+    name: Dossiers, format, Ameba
     runs-on: ubuntu-latest
     container: crystallang/crystal:1.19.1
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
-      - name: Verrou sans dépendance « path » (exigé par les ports FreeBSD)
+      - name: Verrou sans dépendance « path »
         run: "! grep -q 'path:' shard.lock"
-      - name: Format
-        run: crystal tool format --check src spec config manage.cr
       - name: Aucune mention du logiciel d'origine hors documentation
         run: |
           git config --global --add safe.directory "$GITHUB_WORKSPACE"
@@ -34,39 +33,15 @@ jobs:
             echo "Mention du logiciel d'origine hors *.adoc/*.md" >&2
             exit 1
           fi
-      - name: Script de lancement (syntaxe POSIX)
-        run: sh -n scripts/demo && sh -n scripts/override-local.sh
-      - name: Shards
-        run: shards install
+      - name: Scripts (syntaxe POSIX)
+        run: sh -n scripts/demo
+      - name: Format
+        run: crystal tool format --check src spec
+      - name: Validateur
+        run: shards build partiduo-demo-valider --without-development
+      - name: Dossiers (schéma, références, équilibres, totaux attendus, secrets)
+        run: bin/partiduo-demo-valider --detail dossiers
+      - name: Specs du validateur
+        run: crystal spec
       - name: Ameba
-        run: mkdir -p bin && crystal build lib/ameba/bin/ameba.cr -o bin/ameba && bin/ameba
-
-  specs:
-    # La démonstration compile le cœur et toutes les extensions d'un bloc :
-    # exécuter ses specs dépasse la mémoire et le temps d'un exécuteur GitHub
-    # gratuit (étape interrompue après 28 minutes). La CI vérifie donc les
-    # types seulement ; les specs complètes se jouent sur le poste, et chaque
-    # extension garde sa propre CI complète (option A, 12 octobre 2026).
-    name: Specs et distribution (types)
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Mémoire d'échange (l'analyse des types dépasse 6 Go)
-        run: |
-          sudo fallocate -l 12G /swap-ci && sudo chmod 600 /swap-ci
-          sudo mkswap /swap-ci && sudo swapon /swap-ci && free -h
-      - name: Index des paquets à jour (install-crystal installe sans le rafraîchir)
-        run: sudo apt-get update
-      - uses: crystal-lang/install-crystal@v1
-        with:
-          crystal: 1.19.1
-      - name: Bibliothèques de compilation
-        run: sudo apt-get update && sudo apt-get install -y --no-install-recommends libyaml-dev libssl-dev libgmp-dev libxml2-dev libpcre2-dev lld
-      - name: Shards
-        run: shards install
-      - name: Specs (types, sans génération de code)
-        timeout-minutes: 25
-        run: crystal build --no-codegen -o /dev/null $(find spec -name '*_spec.cr')
-      - name: Vérification de la distribution (types, sans génération de code)
-        timeout-minutes: 20
-        run: crystal build src/main.cr --no-codegen
+        run: shards install && crystal build lib/ameba/bin/ameba.cr -o bin/ameba && bin/ameba

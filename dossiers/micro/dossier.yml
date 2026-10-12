@@ -1,0 +1,29 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# Dossier « micro » : Cycles Perrot, micro-entrepreneur (entreprise individuelle fictive).
+format: 1
+code: micro
+profil: micro
+type: company
+description: "Micro-entrepreneur (réparation et vente de vélos) à Angers, franchise en base de TVA, URSSAF trimestrielle"
+societe:
+  nom: "Cycles Perrot"
+  forme_juridique: EI
+  siren: "918 452 079"
+  rue: "rue des Rayons"
+  numero: "23"
+  code_postal: "49000"
+  ville: Angers
+  pays: FR
+  telephone: "02 41 00 00 00"
+  courriel: "contact@cycles-perrot.test"
+  regime: fr
+  langue: fr
+modules: [micro, invoicing]
+extensions: [urssaf, document]
+exercices: []
+utilisateurs: [{email: "nicolas@micro.demo.test", prenom: Nicolas, nom: Perrot, profil: ADMIN, role: member}]
+parcours:
+  - "Tableau de bord simplifié de la micro-entreprise : recettes de l'année, seuils, prochaine déclaration"
+  - "Facture en quelques champs (mention « TVA non applicable, art. 293 B du CGI »), encaissement → recette au livre"
+  - "Livre des recettes, registre des achats, 2042-C-PRO, seuils de chiffre d'affaires"
+  - "URSSAF simulée (/ext/URSSAF/) : mandat, déclarations trimestrielles et télépaiements"

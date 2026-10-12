@@ -1,0 +1,49 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# Paramètres du dossier « foyer » : format CSV de la banque et règles de catégorisation
+# de l'import des relevés (extension BANKIMPORT).
+format: 1
+bankimport:
+  formats:
+    - nom: "Banque du Val de Loire"
+      etablissement: "Banque du Val de Loire"
+      journal: banque
+      compte: "512001"
+      separateur: semicolon
+      encodage: utf-8
+      lignes_entete: 1
+      format_date: "dd/mm/yyyy"
+      separateur_decimal: comma
+      separateur_milliers: none
+      colonnes: {date: 1, libelle: 2, debit: 3, credit: 4, reference: 5}
+  regles:
+    - {libelle_contient: "SALAIRE ATELIERS DU LOIRET", compte: "701"}
+    - {libelle_contient: "PRIME ATELIERS DU LOIRET", compte: "701"}
+    - {libelle_contient: "SALAIRE CENTRE HOSPITALIER", compte: "701"}
+    - {libelle_contient: "CAF DU LOIRET", compte: "705"}
+    - {libelle_contient: "ECHEANCE PRET", compte: "164"}
+    - {libelle_contient: "EDF CLIENTS", compte: "6103"}
+    - {libelle_contient: "ORLEANS METROPOLE EAU", compte: "6104"}
+    - {libelle_contient: "MAIF HABITATION", compte: "6105"}
+    - {libelle_contient: "MAIF AUTOMOBILE", compte: "6303"}
+    - {libelle_contient: "ORANGE BOX", compte: "68"}
+    - {libelle_contient: "CANTINE ECOLE", compte: "65"}
+    - {libelle_contient: "LIBRAIRIE NOUVELLE", compte: "65"}
+    - {libelle_contient: "CESU GARDE", compte: "602"}
+    - {libelle_contient: "LIVRET A", compte: "514001"}
+    - {libelle_contient: "GENERALI ASSURANCE VIE", compte: "2711"}
+    - {libelle_contient: "CARREFOUR MARKET", compte: "62"}
+    - {libelle_contient: "TOTAL ENERGIES", compte: "6301"}
+    - {libelle_contient: "GARAGE DES AUBIERS", compte: "6302"}
+    - {libelle_contient: "TAO ABONNEMENT", compte: "6304"}
+    - {libelle_contient: "PHARMACIE DU MARTROI", compte: "64"}
+    - {libelle_contient: "CABINET MEDICAL", compte: "64"}
+    - {libelle_contient: "CINEMA LES CARMES", compte: "66"}
+    - {libelle_contient: "LA PETITE MARMITE", compte: "66"}
+    - {libelle_contient: "LOCATION VACANCES", compte: "66"}
+    - {libelle_contient: FNAC, compte: "66"}
+    - {libelle_contient: DECATHLON, compte: "67"}
+    - {libelle_contient: "LEROY MERLIN", compte: "6106"}
+    - {libelle_contient: "DGFIP TAXE FONCIERE", compte: "6902"}
+    - {libelle_contient: "DGFIP IMPOT", compte: "6901"}
+    - {libelle_contient: "RESTOS DU COEUR", compte: "601"}
+    - {libelle_contient: "COTISATION CARTE", compte: "604"}

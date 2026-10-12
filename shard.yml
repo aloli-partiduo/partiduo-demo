@@ -1,12 +1,12 @@
 name: partiduo-demo
-version: 0.1.3
+version: 0.1.4
 
 description: |
-  Distribution locale de démonstration de Partiduo : le cœur, l'interface
-  Bulma et les extensions composés en une seule application, avec des
-  dossiers fictifs complets (société commerciale, micro-entrepreneur,
-  profession libérale) chargés par le contrat Partiduo::Api et servis en
-  local, services externes simulés.
+  Dossiers de démonstration de Partiduo (entreprise, profession libérale,
+  micro-entrepreneur, foyer) décrits par des fichiers de données
+  déclaratifs, leur format, un validateur léger qui ne dépend ni de
+  Partiduo ni de Marten, et scripts/demo, qui les charge, les vérifie et
+  les sert en local avec le binaire de la distribution (partiduo-dist).
 
 authors:
   - Philippe Nénert <it+claude.ai@aloli.fr>
@@ -16,53 +16,10 @@ crystal: ">= 1.19.1"
 license: AGPL-3.0-or-later
 
 targets:
-  # Charge un dossier fictif puis le sert (scripts/demo).
-  partiduo-demo:
-    main: src/main.cr
-  # Ligne de commande Marten de la distribution (migrate, provision…).
-  partiduo-demo-manage:
-    main: manage.cr
-
-dependencies:
-  # Le cœur : registre, événements et contrat Partiduo::Api.
-  partiduo:
-    github: aloli-partiduo/partiduo-app
-    branch: development
-  # L'interface Bulma, qui monte les interfaces des extensions.
-  partiduo-ui-bulma:
-    github: aloli-partiduo/partiduo-ui-bulma
-    branch: development
-  # Extensions composées (voir README.adoc, « Extensions »).
-  partiduo-document:
-    github: aloli-partiduo/partiduo-document
-    branch: development
-  partiduo-einvoicing:
-    github: aloli-partiduo/partiduo-einvoicing
-    branch: development
-  partiduo-superpdp:
-    github: aloli-partiduo/partiduo-superpdp
-    branch: development
-  partiduo-esalink:
-    github: aloli-partiduo/partiduo-esalink
-    branch: development
-  partiduo-choruspro:
-    github: aloli-partiduo/partiduo-choruspro
-    branch: development
-  partiduo-teledec:
-    github: aloli-partiduo/partiduo-teledec
-    branch: development
-  partiduo-urssaf:
-    github: aloli-partiduo/partiduo-urssaf
-    branch: development
-  partiduo-crm:
-    github: aloli-partiduo/partiduo-crm
-    branch: development
-  partiduo-modeles:
-    github: aloli-partiduo/partiduo-modeles
-    branch: development
-  marten:
-    github: aloli-crystal/marten
-    branch: production
+  # Validateur des dossiers (schéma, références, équilibres, totaux attendus,
+  # aucun secret) : bibliothèque standard de Crystal seulement.
+  partiduo-demo-valider:
+    main: src/valider.cr
 
 development_dependencies:
   ameba:

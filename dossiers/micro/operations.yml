@@ -1,0 +1,1704 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# Opérations datées du dossier « micro » : ventes au comptoir, factures
+# encaissées, registre des achats, déclarations URSSAF trimestrielles.
+# Format : doc/format-dossiers.adoc.
+format: 1
+operations:
+  - date: N-1-01-04
+    type: micro_achat
+    nature: goods
+    montant: "320"
+    moyen: transfer
+    fournisseur: FOU-DCO
+    tiers: "Distribution Cycles Ouest SAS"
+    libelle: "Pièces et accessoires"
+    reference: "DCO-{aa}{mm}-400"
+    copie:
+      enseigne: "DISTRIBUTION CYCLES OUEST"
+      adresse: "ZI DU BOIS DE BOUCHET 44800 SAINT-HERBLAIN"
+      numero: "DCO-{aa}{mm}{jj}"
+      libelle: "PIECES ET ACCESSOIRES"
+      taux: "20"
+      couleur: [46, 125, 50]
+  - date: N-1-01-05
+    type: urssaf_mandat
+    iban: FR7630006000011234567890189
+    bic: AGRIFRPP
+    titulaire: "Nicolas Perrot"
+  - date: N-1-01-05
+    type: micro_recette
+    nature: SALE
+    montant: "150"
+    moyen: card
+    tiers: "Clients au comptoir"
+    libelle: "Ventes d'accessoires de la semaine"
+  - date: N-1-01-07
+    type: micro_achat
+    nature: other
+    montant: "450"
+    moyen: transfer
+    tiers: "M. et Mme Chevalier (bailleurs)"
+    libelle: "Loyer de la boutique"
+  - date: N-1-01-09
+    type: facture
+    client: CLI-DUPRE
+    categorie: mixed
+    lignes: [{article: REVISION, quantite: 1}, {article: PNEU, quantite: 2}, {article: CHAMBRE, quantite: 2}]
+    reglement: {delai: 0, mode: encaissement, moyen: card}
+  - date: N-1-01-12
+    type: micro_recette
+    nature: SALE
+    montant: "160"
+    moyen: cash
+    tiers: "Clients au comptoir"
+    libelle: "Ventes d'accessoires de la semaine"
+  - date: N-1-01-15
+    type: facture
+    client: CLI-LOCALOIRE
+    categorie: mixed
+    lignes: [{article: REVISION, quantite: 4}, {article: MO, quantite: 2}, {article: CHAMBRE, quantite: 6}]
+    reglement: {delai: 30, mode: encaissement, moyen: transfer}
+  - date: N-1-01-19
+    type: micro_recette
+    nature: SALE
+    montant: "170"
+    moyen: card
+    tiers: "Clients au comptoir"
+    libelle: "Ventes d'accessoires de la semaine"
+  - date: N-1-01-21
+    type: facture
+    client: CLI-NGUYEN
+    categorie: mixed
+    lignes: [{article: CREVAISON, quantite: 1}, {article: MO, quantite: 1}]
+    reglement: {delai: 3, mode: encaissement, moyen: transfer}
+  - date: N-1-01-26
+    type: micro_recette
+    nature: SALE
+    montant: "180"
+    moyen: cash
+    tiers: "Clients au comptoir"
+    libelle: "Ventes d'accessoires de la semaine"
+  - date: N-1-02-04
+    type: micro_achat
+    nature: goods
+    montant: "365"
+    moyen: transfer
+    fournisseur: FOU-DCO
+    tiers: "Distribution Cycles Ouest SAS"
+    libelle: "Pièces et accessoires"
+    reference: "DCO-{aa}{mm}-401"
+    copie:
+      enseigne: "DISTRIBUTION CYCLES OUEST"
+      adresse: "ZI DU BOIS DE BOUCHET 44800 SAINT-HERBLAIN"
+      numero: "DCO-{aa}{mm}{jj}"
+      libelle: "PIECES ET ACCESSOIRES"
+      taux: "20"
+      couleur: [46, 125, 50]
+  - date: N-1-02-05
+    type: micro_recette
+    nature: SALE
+    montant: "220"
+    moyen: card
+    tiers: "Clients au comptoir"
+    libelle: "Ventes d'accessoires de la semaine"
+  - date: N-1-02-07
+    type: micro_achat
+    nature: other
+    montant: "450"
+    moyen: transfer
+    tiers: "M. et Mme Chevalier (bailleurs)"
+    libelle: "Loyer de la boutique"
+  - date: N-1-02-09
+    type: facture
+    client: CLI-NGUYEN
+    categorie: mixed
+    lignes: [{article: REVISION, quantite: 1}, {article: PNEU, quantite: 2}, {article: CHAMBRE, quantite: 2}]
+    reglement: {delai: 0, mode: encaissement, moyen: card}
+  - date: N-1-02-12
+    type: micro_recette
+    nature: SALE
+    montant: "230"
+    moyen: cash
+    tiers: "Clients au comptoir"
+    libelle: "Ventes d'accessoires de la semaine"
+  - date: N-1-02-15
+    type: facture
+    client: CLI-LOCALOIRE
+    categorie: mixed
+    lignes: [{article: REVISION, quantite: 5}, {article: MO, quantite: 2}, {article: CHAMBRE, quantite: 6}]
+    reglement: {delai: 30, mode: encaissement, moyen: transfer}
+  - date: N-1-02-19
+    type: micro_recette
+    nature: SALE
+    montant: "240"
+    moyen: card
+    tiers: "Clients au comptoir"
+    libelle: "Ventes d'accessoires de la semaine"
+  - date: N-1-02-21
+    type: facture
+    client: CLI-LEGRAND
+    categorie: mixed
+    lignes: [{article: CREVAISON, quantite: 1}, {article: MO, quantite: 2}]
+    reglement: {delai: 3, mode: encaissement, moyen: transfer}
+  - date: N-1-02-26
+    type: micro_recette
+    nature: SALE
+    montant: "250"
+    moyen: cash
+    tiers: "Clients au comptoir"
+    libelle: "Ventes d'accessoires de la semaine"
+  - date: N-1-03-04
+    type: micro_achat
+    nature: goods
+    montant: "410"
+    moyen: transfer
+    fournisseur: FOU-DCO
+    tiers: "Distribution Cycles Ouest SAS"
+    libelle: "Pièces et accessoires"
+    reference: "DCO-{aa}{mm}-402"
+    copie:
+      enseigne: "DISTRIBUTION CYCLES OUEST"
+      adresse: "ZI DU BOIS DE BOUCHET 44800 SAINT-HERBLAIN"
+      numero: "DCO-{aa}{mm}{jj}"
+      libelle: "PIECES ET ACCESSOIRES"
+      taux: "20"
+      couleur: [46, 125, 50]
+  - date: N-1-03-05
+    type: micro_recette
+    nature: SALE
+    montant: "180"
+    moyen: card
+    tiers: "Clients au comptoir"
+    libelle: "Ventes d'accessoires de la semaine"
+  - date: N-1-03-07
+    type: micro_achat
+    nature: other
+    montant: "450"
+    moyen: transfer
+    tiers: "M. et Mme Chevalier (bailleurs)"
+    libelle: "Loyer de la boutique"
+  - date: N-1-03-09
+    type: facture
+    client: CLI-LEGRAND
+    categorie: mixed
+    lignes: [{article: REVISION, quantite: 1}, {article: PNEU, quantite: 2}, {article: CHAMBRE, quantite: 2}]
+    reglement: {delai: 0, mode: encaissement, moyen: card}
+  - date: N-1-03-12
+    type: micro_recette
+    nature: SALE
+    montant: "190"
+    moyen: cash
+    tiers: "Clients au comptoir"
+    libelle: "Ventes d'accessoires de la semaine"
+  - date: N-1-03-15
+    type: facture
+    client: CLI-LOCALOIRE
+    categorie: mixed
+    lignes: [{article: REVISION, quantite: 6}, {article: MO, quantite: 2}, {article: CHAMBRE, quantite: 6}]
+    reglement: {delai: 30, mode: encaissement, moyen: transfer}
+  - date: N-1-03-19
+    type: micro_recette
+    nature: SALE
+    montant: "200"
+    moyen: card
+    tiers: "Clients au comptoir"
+    libelle: "Ventes d'accessoires de la semaine"
+  - date: N-1-03-21
+    type: facture
+    client: CLI-DUPRE
+    categorie: mixed
+    lignes: [{article: CREVAISON, quantite: 1}, {article: MO, quantite: 1}]
+    reglement: {delai: 3, mode: encaissement, moyen: transfer}
+  - date: N-1-03-26
+    type: micro_recette
+    nature: SALE
+    montant: "210"
+    moyen: cash
+    tiers: "Clients au comptoir"
+    libelle: "Ventes d'accessoires de la semaine"
+  - date: N-1-04-04
+    type: micro_achat
+    nature: goods
+    montant: "455"
+    moyen: transfer
+    fournisseur: FOU-DCO
+    tiers: "Distribution Cycles Ouest SAS"
+    libelle: "Pièces et accessoires"
+    reference: "DCO-{aa}{mm}-403"
+    copie:
+      enseigne: "DISTRIBUTION CYCLES OUEST"
+      adresse: "ZI DU BOIS DE BOUCHET 44800 SAINT-HERBLAIN"
+      numero: "DCO-{aa}{mm}{jj}"
+      libelle: "PIECES ET ACCESSOIRES"
+      taux: "20"
+      couleur: [46, 125, 50]
+  - date: N-1-04-05
+    type: micro_recette
+    nature: SALE
+    montant: "250"
+    moyen: card
+    tiers: "Clients au comptoir"
+    libelle: "Ventes d'accessoires de la semaine"
+  - date: N-1-04-07
+    type: micro_achat
+    nature: other
+    montant: "450"
+    moyen: transfer
+    tiers: "M. et Mme Chevalier (bailleurs)"
+    libelle: "Loyer de la boutique"
+  - date: N-1-04-09
+    type: facture
+    client: CLI-DUPRE
+    categorie: mixed
+    lignes: [{article: REVISION, quantite: 1}, {article: PNEU, quantite: 2}, {article: CHAMBRE, quantite: 2}]
+    reglement: {delai: 0, mode: encaissement, moyen: card}
+  - date: N-1-04-12
+    type: micro_recette
+    nature: SALE
+    montant: "150"
+    moyen: cash
+    tiers: "Clients au comptoir"
+    libelle: "Ventes d'accessoires de la semaine"
+  - date: N-1-04-15
+    type: facture
+    client: CLI-LOCALOIRE
+    categorie: mixed
+    lignes: [{article: REVISION, quantite: 4}, {article: MO, quantite: 2}, {article: CHAMBRE, quantite: 6}]
+    reglement: {delai: 30, mode: encaissement, moyen: transfer}
+  - date: N-1-04-19
+    type: micro_recette
+    nature: SALE
+    montant: "160"
+    moyen: card
+    tiers: "Clients au comptoir"
+    libelle: "Ventes d'accessoires de la semaine"
+  - {date: N-1-04-20, type: urssaf_declaration, periode: N-1-01, paiement: true}
+  - date: N-1-04-21
+    type: facture
+    client: CLI-NGUYEN
+    categorie: mixed
+    lignes: [{article: CREVAISON, quantite: 1}, {article: MO, quantite: 2}]
+    reglement: {delai: 3, mode: encaissement, moyen: transfer}
+  - date: N-1-04-26
+    type: micro_recette
+    nature: SALE
+    montant: "170"
+    moyen: cash
+    tiers: "Clients au comptoir"
+    libelle: "Ventes d'accessoires de la semaine"
+  - date: N-1-05-04
+    type: micro_achat
+    nature: goods
+    montant: "500"
+    moyen: transfer
+    fournisseur: FOU-DCO
+    tiers: "Distribution Cycles Ouest SAS"
+    libelle: "Pièces et accessoires"
+    reference: "DCO-{aa}{mm}-404"
+    copie:
+      enseigne: "DISTRIBUTION CYCLES OUEST"
+      adresse: "ZI DU BOIS DE BOUCHET 44800 SAINT-HERBLAIN"
+      numero: "DCO-{aa}{mm}{jj}"
+      libelle: "PIECES ET ACCESSOIRES"
+      taux: "20"
+      couleur: [46, 125, 50]
+  - date: N-1-05-05
+    type: micro_recette
+    nature: SALE
+    montant: "210"
+    moyen: card
+    tiers: "Clients au comptoir"
+    libelle: "Ventes d'accessoires de la semaine"
+  - date: N-1-05-07
+    type: micro_achat
+    nature: other
+    montant: "450"
+    moyen: transfer
+    tiers: "M. et Mme Chevalier (bailleurs)"
+    libelle: "Loyer de la boutique"
+  - date: N-1-05-09
+    type: facture
+    client: CLI-NGUYEN
+    categorie: mixed
+    lignes: [{article: REVISION, quantite: 1}, {article: PNEU, quantite: 2}, {article: CHAMBRE, quantite: 2}]
+    reglement: {delai: 0, mode: encaissement, moyen: card}
+  - date: N-1-05-12
+    type: micro_recette
+    nature: SALE
+    montant: "220"
+    moyen: cash
+    tiers: "Clients au comptoir"
+    libelle: "Ventes d'accessoires de la semaine"
+  - date: N-1-05-15
+    type: facture
+    client: CLI-LOCALOIRE
+    categorie: mixed
+    lignes: [{article: REVISION, quantite: 5}, {article: MO, quantite: 2}, {article: CHAMBRE, quantite: 6}]
+    reglement: {delai: 30, mode: encaissement, moyen: transfer}
+  - date: N-1-05-19
+    type: micro_recette
+    nature: SALE
+    montant: "230"
+    moyen: card
+    tiers: "Clients au comptoir"
+    libelle: "Ventes d'accessoires de la semaine"
+  - date: N-1-05-21
+    type: facture
+    client: CLI-LEGRAND
+    categorie: mixed
+    lignes: [{article: CREVAISON, quantite: 1}, {article: MO, quantite: 1}]
+    reglement: {delai: 3, mode: encaissement, moyen: transfer}
+  - date: N-1-05-26
+    type: micro_recette
+    nature: SALE
+    montant: "240"
+    moyen: cash
+    tiers: "Clients au comptoir"
+    libelle: "Ventes d'accessoires de la semaine"
+  - date: N-1-06-04
+    type: micro_achat
+    nature: goods
+    montant: "320"
+    moyen: transfer
+    fournisseur: FOU-DCO
+    tiers: "Distribution Cycles Ouest SAS"
+    libelle: "Pièces et accessoires"
+    reference: "DCO-{aa}{mm}-405"
+    copie:
+      enseigne: "DISTRIBUTION CYCLES OUEST"
+      adresse: "ZI DU BOIS DE BOUCHET 44800 SAINT-HERBLAIN"
+      numero: "DCO-{aa}{mm}{jj}"
+      libelle: "PIECES ET ACCESSOIRES"
+      taux: "20"
+      couleur: [46, 125, 50]
+  - date: N-1-06-05
+    type: micro_recette
+    nature: SALE
+    montant: "170"
+    moyen: card
+    tiers: "Clients au comptoir"
+    libelle: "Ventes d'accessoires de la semaine"
+  - date: N-1-06-07
+    type: micro_achat
+    nature: other
+    montant: "450"
+    moyen: transfer
+    tiers: "M. et Mme Chevalier (bailleurs)"
+    libelle: "Loyer de la boutique"
+  - date: N-1-06-09
+    type: facture
+    client: CLI-LEGRAND
+    categorie: mixed
+    lignes: [{article: REVISION, quantite: 1}, {article: PNEU, quantite: 2}, {article: CHAMBRE, quantite: 2}]
+    reglement: {delai: 0, mode: encaissement, moyen: card}
+  - date: N-1-06-12
+    type: micro_recette
+    nature: SALE
+    montant: "180"
+    moyen: cash
+    tiers: "Clients au comptoir"
+    libelle: "Ventes d'accessoires de la semaine"
+  - date: N-1-06-15
+    type: facture
+    client: CLI-LOCALOIRE
+    categorie: mixed
+    lignes: [{article: REVISION, quantite: 6}, {article: MO, quantite: 2}, {article: CHAMBRE, quantite: 6}]
+    reglement: {delai: 30, mode: encaissement, moyen: transfer}
+  - date: N-1-06-19
+    type: micro_recette
+    nature: SALE
+    montant: "190"
+    moyen: card
+    tiers: "Clients au comptoir"
+    libelle: "Ventes d'accessoires de la semaine"
+  - date: N-1-06-21
+    type: facture
+    client: CLI-DUPRE
+    categorie: mixed
+    lignes: [{article: CREVAISON, quantite: 1}, {article: MO, quantite: 2}]
+    reglement: {delai: 3, mode: encaissement, moyen: transfer}
+  - date: N-1-06-26
+    type: micro_recette
+    nature: SALE
+    montant: "200"
+    moyen: cash
+    tiers: "Clients au comptoir"
+    libelle: "Ventes d'accessoires de la semaine"
+  - date: N-1-07-04
+    type: micro_achat
+    nature: goods
+    montant: "365"
+    moyen: transfer
+    fournisseur: FOU-DCO
+    tiers: "Distribution Cycles Ouest SAS"
+    libelle: "Pièces et accessoires"
+    reference: "DCO-{aa}{mm}-406"
+    copie:
+      enseigne: "DISTRIBUTION CYCLES OUEST"
+      adresse: "ZI DU BOIS DE BOUCHET 44800 SAINT-HERBLAIN"
+      numero: "DCO-{aa}{mm}{jj}"
+      libelle: "PIECES ET ACCESSOIRES"
+      taux: "20"
+      couleur: [46, 125, 50]
+  - date: N-1-07-05
+    type: micro_recette
+    nature: SALE
+    montant: "240"
+    moyen: card
+    tiers: "Clients au comptoir"
+    libelle: "Ventes d'accessoires de la semaine"
+  - date: N-1-07-07
+    type: micro_achat
+    nature: other
+    montant: "450"
+    moyen: transfer
+    tiers: "M. et Mme Chevalier (bailleurs)"
+    libelle: "Loyer de la boutique"
+  - date: N-1-07-09
+    type: facture
+    client: CLI-DUPRE
+    categorie: mixed
+    lignes: [{article: REVISION, quantite: 1}, {article: PNEU, quantite: 2}, {article: CHAMBRE, quantite: 2}]
+    reglement: {delai: 0, mode: encaissement, moyen: card}
+  - date: N-1-07-12
+    type: micro_recette
+    nature: SALE
+    montant: "250"
+    moyen: cash
+    tiers: "Clients au comptoir"
+    libelle: "Ventes d'accessoires de la semaine"
+  - date: N-1-07-15
+    type: facture
+    client: CLI-LOCALOIRE
+    categorie: mixed
+    lignes: [{article: REVISION, quantite: 4}, {article: MO, quantite: 2}, {article: CHAMBRE, quantite: 6}]
+    reglement: {delai: 30, mode: encaissement, moyen: transfer}
+  - date: N-1-07-19
+    type: micro_recette
+    nature: SALE
+    montant: "150"
+    moyen: card
+    tiers: "Clients au comptoir"
+    libelle: "Ventes d'accessoires de la semaine"
+  - {date: N-1-07-20, type: urssaf_declaration, periode: N-1-04, paiement: true}
+  - date: N-1-07-21
+    type: facture
+    client: CLI-NGUYEN
+    categorie: mixed
+    lignes: [{article: CREVAISON, quantite: 1}, {article: MO, quantite: 1}]
+    reglement: {delai: 3, mode: encaissement, moyen: transfer}
+  - date: N-1-07-26
+    type: micro_recette
+    nature: SALE
+    montant: "160"
+    moyen: cash
+    tiers: "Clients au comptoir"
+    libelle: "Ventes d'accessoires de la semaine"
+  - date: N-1-08-04
+    type: micro_achat
+    nature: goods
+    montant: "410"
+    moyen: transfer
+    fournisseur: FOU-DCO
+    tiers: "Distribution Cycles Ouest SAS"
+    libelle: "Pièces et accessoires"
+    reference: "DCO-{aa}{mm}-407"
+    copie:
+      enseigne: "DISTRIBUTION CYCLES OUEST"
+      adresse: "ZI DU BOIS DE BOUCHET 44800 SAINT-HERBLAIN"
+      numero: "DCO-{aa}{mm}{jj}"
+      libelle: "PIECES ET ACCESSOIRES"
+      taux: "20"
+      couleur: [46, 125, 50]
+  - date: N-1-08-05
+    type: micro_recette
+    nature: SALE
+    montant: "200"
+    moyen: card
+    tiers: "Clients au comptoir"
+    libelle: "Ventes d'accessoires de la semaine"
+  - date: N-1-08-07
+    type: micro_achat
+    nature: other
+    montant: "450"
+    moyen: transfer
+    tiers: "M. et Mme Chevalier (bailleurs)"
+    libelle: "Loyer de la boutique"
+  - date: N-1-08-09
+    type: facture
+    client: CLI-NGUYEN
+    categorie: mixed
+    lignes: [{article: REVISION, quantite: 1}, {article: PNEU, quantite: 2}, {article: CHAMBRE, quantite: 2}]
+    reglement: {delai: 0, mode: encaissement, moyen: card}
+  - date: N-1-08-12
+    type: micro_recette
+    nature: SALE
+    montant: "210"
+    moyen: cash
+    tiers: "Clients au comptoir"
+    libelle: "Ventes d'accessoires de la semaine"
+  - date: N-1-08-15
+    type: facture
+    client: CLI-LOCALOIRE
+    categorie: mixed
+    lignes: [{article: REVISION, quantite: 5}, {article: MO, quantite: 2}, {article: CHAMBRE, quantite: 6}]
+    reglement: {delai: 30, mode: encaissement, moyen: transfer}
+  - date: N-1-08-19
+    type: micro_recette
+    nature: SALE
+    montant: "220"
+    moyen: card
+    tiers: "Clients au comptoir"
+    libelle: "Ventes d'accessoires de la semaine"
+  - date: N-1-08-21
+    type: facture
+    client: CLI-LEGRAND
+    categorie: mixed
+    lignes: [{article: CREVAISON, quantite: 1}, {article: MO, quantite: 2}]
+    reglement: {delai: 3, mode: encaissement, moyen: transfer}
+  - date: N-1-08-26
+    type: micro_recette
+    nature: SALE
+    montant: "230"
+    moyen: cash
+    tiers: "Clients au comptoir"
+    libelle: "Ventes d'accessoires de la semaine"
+  - date: N-1-09-04
+    type: micro_achat
+    nature: goods
+    montant: "455"
+    moyen: transfer
+    fournisseur: FOU-DCO
+    tiers: "Distribution Cycles Ouest SAS"
+    libelle: "Pièces et accessoires"
+    reference: "DCO-{aa}{mm}-408"
+    copie:
+      enseigne: "DISTRIBUTION CYCLES OUEST"
+      adresse: "ZI DU BOIS DE BOUCHET 44800 SAINT-HERBLAIN"
+      numero: "DCO-{aa}{mm}{jj}"
+      libelle: "PIECES ET ACCESSOIRES"
+      taux: "20"
+      couleur: [46, 125, 50]
+  - date: N-1-09-05
+    type: micro_recette
+    nature: SALE
+    montant: "160"
+    moyen: card
+    tiers: "Clients au comptoir"
+    libelle: "Ventes d'accessoires de la semaine"
+  - date: N-1-09-07
+    type: micro_achat
+    nature: other
+    montant: "450"
+    moyen: transfer
+    tiers: "M. et Mme Chevalier (bailleurs)"
+    libelle: "Loyer de la boutique"
+  - date: N-1-09-09
+    type: facture
+    client: CLI-LEGRAND
+    categorie: mixed
+    lignes: [{article: REVISION, quantite: 1}, {article: PNEU, quantite: 2}, {article: CHAMBRE, quantite: 2}]
+    reglement: {delai: 0, mode: encaissement, moyen: card}
+  - date: N-1-09-12
+    type: micro_recette
+    nature: SALE
+    montant: "170"
+    moyen: cash
+    tiers: "Clients au comptoir"
+    libelle: "Ventes d'accessoires de la semaine"
+  - date: N-1-09-15
+    type: facture
+    client: CLI-LOCALOIRE
+    categorie: mixed
+    lignes: [{article: REVISION, quantite: 6}, {article: MO, quantite: 2}, {article: CHAMBRE, quantite: 6}]
+    reglement: {delai: 30, mode: encaissement, moyen: transfer}
+  - date: N-1-09-19
+    type: micro_recette
+    nature: SALE
+    montant: "180"
+    moyen: card
+    tiers: "Clients au comptoir"
+    libelle: "Ventes d'accessoires de la semaine"
+  - date: N-1-09-21
+    type: facture
+    client: CLI-DUPRE
+    categorie: mixed
+    lignes: [{article: CREVAISON, quantite: 1}, {article: MO, quantite: 1}]
+    reglement: {delai: 3, mode: encaissement, moyen: transfer}
+  - date: N-1-09-26
+    type: micro_recette
+    nature: SALE
+    montant: "190"
+    moyen: cash
+    tiers: "Clients au comptoir"
+    libelle: "Ventes d'accessoires de la semaine"
+  - date: N-1-10-04
+    type: micro_achat
+    nature: goods
+    montant: "500"
+    moyen: transfer
+    fournisseur: FOU-DCO
+    tiers: "Distribution Cycles Ouest SAS"
+    libelle: "Pièces et accessoires"
+    reference: "DCO-{aa}{mm}-409"
+    copie:
+      enseigne: "DISTRIBUTION CYCLES OUEST"
+      adresse: "ZI DU BOIS DE BOUCHET 44800 SAINT-HERBLAIN"
+      numero: "DCO-{aa}{mm}{jj}"
+      libelle: "PIECES ET ACCESSOIRES"
+      taux: "20"
+      couleur: [46, 125, 50]
+  - date: N-1-10-05
+    type: micro_recette
+    nature: SALE
+    montant: "230"
+    moyen: card
+    tiers: "Clients au comptoir"
+    libelle: "Ventes d'accessoires de la semaine"
+  - date: N-1-10-07
+    type: micro_achat
+    nature: other
+    montant: "450"
+    moyen: transfer
+    tiers: "M. et Mme Chevalier (bailleurs)"
+    libelle: "Loyer de la boutique"
+  - date: N-1-10-09
+    type: facture
+    client: CLI-DUPRE
+    categorie: mixed
+    lignes: [{article: REVISION, quantite: 1}, {article: PNEU, quantite: 2}, {article: CHAMBRE, quantite: 2}]
+    reglement: {delai: 0, mode: encaissement, moyen: card}
+  - date: N-1-10-12
+    type: micro_recette
+    nature: SALE
+    montant: "240"
+    moyen: cash
+    tiers: "Clients au comptoir"
+    libelle: "Ventes d'accessoires de la semaine"
+  - date: N-1-10-15
+    type: facture
+    client: CLI-LOCALOIRE
+    categorie: mixed
+    lignes: [{article: REVISION, quantite: 4}, {article: MO, quantite: 2}, {article: CHAMBRE, quantite: 6}]
+    reglement: {delai: 30, mode: encaissement, moyen: transfer}
+  - date: N-1-10-19
+    type: micro_recette
+    nature: SALE
+    montant: "250"
+    moyen: card
+    tiers: "Clients au comptoir"
+    libelle: "Ventes d'accessoires de la semaine"
+  - {date: N-1-10-20, type: urssaf_declaration, periode: N-1-07, paiement: true}
+  - date: N-1-10-21
+    type: facture
+    client: CLI-NGUYEN
+    categorie: mixed
+    lignes: [{article: CREVAISON, quantite: 1}, {article: MO, quantite: 2}]
+    reglement: {delai: 3, mode: encaissement, moyen: transfer}
+  - date: N-1-10-26
+    type: micro_recette
+    nature: SALE
+    montant: "150"
+    moyen: cash
+    tiers: "Clients au comptoir"
+    libelle: "Ventes d'accessoires de la semaine"
+  - date: N-1-11-04
+    type: micro_achat
+    nature: goods
+    montant: "320"
+    moyen: transfer
+    fournisseur: FOU-DCO
+    tiers: "Distribution Cycles Ouest SAS"
+    libelle: "Pièces et accessoires"
+    reference: "DCO-{aa}{mm}-410"
+    copie:
+      enseigne: "DISTRIBUTION CYCLES OUEST"
+      adresse: "ZI DU BOIS DE BOUCHET 44800 SAINT-HERBLAIN"
+      numero: "DCO-{aa}{mm}{jj}"
+      libelle: "PIECES ET ACCESSOIRES"
+      taux: "20"
+      couleur: [46, 125, 50]
+  - date: N-1-11-05
+    type: micro_recette
+    nature: SALE
+    montant: "190"
+    moyen: card
+    tiers: "Clients au comptoir"
+    libelle: "Ventes d'accessoires de la semaine"
+  - date: N-1-11-07
+    type: micro_achat
+    nature: other
+    montant: "450"
+    moyen: transfer
+    tiers: "M. et Mme Chevalier (bailleurs)"
+    libelle: "Loyer de la boutique"
+  - date: N-1-11-09
+    type: facture
+    client: CLI-NGUYEN
+    categorie: mixed
+    lignes: [{article: REVISION, quantite: 1}, {article: PNEU, quantite: 2}, {article: CHAMBRE, quantite: 2}]
+    reglement: {delai: 0, mode: encaissement, moyen: card}
+  - date: N-1-11-12
+    type: micro_recette
+    nature: SALE
+    montant: "200"
+    moyen: cash
+    tiers: "Clients au comptoir"
+    libelle: "Ventes d'accessoires de la semaine"
+  - date: N-1-11-15
+    type: facture
+    client: CLI-LOCALOIRE
+    categorie: mixed
+    lignes: [{article: REVISION, quantite: 5}, {article: MO, quantite: 2}, {article: CHAMBRE, quantite: 6}]
+    reglement: {delai: 30, mode: encaissement, moyen: transfer}
+  - date: N-1-11-19
+    type: micro_recette
+    nature: SALE
+    montant: "210"
+    moyen: card
+    tiers: "Clients au comptoir"
+    libelle: "Ventes d'accessoires de la semaine"
+  - date: N-1-11-21
+    type: facture
+    client: CLI-LEGRAND
+    categorie: mixed
+    lignes: [{article: CREVAISON, quantite: 1}, {article: MO, quantite: 1}]
+    reglement: {delai: 3, mode: encaissement, moyen: transfer}
+  - date: N-1-11-26
+    type: micro_recette
+    nature: SALE
+    montant: "220"
+    moyen: cash
+    tiers: "Clients au comptoir"
+    libelle: "Ventes d'accessoires de la semaine"
+  - date: N-1-12-04
+    type: micro_achat
+    nature: goods
+    montant: "365"
+    moyen: transfer
+    fournisseur: FOU-DCO
+    tiers: "Distribution Cycles Ouest SAS"
+    libelle: "Pièces et accessoires"
+    reference: "DCO-{aa}{mm}-411"
+    copie:
+      enseigne: "DISTRIBUTION CYCLES OUEST"
+      adresse: "ZI DU BOIS DE BOUCHET 44800 SAINT-HERBLAIN"
+      numero: "DCO-{aa}{mm}{jj}"
+      libelle: "PIECES ET ACCESSOIRES"
+      taux: "20"
+      couleur: [46, 125, 50]
+  - date: N-1-12-05
+    type: micro_recette
+    nature: SALE
+    montant: "150"
+    moyen: card
+    tiers: "Clients au comptoir"
+    libelle: "Ventes d'accessoires de la semaine"
+  - date: N-1-12-07
+    type: micro_achat
+    nature: other
+    montant: "450"
+    moyen: transfer
+    tiers: "M. et Mme Chevalier (bailleurs)"
+    libelle: "Loyer de la boutique"
+  - date: N-1-12-09
+    type: facture
+    client: CLI-LEGRAND
+    categorie: mixed
+    lignes: [{article: REVISION, quantite: 1}, {article: PNEU, quantite: 2}, {article: CHAMBRE, quantite: 2}]
+    reglement: {delai: 0, mode: encaissement, moyen: card}
+  - date: N-1-12-12
+    type: micro_recette
+    nature: SALE
+    montant: "160"
+    moyen: cash
+    tiers: "Clients au comptoir"
+    libelle: "Ventes d'accessoires de la semaine"
+  - date: N-1-12-15
+    type: facture
+    client: CLI-LOCALOIRE
+    categorie: mixed
+    lignes: [{article: REVISION, quantite: 6}, {article: MO, quantite: 2}, {article: CHAMBRE, quantite: 6}]
+    reglement: {delai: 30, mode: encaissement, moyen: transfer}
+  - date: N-1-12-19
+    type: micro_recette
+    nature: SALE
+    montant: "170"
+    moyen: card
+    tiers: "Clients au comptoir"
+    libelle: "Ventes d'accessoires de la semaine"
+  - date: N-1-12-21
+    type: facture
+    client: CLI-DUPRE
+    categorie: mixed
+    lignes: [{article: CREVAISON, quantite: 1}, {article: MO, quantite: 2}]
+    reglement: {delai: 3, mode: encaissement, moyen: transfer}
+  - date: N-1-12-26
+    type: micro_recette
+    nature: SALE
+    montant: "180"
+    moyen: cash
+    tiers: "Clients au comptoir"
+    libelle: "Ventes d'accessoires de la semaine"
+  - date: N-01-04
+    type: micro_achat
+    nature: goods
+    montant: "410"
+    moyen: transfer
+    fournisseur: FOU-DCO
+    tiers: "Distribution Cycles Ouest SAS"
+    libelle: "Pièces et accessoires"
+    reference: "DCO-{aa}{mm}-412"
+    copie:
+      enseigne: "DISTRIBUTION CYCLES OUEST"
+      adresse: "ZI DU BOIS DE BOUCHET 44800 SAINT-HERBLAIN"
+      numero: "DCO-{aa}{mm}{jj}"
+      libelle: "PIECES ET ACCESSOIRES"
+      taux: "20"
+      couleur: [46, 125, 50]
+  - date: N-01-05
+    type: micro_recette
+    nature: SALE
+    montant: "220"
+    moyen: card
+    tiers: "Clients au comptoir"
+    libelle: "Ventes d'accessoires de la semaine"
+  - date: N-01-07
+    type: micro_achat
+    nature: other
+    montant: "450"
+    moyen: transfer
+    tiers: "M. et Mme Chevalier (bailleurs)"
+    libelle: "Loyer de la boutique"
+  - date: N-01-09
+    type: facture
+    client: CLI-DUPRE
+    categorie: mixed
+    lignes: [{article: REVISION, quantite: 1}, {article: PNEU, quantite: 2}, {article: CHAMBRE, quantite: 2}]
+    reglement: {delai: 0, mode: encaissement, moyen: card}
+  - date: N-01-12
+    type: micro_recette
+    nature: SALE
+    montant: "230"
+    moyen: cash
+    tiers: "Clients au comptoir"
+    libelle: "Ventes d'accessoires de la semaine"
+  - date: N-01-15
+    type: facture
+    client: CLI-LOCALOIRE
+    categorie: mixed
+    lignes: [{article: REVISION, quantite: 4}, {article: MO, quantite: 2}, {article: CHAMBRE, quantite: 6}]
+    reglement: {delai: 30, mode: encaissement, moyen: transfer}
+  - date: N-01-19
+    type: micro_recette
+    nature: SALE
+    montant: "240"
+    moyen: card
+    tiers: "Clients au comptoir"
+    libelle: "Ventes d'accessoires de la semaine"
+  - {date: N-01-20, type: urssaf_declaration, periode: N-1-10, paiement: true}
+  - date: N-01-21
+    type: facture
+    client: CLI-NGUYEN
+    categorie: mixed
+    lignes: [{article: CREVAISON, quantite: 1}, {article: MO, quantite: 1}]
+    reglement: {delai: 3, mode: encaissement, moyen: transfer}
+  - date: N-01-26
+    type: micro_recette
+    nature: SALE
+    montant: "250"
+    moyen: cash
+    tiers: "Clients au comptoir"
+    libelle: "Ventes d'accessoires de la semaine"
+  - date: N-02-04
+    type: micro_achat
+    nature: goods
+    montant: "455"
+    moyen: transfer
+    fournisseur: FOU-DCO
+    tiers: "Distribution Cycles Ouest SAS"
+    libelle: "Pièces et accessoires"
+    reference: "DCO-{aa}{mm}-413"
+    copie:
+      enseigne: "DISTRIBUTION CYCLES OUEST"
+      adresse: "ZI DU BOIS DE BOUCHET 44800 SAINT-HERBLAIN"
+      numero: "DCO-{aa}{mm}{jj}"
+      libelle: "PIECES ET ACCESSOIRES"
+      taux: "20"
+      couleur: [46, 125, 50]
+  - date: N-02-05
+    type: micro_recette
+    nature: SALE
+    montant: "180"
+    moyen: card
+    tiers: "Clients au comptoir"
+    libelle: "Ventes d'accessoires de la semaine"
+  - date: N-02-07
+    type: micro_achat
+    nature: other
+    montant: "450"
+    moyen: transfer
+    tiers: "M. et Mme Chevalier (bailleurs)"
+    libelle: "Loyer de la boutique"
+  - date: N-02-09
+    type: facture
+    client: CLI-NGUYEN
+    categorie: mixed
+    lignes: [{article: REVISION, quantite: 1}, {article: PNEU, quantite: 2}, {article: CHAMBRE, quantite: 2}]
+    reglement: {delai: 0, mode: encaissement, moyen: card}
+  - date: N-02-12
+    type: micro_recette
+    nature: SALE
+    montant: "190"
+    moyen: cash
+    tiers: "Clients au comptoir"
+    libelle: "Ventes d'accessoires de la semaine"
+  - date: N-02-15
+    type: facture
+    client: CLI-LOCALOIRE
+    categorie: mixed
+    lignes: [{article: REVISION, quantite: 5}, {article: MO, quantite: 2}, {article: CHAMBRE, quantite: 6}]
+    reglement: {delai: 30, mode: encaissement, moyen: transfer}
+  - date: N-02-19
+    type: micro_recette
+    nature: SALE
+    montant: "200"
+    moyen: card
+    tiers: "Clients au comptoir"
+    libelle: "Ventes d'accessoires de la semaine"
+  - date: N-02-21
+    type: facture
+    client: CLI-LEGRAND
+    categorie: mixed
+    lignes: [{article: CREVAISON, quantite: 1}, {article: MO, quantite: 2}]
+    reglement: {delai: 3, mode: encaissement, moyen: transfer}
+  - date: N-02-26
+    type: micro_recette
+    nature: SALE
+    montant: "210"
+    moyen: cash
+    tiers: "Clients au comptoir"
+    libelle: "Ventes d'accessoires de la semaine"
+  - date: N-03-04
+    type: micro_achat
+    nature: goods
+    montant: "500"
+    moyen: transfer
+    fournisseur: FOU-DCO
+    tiers: "Distribution Cycles Ouest SAS"
+    libelle: "Pièces et accessoires"
+    reference: "DCO-{aa}{mm}-414"
+    copie:
+      enseigne: "DISTRIBUTION CYCLES OUEST"
+      adresse: "ZI DU BOIS DE BOUCHET 44800 SAINT-HERBLAIN"
+      numero: "DCO-{aa}{mm}{jj}"
+      libelle: "PIECES ET ACCESSOIRES"
+      taux: "20"
+      couleur: [46, 125, 50]
+  - date: N-03-05
+    type: micro_recette
+    nature: SALE
+    montant: "250"
+    moyen: card
+    tiers: "Clients au comptoir"
+    libelle: "Ventes d'accessoires de la semaine"
+  - date: N-03-07
+    type: micro_achat
+    nature: other
+    montant: "450"
+    moyen: transfer
+    tiers: "M. et Mme Chevalier (bailleurs)"
+    libelle: "Loyer de la boutique"
+  - date: N-03-09
+    type: facture
+    client: CLI-LEGRAND
+    categorie: mixed
+    lignes: [{article: REVISION, quantite: 1}, {article: PNEU, quantite: 2}, {article: CHAMBRE, quantite: 2}]
+    reglement: {delai: 0, mode: encaissement, moyen: card}
+  - date: N-03-12
+    type: micro_recette
+    nature: SALE
+    montant: "150"
+    moyen: cash
+    tiers: "Clients au comptoir"
+    libelle: "Ventes d'accessoires de la semaine"
+  - date: N-03-15
+    type: facture
+    client: CLI-LOCALOIRE
+    categorie: mixed
+    lignes: [{article: REVISION, quantite: 6}, {article: MO, quantite: 2}, {article: CHAMBRE, quantite: 6}]
+    reglement: {delai: 30, mode: encaissement, moyen: transfer}
+  - date: N-03-19
+    type: micro_recette
+    nature: SALE
+    montant: "160"
+    moyen: card
+    tiers: "Clients au comptoir"
+    libelle: "Ventes d'accessoires de la semaine"
+  - date: N-03-21
+    type: facture
+    client: CLI-DUPRE
+    categorie: mixed
+    lignes: [{article: CREVAISON, quantite: 1}, {article: MO, quantite: 1}]
+    reglement: {delai: 3, mode: encaissement, moyen: transfer}
+  - date: N-03-26
+    type: micro_recette
+    nature: SALE
+    montant: "170"
+    moyen: cash
+    tiers: "Clients au comptoir"
+    libelle: "Ventes d'accessoires de la semaine"
+  - date: N-04-04
+    type: micro_achat
+    nature: goods
+    montant: "320"
+    moyen: transfer
+    fournisseur: FOU-DCO
+    tiers: "Distribution Cycles Ouest SAS"
+    libelle: "Pièces et accessoires"
+    reference: "DCO-{aa}{mm}-415"
+    copie:
+      enseigne: "DISTRIBUTION CYCLES OUEST"
+      adresse: "ZI DU BOIS DE BOUCHET 44800 SAINT-HERBLAIN"
+      numero: "DCO-{aa}{mm}{jj}"
+      libelle: "PIECES ET ACCESSOIRES"
+      taux: "20"
+      couleur: [46, 125, 50]
+  - date: N-04-05
+    type: micro_recette
+    nature: SALE
+    montant: "210"
+    moyen: card
+    tiers: "Clients au comptoir"
+    libelle: "Ventes d'accessoires de la semaine"
+  - date: N-04-07
+    type: micro_achat
+    nature: other
+    montant: "450"
+    moyen: transfer
+    tiers: "M. et Mme Chevalier (bailleurs)"
+    libelle: "Loyer de la boutique"
+  - date: N-04-09
+    type: facture
+    client: CLI-DUPRE
+    categorie: mixed
+    lignes: [{article: REVISION, quantite: 1}, {article: PNEU, quantite: 2}, {article: CHAMBRE, quantite: 2}]
+    reglement: {delai: 0, mode: encaissement, moyen: card}
+  - date: N-04-12
+    type: micro_recette
+    nature: SALE
+    montant: "220"
+    moyen: cash
+    tiers: "Clients au comptoir"
+    libelle: "Ventes d'accessoires de la semaine"
+  - date: N-04-15
+    type: facture
+    client: CLI-LOCALOIRE
+    categorie: mixed
+    lignes: [{article: REVISION, quantite: 4}, {article: MO, quantite: 2}, {article: CHAMBRE, quantite: 6}]
+    reglement: {delai: 30, mode: encaissement, moyen: transfer}
+  - date: N-04-19
+    type: micro_recette
+    nature: SALE
+    montant: "230"
+    moyen: card
+    tiers: "Clients au comptoir"
+    libelle: "Ventes d'accessoires de la semaine"
+  - {date: N-04-20, type: urssaf_declaration, periode: N-01, paiement: true}
+  - date: N-04-21
+    type: facture
+    client: CLI-NGUYEN
+    categorie: mixed
+    lignes: [{article: CREVAISON, quantite: 1}, {article: MO, quantite: 2}]
+    reglement: {delai: 3, mode: encaissement, moyen: transfer}
+  - date: N-04-26
+    type: micro_recette
+    nature: SALE
+    montant: "240"
+    moyen: cash
+    tiers: "Clients au comptoir"
+    libelle: "Ventes d'accessoires de la semaine"
+  - date: N-05-04
+    type: micro_achat
+    nature: goods
+    montant: "365"
+    moyen: transfer
+    fournisseur: FOU-DCO
+    tiers: "Distribution Cycles Ouest SAS"
+    libelle: "Pièces et accessoires"
+    reference: "DCO-{aa}{mm}-416"
+    copie:
+      enseigne: "DISTRIBUTION CYCLES OUEST"
+      adresse: "ZI DU BOIS DE BOUCHET 44800 SAINT-HERBLAIN"
+      numero: "DCO-{aa}{mm}{jj}"
+      libelle: "PIECES ET ACCESSOIRES"
+      taux: "20"
+      couleur: [46, 125, 50]
+  - date: N-05-05
+    type: micro_recette
+    nature: SALE
+    montant: "170"
+    moyen: card
+    tiers: "Clients au comptoir"
+    libelle: "Ventes d'accessoires de la semaine"
+  - date: N-05-07
+    type: micro_achat
+    nature: other
+    montant: "450"
+    moyen: transfer
+    tiers: "M. et Mme Chevalier (bailleurs)"
+    libelle: "Loyer de la boutique"
+  - date: N-05-09
+    type: facture
+    client: CLI-NGUYEN
+    categorie: mixed
+    lignes: [{article: REVISION, quantite: 1}, {article: PNEU, quantite: 2}, {article: CHAMBRE, quantite: 2}]
+    reglement: {delai: 0, mode: encaissement, moyen: card}
+  - date: N-05-12
+    type: micro_recette
+    nature: SALE
+    montant: "180"
+    moyen: cash
+    tiers: "Clients au comptoir"
+    libelle: "Ventes d'accessoires de la semaine"
+  - date: N-05-15
+    type: facture
+    client: CLI-LOCALOIRE
+    categorie: mixed
+    lignes: [{article: REVISION, quantite: 5}, {article: MO, quantite: 2}, {article: CHAMBRE, quantite: 6}]
+    reglement: {delai: 30, mode: encaissement, moyen: transfer}
+  - date: N-05-19
+    type: micro_recette
+    nature: SALE
+    montant: "190"
+    moyen: card
+    tiers: "Clients au comptoir"
+    libelle: "Ventes d'accessoires de la semaine"
+  - date: N-05-21
+    type: facture
+    client: CLI-LEGRAND
+    categorie: mixed
+    lignes: [{article: CREVAISON, quantite: 1}, {article: MO, quantite: 1}]
+    reglement: {delai: 3, mode: encaissement, moyen: transfer}
+  - date: N-05-26
+    type: micro_recette
+    nature: SALE
+    montant: "200"
+    moyen: cash
+    tiers: "Clients au comptoir"
+    libelle: "Ventes d'accessoires de la semaine"
+  - date: N-06-04
+    type: micro_achat
+    nature: goods
+    montant: "410"
+    moyen: transfer
+    fournisseur: FOU-DCO
+    tiers: "Distribution Cycles Ouest SAS"
+    libelle: "Pièces et accessoires"
+    reference: "DCO-{aa}{mm}-417"
+    copie:
+      enseigne: "DISTRIBUTION CYCLES OUEST"
+      adresse: "ZI DU BOIS DE BOUCHET 44800 SAINT-HERBLAIN"
+      numero: "DCO-{aa}{mm}{jj}"
+      libelle: "PIECES ET ACCESSOIRES"
+      taux: "20"
+      couleur: [46, 125, 50]
+  - date: N-06-05
+    type: micro_recette
+    nature: SALE
+    montant: "240"
+    moyen: card
+    tiers: "Clients au comptoir"
+    libelle: "Ventes d'accessoires de la semaine"
+  - date: N-06-07
+    type: micro_achat
+    nature: other
+    montant: "450"
+    moyen: transfer
+    tiers: "M. et Mme Chevalier (bailleurs)"
+    libelle: "Loyer de la boutique"
+  - date: N-06-09
+    type: facture
+    client: CLI-LEGRAND
+    categorie: mixed
+    lignes: [{article: REVISION, quantite: 1}, {article: PNEU, quantite: 2}, {article: CHAMBRE, quantite: 2}]
+    reglement: {delai: 0, mode: encaissement, moyen: card}
+  - date: N-06-12
+    type: micro_recette
+    nature: SALE
+    montant: "250"
+    moyen: cash
+    tiers: "Clients au comptoir"
+    libelle: "Ventes d'accessoires de la semaine"
+  - date: N-06-15
+    type: facture
+    client: CLI-LOCALOIRE
+    categorie: mixed
+    lignes: [{article: REVISION, quantite: 6}, {article: MO, quantite: 2}, {article: CHAMBRE, quantite: 6}]
+    reglement: {delai: 30, mode: encaissement, moyen: transfer}
+  - date: N-06-19
+    type: micro_recette
+    nature: SALE
+    montant: "150"
+    moyen: card
+    tiers: "Clients au comptoir"
+    libelle: "Ventes d'accessoires de la semaine"
+  - date: N-06-21
+    type: facture
+    client: CLI-DUPRE
+    categorie: mixed
+    lignes: [{article: CREVAISON, quantite: 1}, {article: MO, quantite: 2}]
+    reglement: {delai: 3, mode: encaissement, moyen: transfer}
+  - date: N-06-26
+    type: micro_recette
+    nature: SALE
+    montant: "160"
+    moyen: cash
+    tiers: "Clients au comptoir"
+    libelle: "Ventes d'accessoires de la semaine"
+  - date: N-07-04
+    type: micro_achat
+    nature: goods
+    montant: "455"
+    moyen: transfer
+    fournisseur: FOU-DCO
+    tiers: "Distribution Cycles Ouest SAS"
+    libelle: "Pièces et accessoires"
+    reference: "DCO-{aa}{mm}-418"
+    copie:
+      enseigne: "DISTRIBUTION CYCLES OUEST"
+      adresse: "ZI DU BOIS DE BOUCHET 44800 SAINT-HERBLAIN"
+      numero: "DCO-{aa}{mm}{jj}"
+      libelle: "PIECES ET ACCESSOIRES"
+      taux: "20"
+      couleur: [46, 125, 50]
+  - date: N-07-05
+    type: micro_recette
+    nature: SALE
+    montant: "200"
+    moyen: card
+    tiers: "Clients au comptoir"
+    libelle: "Ventes d'accessoires de la semaine"
+  - date: N-07-07
+    type: micro_achat
+    nature: other
+    montant: "450"
+    moyen: transfer
+    tiers: "M. et Mme Chevalier (bailleurs)"
+    libelle: "Loyer de la boutique"
+  - date: N-07-09
+    type: facture
+    client: CLI-DUPRE
+    categorie: mixed
+    lignes: [{article: REVISION, quantite: 1}, {article: PNEU, quantite: 2}, {article: CHAMBRE, quantite: 2}]
+    reglement: {delai: 0, mode: encaissement, moyen: card}
+  - date: N-07-12
+    type: micro_recette
+    nature: SALE
+    montant: "210"
+    moyen: cash
+    tiers: "Clients au comptoir"
+    libelle: "Ventes d'accessoires de la semaine"
+  - date: N-07-15
+    type: facture
+    client: CLI-LOCALOIRE
+    categorie: mixed
+    lignes: [{article: REVISION, quantite: 4}, {article: MO, quantite: 2}, {article: CHAMBRE, quantite: 6}]
+    reglement: {delai: 30, mode: encaissement, moyen: transfer}
+  - date: N-07-19
+    type: micro_recette
+    nature: SALE
+    montant: "220"
+    moyen: card
+    tiers: "Clients au comptoir"
+    libelle: "Ventes d'accessoires de la semaine"
+  - {date: N-07-20, type: urssaf_declaration, periode: N-04, paiement: true}
+  - date: N-07-21
+    type: facture
+    client: CLI-NGUYEN
+    categorie: mixed
+    lignes: [{article: CREVAISON, quantite: 1}, {article: MO, quantite: 1}]
+    reglement: {delai: 3, mode: encaissement, moyen: transfer}
+  - date: N-07-26
+    type: micro_recette
+    nature: SALE
+    montant: "230"
+    moyen: cash
+    tiers: "Clients au comptoir"
+    libelle: "Ventes d'accessoires de la semaine"
+  - date: N-08-04
+    type: micro_achat
+    nature: goods
+    montant: "500"
+    moyen: transfer
+    fournisseur: FOU-DCO
+    tiers: "Distribution Cycles Ouest SAS"
+    libelle: "Pièces et accessoires"
+    reference: "DCO-{aa}{mm}-419"
+    copie:
+      enseigne: "DISTRIBUTION CYCLES OUEST"
+      adresse: "ZI DU BOIS DE BOUCHET 44800 SAINT-HERBLAIN"
+      numero: "DCO-{aa}{mm}{jj}"
+      libelle: "PIECES ET ACCESSOIRES"
+      taux: "20"
+      couleur: [46, 125, 50]
+  - date: N-08-05
+    type: micro_recette
+    nature: SALE
+    montant: "160"
+    moyen: card
+    tiers: "Clients au comptoir"
+    libelle: "Ventes d'accessoires de la semaine"
+  - date: N-08-07
+    type: micro_achat
+    nature: other
+    montant: "450"
+    moyen: transfer
+    tiers: "M. et Mme Chevalier (bailleurs)"
+    libelle: "Loyer de la boutique"
+  - date: N-08-09
+    type: facture
+    client: CLI-NGUYEN
+    categorie: mixed
+    lignes: [{article: REVISION, quantite: 1}, {article: PNEU, quantite: 2}, {article: CHAMBRE, quantite: 2}]
+    reglement: {delai: 0, mode: encaissement, moyen: card}
+  - date: N-08-12
+    type: micro_recette
+    nature: SALE
+    montant: "170"
+    moyen: cash
+    tiers: "Clients au comptoir"
+    libelle: "Ventes d'accessoires de la semaine"
+  - date: N-08-15
+    type: facture
+    client: CLI-LOCALOIRE
+    categorie: mixed
+    lignes: [{article: REVISION, quantite: 5}, {article: MO, quantite: 2}, {article: CHAMBRE, quantite: 6}]
+    reglement: {delai: 30, mode: encaissement, moyen: transfer}
+  - date: N-08-19
+    type: micro_recette
+    nature: SALE
+    montant: "180"
+    moyen: card
+    tiers: "Clients au comptoir"
+    libelle: "Ventes d'accessoires de la semaine"
+  - date: N-08-21
+    type: facture
+    client: CLI-LEGRAND
+    categorie: mixed
+    lignes: [{article: CREVAISON, quantite: 1}, {article: MO, quantite: 2}]
+    reglement: {delai: 3, mode: encaissement, moyen: transfer}
+  - date: N-08-26
+    type: micro_recette
+    nature: SALE
+    montant: "190"
+    moyen: cash
+    tiers: "Clients au comptoir"
+    libelle: "Ventes d'accessoires de la semaine"
+  - date: N-09-04
+    type: micro_achat
+    nature: goods
+    montant: "320"
+    moyen: transfer
+    fournisseur: FOU-DCO
+    tiers: "Distribution Cycles Ouest SAS"
+    libelle: "Pièces et accessoires"
+    reference: "DCO-{aa}{mm}-420"
+    copie:
+      enseigne: "DISTRIBUTION CYCLES OUEST"
+      adresse: "ZI DU BOIS DE BOUCHET 44800 SAINT-HERBLAIN"
+      numero: "DCO-{aa}{mm}{jj}"
+      libelle: "PIECES ET ACCESSOIRES"
+      taux: "20"
+      couleur: [46, 125, 50]
+  - date: N-09-05
+    type: micro_recette
+    nature: SALE
+    montant: "230"
+    moyen: card
+    tiers: "Clients au comptoir"
+    libelle: "Ventes d'accessoires de la semaine"
+  - date: N-09-07
+    type: micro_achat
+    nature: other
+    montant: "450"
+    moyen: transfer
+    tiers: "M. et Mme Chevalier (bailleurs)"
+    libelle: "Loyer de la boutique"
+  - date: N-09-09
+    type: facture
+    client: CLI-LEGRAND
+    categorie: mixed
+    lignes: [{article: REVISION, quantite: 1}, {article: PNEU, quantite: 2}, {article: CHAMBRE, quantite: 2}]
+    reglement: {delai: 0, mode: encaissement, moyen: card}
+  - date: N-09-12
+    type: micro_recette
+    nature: SALE
+    montant: "240"
+    moyen: cash
+    tiers: "Clients au comptoir"
+    libelle: "Ventes d'accessoires de la semaine"
+  - date: N-09-15
+    type: facture
+    client: CLI-LOCALOIRE
+    categorie: mixed
+    lignes: [{article: REVISION, quantite: 6}, {article: MO, quantite: 2}, {article: CHAMBRE, quantite: 6}]
+    reglement: {delai: 30, mode: encaissement, moyen: transfer}
+  - date: N-09-19
+    type: micro_recette
+    nature: SALE
+    montant: "250"
+    moyen: card
+    tiers: "Clients au comptoir"
+    libelle: "Ventes d'accessoires de la semaine"
+  - date: N-09-21
+    type: facture
+    client: CLI-DUPRE
+    categorie: mixed
+    lignes: [{article: CREVAISON, quantite: 1}, {article: MO, quantite: 1}]
+    reglement: {delai: 3, mode: encaissement, moyen: transfer}
+  - date: N-09-26
+    type: micro_recette
+    nature: SALE
+    montant: "150"
+    moyen: cash
+    tiers: "Clients au comptoir"
+    libelle: "Ventes d'accessoires de la semaine"
+  - date: N-10-04
+    type: micro_achat
+    nature: goods
+    montant: "365"
+    moyen: transfer
+    fournisseur: FOU-DCO
+    tiers: "Distribution Cycles Ouest SAS"
+    libelle: "Pièces et accessoires"
+    reference: "DCO-{aa}{mm}-421"
+    copie:
+      enseigne: "DISTRIBUTION CYCLES OUEST"
+      adresse: "ZI DU BOIS DE BOUCHET 44800 SAINT-HERBLAIN"
+      numero: "DCO-{aa}{mm}{jj}"
+      libelle: "PIECES ET ACCESSOIRES"
+      taux: "20"
+      couleur: [46, 125, 50]
+  - date: N-10-05
+    type: micro_recette
+    nature: SALE
+    montant: "190"
+    moyen: card
+    tiers: "Clients au comptoir"
+    libelle: "Ventes d'accessoires de la semaine"
+  - date: N-10-07
+    type: micro_achat
+    nature: other
+    montant: "450"
+    moyen: transfer
+    tiers: "M. et Mme Chevalier (bailleurs)"
+    libelle: "Loyer de la boutique"
+  - date: N-10-09
+    type: facture
+    client: CLI-DUPRE
+    categorie: mixed
+    lignes: [{article: REVISION, quantite: 1}, {article: PNEU, quantite: 2}, {article: CHAMBRE, quantite: 2}]
+    reglement: {delai: 0, mode: encaissement, moyen: card}
+  - date: N-10-12
+    type: micro_recette
+    nature: SALE
+    montant: "200"
+    moyen: cash
+    tiers: "Clients au comptoir"
+    libelle: "Ventes d'accessoires de la semaine"
+  - date: N-10-15
+    type: facture
+    client: CLI-LOCALOIRE
+    categorie: mixed
+    lignes: [{article: REVISION, quantite: 4}, {article: MO, quantite: 2}, {article: CHAMBRE, quantite: 6}]
+    reglement: {delai: 30, mode: encaissement, moyen: transfer}
+  - date: N-10-19
+    type: micro_recette
+    nature: SALE
+    montant: "210"
+    moyen: card
+    tiers: "Clients au comptoir"
+    libelle: "Ventes d'accessoires de la semaine"
+  - {date: N-10-20, type: urssaf_declaration, periode: N-07, paiement: true}
+  - date: N-10-21
+    type: facture
+    client: CLI-NGUYEN
+    categorie: mixed
+    lignes: [{article: CREVAISON, quantite: 1}, {article: MO, quantite: 2}]
+    reglement: {delai: 3, mode: encaissement, moyen: transfer}
+  - date: N-10-26
+    type: micro_recette
+    nature: SALE
+    montant: "220"
+    moyen: cash
+    tiers: "Clients au comptoir"
+    libelle: "Ventes d'accessoires de la semaine"
+  - date: N-11-04
+    type: micro_achat
+    nature: goods
+    montant: "410"
+    moyen: transfer
+    fournisseur: FOU-DCO
+    tiers: "Distribution Cycles Ouest SAS"
+    libelle: "Pièces et accessoires"
+    reference: "DCO-{aa}{mm}-422"
+    copie:
+      enseigne: "DISTRIBUTION CYCLES OUEST"
+      adresse: "ZI DU BOIS DE BOUCHET 44800 SAINT-HERBLAIN"
+      numero: "DCO-{aa}{mm}{jj}"
+      libelle: "PIECES ET ACCESSOIRES"
+      taux: "20"
+      couleur: [46, 125, 50]
+  - date: N-11-05
+    type: micro_recette
+    nature: SALE
+    montant: "150"
+    moyen: card
+    tiers: "Clients au comptoir"
+    libelle: "Ventes d'accessoires de la semaine"
+  - date: N-11-07
+    type: micro_achat
+    nature: other
+    montant: "450"
+    moyen: transfer
+    tiers: "M. et Mme Chevalier (bailleurs)"
+    libelle: "Loyer de la boutique"
+  - date: N-11-09
+    type: facture
+    client: CLI-NGUYEN
+    categorie: mixed
+    lignes: [{article: REVISION, quantite: 1}, {article: PNEU, quantite: 2}, {article: CHAMBRE, quantite: 2}]
+    reglement: {delai: 0, mode: encaissement, moyen: card}
+  - date: N-11-12
+    type: micro_recette
+    nature: SALE
+    montant: "160"
+    moyen: cash
+    tiers: "Clients au comptoir"
+    libelle: "Ventes d'accessoires de la semaine"
+  - date: N-11-15
+    type: facture
+    client: CLI-LOCALOIRE
+    categorie: mixed
+    lignes: [{article: REVISION, quantite: 5}, {article: MO, quantite: 2}, {article: CHAMBRE, quantite: 6}]
+    reglement: {delai: 30, mode: encaissement, moyen: transfer}
+  - date: N-11-19
+    type: micro_recette
+    nature: SALE
+    montant: "170"
+    moyen: card
+    tiers: "Clients au comptoir"
+    libelle: "Ventes d'accessoires de la semaine"
+  - date: N-11-21
+    type: facture
+    client: CLI-LEGRAND
+    categorie: mixed
+    lignes: [{article: CREVAISON, quantite: 1}, {article: MO, quantite: 1}]
+    reglement: {delai: 3, mode: encaissement, moyen: transfer}
+  - date: N-11-26
+    type: micro_recette
+    nature: SALE
+    montant: "180"
+    moyen: cash
+    tiers: "Clients au comptoir"
+    libelle: "Ventes d'accessoires de la semaine"
+  - date: N-12-04
+    type: micro_achat
+    nature: goods
+    montant: "455"
+    moyen: transfer
+    fournisseur: FOU-DCO
+    tiers: "Distribution Cycles Ouest SAS"
+    libelle: "Pièces et accessoires"
+    reference: "DCO-{aa}{mm}-423"
+    copie:
+      enseigne: "DISTRIBUTION CYCLES OUEST"
+      adresse: "ZI DU BOIS DE BOUCHET 44800 SAINT-HERBLAIN"
+      numero: "DCO-{aa}{mm}{jj}"
+      libelle: "PIECES ET ACCESSOIRES"
+      taux: "20"
+      couleur: [46, 125, 50]
+  - date: N-12-05
+    type: micro_recette
+    nature: SALE
+    montant: "220"
+    moyen: card
+    tiers: "Clients au comptoir"
+    libelle: "Ventes d'accessoires de la semaine"
+  - date: N-12-07
+    type: micro_achat
+    nature: other
+    montant: "450"
+    moyen: transfer
+    tiers: "M. et Mme Chevalier (bailleurs)"
+    libelle: "Loyer de la boutique"
+  - date: N-12-09
+    type: facture
+    client: CLI-LEGRAND
+    categorie: mixed
+    lignes: [{article: REVISION, quantite: 1}, {article: PNEU, quantite: 2}, {article: CHAMBRE, quantite: 2}]
+    reglement: {delai: 0, mode: encaissement, moyen: card}
+  - date: N-12-12
+    type: micro_recette
+    nature: SALE
+    montant: "230"
+    moyen: cash
+    tiers: "Clients au comptoir"
+    libelle: "Ventes d'accessoires de la semaine"
+  - date: N-12-15
+    type: facture
+    client: CLI-LOCALOIRE
+    categorie: mixed
+    lignes: [{article: REVISION, quantite: 6}, {article: MO, quantite: 2}, {article: CHAMBRE, quantite: 6}]
+    reglement: {delai: 30, mode: encaissement, moyen: transfer}
+  - date: N-12-19
+    type: micro_recette
+    nature: SALE
+    montant: "240"
+    moyen: card
+    tiers: "Clients au comptoir"
+    libelle: "Ventes d'accessoires de la semaine"
+  - date: N-12-21
+    type: facture
+    client: CLI-DUPRE
+    categorie: mixed
+    lignes: [{article: CREVAISON, quantite: 1}, {article: MO, quantite: 2}]
+    reglement: {delai: 3, mode: encaissement, moyen: transfer}
+  - date: N-12-26
+    type: micro_recette
+    nature: SALE
+    montant: "250"
+    moyen: cash
+    tiers: "Clients au comptoir"
+    libelle: "Ventes d'accessoires de la semaine"
+  - {date: N+1-01-20, type: urssaf_declaration, periode: N-10, paiement: true}
+fin:
+  - type: justificatif
+    fichier: "ticket-quincaillerie-du-centre.png"
+    source: photo
+    genre: ticket
+    nom_fournisseur: "QUINCAILLERIE DU CENTRE"
+    montant: "18.40"
+    image:
+      modele: ticket
+      enseigne: "QUINCAILLERIE DU CENTRE"
+      adresse: ANGERS
+      lignes: [{libelle: "Graisse et dégraissant", montant: "18.40"}]
+      tva: "0.00"
+      paiement: CARTE
+      couleur: [150, 60, 90]
+  - type: justificatif
+    fichier: "ticket-librairie-du-ralliement.png"
+    source: photo
+    genre: ticket
+    nom_fournisseur: "LIBRAIRIE DU RALLIEMENT"
+    montant: "6.90"
+    image:
+      modele: ticket
+      enseigne: "LIBRAIRIE DU RALLIEMENT"
+      adresse: ANGERS
+      lignes: [{libelle: "Carnet de reçus", montant: "6.90"}]
+      tva: "0.00"
+      paiement: CARTE
+      couleur: [150, 60, 90]

@@ -1,0 +1,77 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# Référentiel du dossier « micro » : articles (nature micro), clients, fournisseur.
+format: 1
+tiers:
+  - code: CLI-DUPRE
+    categorie: client
+    nom: "Laure Dupré"
+    nature: individual
+    courriel: "laure.dupre@exemple.test"
+    adresse: {ligne1: "4 rue Plantagenêt", code_postal: "49000", ville: Angers, pays: FR}
+  - code: CLI-NGUYEN
+    categorie: client
+    nom: "Minh Nguyen"
+    nature: individual
+    courriel: "minh.nguyen@exemple.test"
+    adresse: {ligne1: "18 boulevard Foch", code_postal: "49000", ville: Angers, pays: FR}
+  - code: CLI-LEGRAND
+    categorie: client
+    nom: "Bastien Legrand"
+    nature: individual
+    adresse: {ligne1: "7 place du Ralliement", code_postal: "49000", ville: Angers, pays: FR}
+  - code: CLI-LOCALOIRE
+    categorie: client
+    nom: "Loire Vélo Location SARL"
+    nature: business
+    siren: "852630144"
+    courriel: "atelier@loire-velo-location.test"
+    adresse: {ligne1: "Quai Ligny", code_postal: "49000", ville: Angers, pays: FR}
+  - code: FOU-DCO
+    categorie: fournisseur
+    nom: "Distribution Cycles Ouest SAS"
+    siren: "895317428"
+    courriel: "commandes@dco.test"
+    adresse: {ligne1: "ZI du Bois de Bouchet", code_postal: "44800", ville: Saint-Herblain, pays: FR}
+articles:
+  - code: REVISION
+    categorie: vente
+    nom: "Révision complète d'un vélo"
+    unite: C62
+    prix_vente: "70"
+    taux: FRANC
+    nature_micro: SERVICE
+  - code: CREVAISON
+    categorie: vente
+    nom: "Réparation de crevaison"
+    unite: C62
+    prix_vente: "20"
+    taux: FRANC
+    nature_micro: SERVICE
+  - code: MO
+    categorie: vente
+    nom: "Main-d'œuvre atelier (heure)"
+    unite: HUR
+    prix_vente: "40"
+    taux: FRANC
+    nature_micro: SERVICE
+  - code: CHAMBRE
+    categorie: vente
+    nom: "Chambre à air"
+    unite: C62
+    prix_vente: "10"
+    taux: FRANC
+    nature_micro: SALE
+  - code: PNEU
+    categorie: vente
+    nom: "Pneu route 700 × 28"
+    unite: C62
+    prix_vente: "30"
+    taux: FRANC
+    nature_micro: SALE
+  - code: ANTIVOL
+    categorie: vente
+    nom: "Antivol en U"
+    unite: C62
+    prix_vente: "40"
+    taux: FRANC
+    nature_micro: SALE

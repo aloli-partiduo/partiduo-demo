@@ -1,0 +1,260 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# Opérations datées du dossier « foyer » : situation d'ouverture, relevés du
+# compte courant importés chaque mois (fichiers de releves/, années
+# écrites {N-1} et {N}), intérêts de fin d'année, budget de l'année N.
+# Format : doc/format-dossiers.adoc.
+format: 1
+operations:
+  - date: N-1-01-01
+    type: ecriture
+    journal: divers
+    libelle: "Situation patrimoniale au 1er janvier"
+    piece: "OUV-{aaaa}"
+    lignes:
+      - {compte: "213", debit: "245000.00"}
+      - {compte: "512001", debit: "1850.00"}
+      - {compte: "514001", debit: "12400.00"}
+      - {compte: "2711", debit: "31500.00"}
+      - {compte: "164", credit: "168000.00"}
+      - {compte: "10", credit: "122750.00"}
+  - date: N-1-02-02
+    type: import_releve
+    journal: banque
+    fichier: "releves/courant-n-1-01.csv"
+    format: "Banque du Val de Loire"
+    transferer: true
+    pointage: {reference: "Relevé 01/{N-1}", solde_debut: "1850.00", solde_fin: "2948.67"}
+  - date: N-1-03-02
+    type: import_releve
+    journal: banque
+    fichier: "releves/courant-n-1-02.csv"
+    format: "Banque du Val de Loire"
+    transferer: true
+    pointage: {reference: "Relevé 02/{N-1}", solde_debut: "2948.67", solde_fin: "3997.70"}
+  - date: N-1-04-02
+    type: import_releve
+    journal: banque
+    fichier: "releves/courant-n-1-03.csv"
+    format: "Banque du Val de Loire"
+    transferer: true
+    pointage: {reference: "Relevé 03/{N-1}", solde_debut: "3997.70", solde_fin: "4943.39"}
+  - date: N-1-05-02
+    type: import_releve
+    journal: banque
+    fichier: "releves/courant-n-1-04.csv"
+    format: "Banque du Val de Loire"
+    transferer: true
+    pointage: {reference: "Relevé 04/{N-1}", solde_debut: "4943.39", solde_fin: "5806.54"}
+  - date: N-1-06-02
+    type: import_releve
+    journal: banque
+    fichier: "releves/courant-n-1-05.csv"
+    format: "Banque du Val de Loire"
+    transferer: true
+    pointage: {reference: "Relevé 05/{N-1}", solde_debut: "5806.54", solde_fin: "6807.05"}
+  - date: N-1-07-02
+    type: import_releve
+    journal: banque
+    fichier: "releves/courant-n-1-06.csv"
+    format: "Banque du Val de Loire"
+    transferer: true
+    pointage: {reference: "Relevé 06/{N-1}", solde_debut: "6807.05", solde_fin: "7890.22"}
+  - date: N-1-08-02
+    type: import_releve
+    journal: banque
+    fichier: "releves/courant-n-1-07.csv"
+    format: "Banque du Val de Loire"
+    transferer: true
+    pointage: {reference: "Relevé 07/{N-1}", solde_debut: "7890.22", solde_fin: "7956.25"}
+  - date: N-1-09-02
+    type: import_releve
+    journal: banque
+    fichier: "releves/courant-n-1-08.csv"
+    format: "Banque du Val de Loire"
+    transferer: true
+    pointage: {reference: "Relevé 08/{N-1}", solde_debut: "7956.25", solde_fin: "9423.44"}
+  - date: N-1-10-02
+    type: import_releve
+    journal: banque
+    fichier: "releves/courant-n-1-09.csv"
+    format: "Banque du Val de Loire"
+    transferer: true
+    pointage: {reference: "Relevé 09/{N-1}", solde_debut: "9423.44", solde_fin: "9883.09"}
+  - date: N-1-11-02
+    type: import_releve
+    journal: banque
+    fichier: "releves/courant-n-1-10.csv"
+    format: "Banque du Val de Loire"
+    transferer: true
+    pointage: {reference: "Relevé 10/{N-1}", solde_debut: "9883.09", solde_fin: "9406.20"}
+  - date: N-1-12-02
+    type: import_releve
+    journal: banque
+    fichier: "releves/courant-n-1-11.csv"
+    format: "Banque du Val de Loire"
+    transferer: true
+    pointage: {reference: "Relevé 11/{N-1}", solde_debut: "9406.20", solde_fin: "10360.37"}
+  - date: N-1-12-31
+    type: ecriture
+    journal: divers
+    libelle: "Intérêts d'emprunt de l'année {aaaa}"
+    piece: "INT-{aaaa}"
+    lignes: [{compte: "6101", debit: "3240.00"}, {compte: "164", credit: "3240.00"}]
+  - date: N-1-12-31
+    type: ecriture
+    journal: divers
+    libelle: "Intérêts du livret A {aaaa}"
+    piece: "LIV-{aaaa}"
+    lignes: [{compte: "514001", debit: "371.20"}, {compte: "704", credit: "371.20"}]
+  - date: N-1-12-31
+    type: ecriture
+    journal: divers
+    libelle: "Revalorisation de l'assurance-vie {aaaa}"
+    piece: "AV-{aaaa}"
+    lignes: [{compte: "2711", debit: "832.40"}, {compte: "704", credit: "832.40"}]
+  - date: N-01-02
+    type: import_releve
+    journal: banque
+    fichier: "releves/courant-n-1-12.csv"
+    format: "Banque du Val de Loire"
+    transferer: true
+    pointage: {reference: "Relevé 12/{N-1}", solde_debut: "10360.37", solde_fin: "12340.50"}
+  - date: N-01-05
+    type: prevision
+    nom: "Budget du foyer {aaaa}"
+    debut: N-01
+    fin: N-12
+    categories:
+      - libelle: Logement
+        elements:
+          - {libelle: "Échéance du prêt immobilier", formule: "[164]", montant: "1120"}
+          - {libelle: "Énergie", formule: "[6103]", montant: "115"}
+          - {libelle: Eau, formule: "[6104]", montant: "40"}
+          - {libelle: "Assurance habitation", formule: "[6105]", montant: "42"}
+          - {libelle: "Travaux et entretien", formule: "[6106]", montant: "40"}
+      - libelle: "Vie courante"
+        elements:
+          - {libelle: Alimentation, formule: "[62]", montant: "700"}
+          - {libelle: "Santé", formule: "[64]", montant: "45"}
+          - {libelle: "Enfants et scolarité", formule: "[65]", montant: "85"}
+          - {libelle: "Garde d'enfants", formule: "[602]", montant: "220"}
+          - {libelle: Communication, formule: "[68]", montant: "65"}
+          - {libelle: Habillement, formule: "[67]", montant: "40"}
+      - libelle: Transport
+        elements:
+          - {libelle: Carburant, formule: "[6301]", montant: "130"}
+          - {libelle: "Entretien du véhicule", formule: "[6302]", montant: "50"}
+          - {libelle: "Assurance automobile", formule: "[6303]", montant: "53"}
+          - {libelle: "Transports en commun", formule: "[6304]", montant: "31"}
+      - libelle: "Loisirs et vacances"
+        elements: [{libelle: "Sorties, cadeaux et vacances", formule: "[66]", montant: "220"}]
+      - libelle: "Épargne"
+        elements:
+          - {libelle: "Livret A", formule: "[514001]", montant: "600"}
+          - {libelle: Assurance-vie, formule: "[2711]", montant: "250"}
+      - libelle: Recettes
+        elements:
+          - {libelle: Salaires, formule: "[701]", montant: "4530"}
+          - {libelle: "Allocations familiales", formule: "[705]", montant: "148.52"}
+  - date: N-02-02
+    type: import_releve
+    journal: banque
+    fichier: "releves/courant-n-01.csv"
+    format: "Banque du Val de Loire"
+    transferer: true
+    pointage: {reference: "Relevé 01/{N}", solde_debut: "12340.50", solde_fin: "13466.09"}
+  - date: N-03-02
+    type: import_releve
+    journal: banque
+    fichier: "releves/courant-n-02.csv"
+    format: "Banque du Val de Loire"
+    transferer: true
+    pointage: {reference: "Relevé 02/{N}", solde_debut: "13466.09", solde_fin: "14447.04"}
+  - date: N-04-02
+    type: import_releve
+    journal: banque
+    fichier: "releves/courant-n-03.csv"
+    format: "Banque du Val de Loire"
+    transferer: true
+    pointage: {reference: "Relevé 03/{N}", solde_debut: "14447.04", solde_fin: "15431.65"}
+  - date: N-05-02
+    type: import_releve
+    journal: banque
+    fichier: "releves/courant-n-04.csv"
+    format: "Banque du Val de Loire"
+    transferer: true
+    pointage: {reference: "Relevé 04/{N}", solde_debut: "15431.65", solde_fin: "16303.72"}
+  - date: N-06-02
+    type: import_releve
+    journal: banque
+    fichier: "releves/courant-n-05.csv"
+    format: "Banque du Val de Loire"
+    transferer: true
+    pointage: {reference: "Relevé 05/{N}", solde_debut: "16303.72", solde_fin: "17357.15"}
+  - date: N-07-02
+    type: import_releve
+    journal: banque
+    fichier: "releves/courant-n-06.csv"
+    format: "Banque du Val de Loire"
+    transferer: true
+    pointage: {reference: "Relevé 06/{N}", solde_debut: "17357.15", solde_fin: "18475.24"}
+  - date: N-08-02
+    type: import_releve
+    journal: banque
+    fichier: "releves/courant-n-07.csv"
+    format: "Banque du Val de Loire"
+    transferer: true
+    pointage: {reference: "Relevé 07/{N}", solde_debut: "18475.24", solde_fin: "18510.19"}
+  - date: N-09-02
+    type: import_releve
+    journal: banque
+    fichier: "releves/courant-n-08.csv"
+    format: "Banque du Val de Loire"
+    transferer: true
+    pointage: {reference: "Relevé 08/{N}", solde_debut: "18510.19", solde_fin: "20021.30"}
+  - date: N-10-02
+    type: import_releve
+    journal: banque
+    fichier: "releves/courant-n-09.csv"
+    format: "Banque du Val de Loire"
+    transferer: true
+    pointage: {reference: "Relevé 09/{N}", solde_debut: "20021.30", solde_fin: "20389.87"}
+  - date: N-11-02
+    type: import_releve
+    journal: banque
+    fichier: "releves/courant-n-10.csv"
+    format: "Banque du Val de Loire"
+    transferer: true
+    pointage: {reference: "Relevé 10/{N}", solde_debut: "20389.87", solde_fin: "20001.90"}
+  - date: N-12-02
+    type: import_releve
+    journal: banque
+    fichier: "releves/courant-n-11.csv"
+    format: "Banque du Val de Loire"
+    transferer: true
+    pointage: {reference: "Relevé 11/{N}", solde_debut: "20001.90", solde_fin: "21029.99"}
+  - date: N-12-31
+    type: ecriture
+    journal: divers
+    libelle: "Intérêts d'emprunt de l'année {aaaa}"
+    piece: "INT-{aaaa}"
+    lignes: [{compte: "6101", debit: "3240.00"}, {compte: "164", credit: "3240.00"}]
+  - date: N-12-31
+    type: ecriture
+    journal: divers
+    libelle: "Intérêts du livret A {aaaa}"
+    piece: "LIV-{aaaa}"
+    lignes: [{compte: "514001", debit: "371.20"}, {compte: "704", credit: "371.20"}]
+  - date: N-12-31
+    type: ecriture
+    journal: divers
+    libelle: "Revalorisation de l'assurance-vie {aaaa}"
+    piece: "AV-{aaaa}"
+    lignes: [{compte: "2711", debit: "832.40"}, {compte: "704", credit: "832.40"}]
+  - date: N+1-01-02
+    type: import_releve
+    journal: banque
+    fichier: "releves/courant-n-12.csv"
+    format: "Banque du Val de Loire"
+    transferer: true
+    pointage: {reference: "Relevé 12/{N}", solde_debut: "21029.99", solde_fin: "22978.04"}

@@ -1,0 +1,32 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# Dossier « liberal » : Camille Rivière, masseur-kinésithérapeute (profession libérale fictive).
+format: 1
+code: liberal
+profil: liberal
+type: company
+description: "Masseur-kinésithérapeute à Blois (BNC, 2035), non assujettie à la TVA"
+societe:
+  nom: "Camille Rivière, masseur-kinésithérapeute"
+  forme_juridique: EI
+  siren: "903 728 160"
+  rue: "avenue de la Loire"
+  numero: "18"
+  code_postal: "41000"
+  ville: Blois
+  pays: FR
+  telephone: "02 54 00 00 00"
+  courriel: "cabinet@riviere-kine.test"
+  regime: fr
+  langue: fr
+modules: [liberal, accounting]
+extensions: [teledec, document]
+exercices: [N-1, "N"]
+utilisateurs:
+  - {email: "camille@liberal.demo.test", prenom: Camille, nom: "Rivière", profil: ADMIN, role: member}
+parcours:
+  - "Tableau de bord simplifié de la profession libérale"
+  - "Recettes et dépenses ventilées par rubrique de la 2035 (part privée du véhicule), livre-journal"
+  - "Immobilisations et amortissements (table de massage, ordinateur), 2035-A et 2035-B, édition PDF"
+  - "TELEDEC simulé (/ext/TELEDEC/) : liasse BNC de l'exercice précédent transmise et accusée"
+  - "Exercice précédent clôturé puis verrouillé par la transmission de sa 2035 (cadenas, plus de « Rouvrir l'exercice ») ; exercice en cours ouvert : « Clôturer l'exercice », puis « Rouvrir l'exercice » (livre-journal, recettes, dépenses, 2035)"
+  - "Préférences de chaque utilisateur (menu de l'utilisateur) : « Recettes et dépenses » ou « Comptabilité », gardée d'une session à l'autre"

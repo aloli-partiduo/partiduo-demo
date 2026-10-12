@@ -1,0 +1,24 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# Paramètres des modules et des extensions du dossier « atelier ».
+# Services externes simulés : aucun identifiant ici, les simulateurs de la distribution fournissent les leurs.
+format: 1
+comptabilite:
+  journal_achats: {compte_defaut: "601"}
+facturation:
+  tva_sur_debits: true
+  iban: FR7630006000011234567890189
+  bic: AGRIFRPP
+  courriel_expediteur: "facturation@menuiserie-lambert.test"
+  nom_expediteur: "Menuiserie Lambert & Fils"
+  taux_penalites: "12.5"
+  categorie_operation: mixed
+  envoi_automatique: true
+analytique: {ventilation_ventes: true}
+einv: {plateforme: simulee, profil: AFNOR}
+choruspro: {plateforme: simulee}
+teledec:
+  plateforme: simulee
+  regime: is_rsi
+  tva: ca3_monthly
+  courriel: "compta@menuiserie-lambert.test"
+  siret: "84731562900018"

@@ -1,0 +1,11 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# Paramètres du dossier « micro ». URSSAF simulée : aucun identifiant ici.
+format: 1
+micro: {periodicite: quarterly, debut_activite: "2021-03-01", nature_defaut: SERVICE}
+facturation:
+  iban: FR7630006000011234567890189
+  bic: AGRIFRPP
+  courriel_expediteur: "contact@cycles-perrot.test"
+  nom_expediteur: "Cycles Perrot"
+  delai_paiement: 15
+urssaf: {plateforme: simulee}

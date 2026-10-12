@@ -1,0 +1,216 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# Relation client du dossier « atelier » (extension CRM) : organisations, contacts,
+# opportunités à toutes les étapes, activités en retard, du jour et à venir.
+format: 1
+organisations:
+  - ref: moulin
+    nom: "Gîte du Moulin de Rochecorbon"
+    nature: business
+    ville: Rochecorbon
+    pays: FR
+    origine: website
+    responsable: "commercial@atelier.demo.test"
+  - ref: chauvin
+    nom: "Domaine Chauvin"
+    nature: business
+    ville: Vouvray
+    pays: FR
+    origine: fair
+    responsable: "gerante@atelier.demo.test"
+  - ref: halles
+    nom: "Pharmacie des Halles"
+    nature: business
+    ville: Tours
+    pays: FR
+    origine: referral
+    responsable: "commercial@atelier.demo.test"
+  - ref: ccvb
+    nom: "Communauté de communes du Val de Brenne"
+    nature: public
+    ville: "Château-Renault"
+    pays: FR
+    origine: prospecting
+    responsable: "gerante@atelier.demo.test"
+  - ref: lefort
+    nom: "Julie Lefort"
+    nature: individual
+    ville: Montlouis-sur-Loire
+    pays: FR
+    origine: website
+    responsable: "commercial@atelier.demo.test"
+  - ref: creche
+    nom: "Crèche Les Petits Copeaux"
+    nature: business
+    ville: Tours
+    pays: FR
+    origine: network
+    responsable: "commercial@atelier.demo.test"
+  - ref: brasser
+    nom: "Brasserie de la Loire"
+    nature: business
+    ville: Amboise
+    pays: FR
+    origine: fair
+    responsable: "gerante@atelier.demo.test"
+contacts:
+  - ref: roux
+    organisation: moulin
+    civilite: ms
+    prenom: Anne
+    nom: Roux
+    fonction: "Gérante"
+    courriel: "anne.roux@gite-moulin.test"
+    base_legale: legitimate_interest
+    origine: fair
+  - ref: chauvin
+    organisation: chauvin
+    civilite: mr
+    prenom: Pierre
+    nom: Chauvin
+    fonction: Vigneron
+    courriel: "pierre@domaine-chauvin.test"
+    base_legale: legitimate_interest
+    origine: fair
+  - ref: halles
+    organisation: halles
+    civilite: ms
+    prenom: Nadia
+    nom: Benali
+    fonction: "Pharmacienne titulaire"
+    courriel: "n.benali@pharmacie-halles.test"
+    base_legale: legitimate_interest
+    origine: fair
+  - ref: ccvb
+    organisation: ccvb
+    civilite: mr
+    prenom: Olivier
+    nom: Perrin
+    fonction: "Directeur des services techniques"
+    courriel: "o.perrin@ccvb.test"
+    base_legale: legitimate_interest
+    origine: fair
+  - ref: creche
+    organisation: creche
+    civilite: ms
+    prenom: Lucie
+    nom: Fabre
+    fonction: Directrice
+    courriel: "direction@petits-copeaux.test"
+    base_legale: legitimate_interest
+    origine: fair
+  - ref: brasser
+    organisation: brasser
+    civilite: mr
+    prenom: Hugo
+    nom: Masson
+    fonction: "Associé"
+    courriel: "hugo@brasserie-loire.test"
+    base_legale: legitimate_interest
+    origine: fair
+  - ref: lefort
+    organisation: lefort
+    prenom: Julie
+    nom: Lefort
+    courriel: "julie.lefort@exemple.test"
+    base_legale: consent
+    opposition: "Ne souhaite plus recevoir d'offres (courriel du client)"
+opportunites:
+  - titre: "Agencement des chambres d'hôtes"
+    organisation: moulin
+    contact: roux
+    montant: "18500"
+    etape: discovery
+    responsable: "commercial@atelier.demo.test"
+    cloture_prevue: J+75
+    origine: fair
+  - titre: "Mobilier de la salle du conseil"
+    organisation: ccvb
+    contact: ccvb
+    montant: "32000"
+    etape: discovery
+    responsable: "gerante@atelier.demo.test"
+    cloture_prevue: J+120
+    origine: fair
+  - titre: "Comptoir et rayonnages"
+    organisation: halles
+    ref: comptoir
+    contact: halles
+    montant: "14200"
+    etape: qualification
+    responsable: "commercial@atelier.demo.test"
+    cloture_prevue: J+40
+    origine: fair
+  - titre: "Chai de dégustation en chêne"
+    organisation: chauvin
+    ref: chai
+    contact: chauvin
+    montant: "21800"
+    etape: discovery
+    responsable: "gerante@atelier.demo.test"
+    cloture_prevue: J+30
+    origine: fair
+    devis: true
+  - titre: "Coin lecture et rangements"
+    organisation: creche
+    contact: creche
+    montant: "6900"
+    etape: negotiation
+    responsable: "commercial@atelier.demo.test"
+    cloture_prevue: J+10
+    origine: fair
+  - titre: "Bibliothèque sous escalier"
+    organisation: lefort
+    montant: "4300"
+    etape: proposal
+    responsable: "commercial@atelier.demo.test"
+    cloture_prevue: J+18
+    origine: fair
+  - titre: "Bar et étagères à fûts"
+    organisation: brasser
+    ref: bar
+    contact: brasser
+    montant: "9600"
+    etape: won
+    responsable: "gerante@atelier.demo.test"
+    cloture_prevue: J-6
+    origine: fair
+  - titre: "Tables de la terrasse"
+    organisation: moulin
+    contact: roux
+    montant: "5200"
+    etape: lost
+    responsable: "commercial@atelier.demo.test"
+    cloture_prevue: J-12
+    origine: fair
+    perte: {motif: competitor, commentaire: "Concurrent moins cher de 12 %"}
+activites:
+  - genre: call
+    objet: "Rappeler Pierre Chauvin au sujet du devis du chai"
+    echeance: J-2
+    responsable: "gerante@atelier.demo.test"
+    opportunite: chai
+  - genre: email
+    objet: "Envoyer des photos de réalisations en pharmacie"
+    echeance: J
+    responsable: "commercial@atelier.demo.test"
+    opportunite: comptoir
+  - genre: meeting
+    objet: "Relevé de cotes au gîte"
+    echeance: J+4
+    responsable: "commercial@atelier.demo.test"
+    organisation: moulin
+  - genre: task
+    objet: "Chiffrer le mobilier de la salle du conseil"
+    echeance: J-1
+    responsable: "gerante@atelier.demo.test"
+    organisation: ccvb
+  - genre: note
+    objet: "Préfère être contactée le mardi"
+    echeance: J
+    responsable: "commercial@atelier.demo.test"
+    organisation: creche
+  - genre: meeting
+    objet: "Présentation des essences de bois à la brasserie"
+    echeance: J+9
+    responsable: "gerante@atelier.demo.test"
+    opportunite: bar

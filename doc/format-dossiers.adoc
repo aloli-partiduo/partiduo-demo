@@ -1,0 +1,263 @@
+= Format des dossiers de démonstration
+:toc: left
+:toc-title: Table des matières
+:toclevels: 3
+:icons: font
+
+Format *1* (12 octobre 2026). Chaque dossier de démonstration est un
+répertoire `dossiers/<code>/` de fichiers de données déclaratifs, en YAML.
+Ils sont :
+
+* *chargés* par la distribution (`partiduo-dist`) : `partiduo-manage demo
+  charger --dossier=<code> --source=<répertoire>`, qui les joue par le
+  contrat `Partiduo::Api` et celui des extensions, jamais par SQL, dans une
+  base dont le nom contient « demo » ;
+* *vérifiés* par la distribution : `partiduo-manage demo verifier`, qui
+  compare les grands totaux du dossier chargé aux résultats attendus ;
+* *validés* sans Partiduo par `bin/partiduo-demo-valider` (ce dépôt) :
+  schéma, références, équilibres, cohérence des résultats attendus, aucun
+  identifiant ni secret.
+
+Le format est versionné : chaque fichier commence par `format: 1`. Une clé
+inconnue est refusée par le chargeur comme par le validateur.
+
+== Règles communes
+
+Montants::
+Toujours des *chaînes décimales* entre guillemets, point décimal, quatre
+décimales au plus : `"1234.50"`, `"-2640"`, `"12.5"` (taux en %). Jamais de
+flottant : `1234.5` sans guillemets est refusé.
+
+Quantités::
+Entier (`3`, `-10`) ou chaîne décimale (`"2.5"`).
+
+Dates::
+Relatives au *jour du chargement*, résolues au chargement :
++
+[cols="1,3",options="header"]
+|===
+|Écriture |Sens
+
+|`N-1-03-06` |6 mars de l'année précédente (`N` : année du chargement ; `N+1`…)
+|`N-02-31` |jour ramené à la fin du mois (28 ou 29 février)
+|`M-2-04` |4 du mois situé deux mois avant celui du chargement
+|`J`, `J-2`, `J+75` |jour du chargement, décalé en jours
+|`"2021-03-01"` |date absolue, entre guillemets
+|`N-1-03-28+17j` |suffixe : décalage en jours
+|===
++
+Périodes (mois) : `N-1-03`, `"2026-03"`. Années : `N`, `N-1`, `"2026"`.
+
+Jetons dans les textes::
+`{aaaa}`, `{aa}`, `{mm}`, `{jj}` : date de l'opération (`"LOYER-{aaaa}-{mm}"`) ;
+`{N}`, `{N-1}` : années ; `{periode}` : période d'une déclaration de TVA
+(`MM/AAAA`). Les relevés importés écrivent leurs années `{N-1}` et `{N}`.
+
+Identifiants et secrets::
+*Aucun* dans les fichiers : les mots de passe des utilisateurs sont générés
+au chargement (`scripts/demo` les écrit dans `demo-identifiants.txt`, non
+versionné) ; les services externes sont toujours simulés et apportent leurs
+propres identifiants de test. Le validateur refuse toute clé `password`,
+`secret`, `token`, `identifiant`… et toute valeur qui ressemble à un
+secret. Les adresses électroniques sont fictives, dans le domaine réservé
+`.test`.
+
+Fiction::
+Entreprises, personnes, adresses, SIREN et montants sont inventés ; SIREN et
+SIRET ont une clé de Luhn valide.
+
+== Fichiers d'un dossier
+
+[cols="1,3",options="header"]
+|===
+|Fichier |Contenu
+
+|`dossier.yml` |société et réglages, type de dossier, modules et extensions, exercices, utilisateurs, parcours conseillé
+|`referentiel.yml` |plan comptable propre, taux de TVA, tiers et fiches, articles, analytique, dépôts de stock
+|`parametres.yml` |paramètres des modules et des extensions activés
+|`operations.yml` |opérations datées, opérations relatives au mois du chargement, opérations de fin
+|`attendus.yml` |résultats attendus (grands totaux) vérifiés après chargement
+|autres |fichiers cités : `crm.yml` (relation client), `releves/*.csv` (relevés bancaires)
+|===
+
+=== dossier.yml
+
+[source,yaml]
+----
+format: 1
+code: atelier                 # = nom du répertoire, sous-domaine <code>.partiduo.localhost
+profil: entreprise            # entreprise, micro, liberal ou foyer
+type: company                 # type de dossier (ADR-011 A3) : company ou household
+description: "…"
+societe: {nom: "…", forme_juridique: SARL, capital: "20000", siren: "847 315 629", tva: FR13847315629,
+          rue: "…", numero: "14", code_postal: "37100", ville: Tours, pays: FR, courriel: "…@….test",
+          regime: fr, langue: fr}
+modules: [accounting, invoicing, analytic, stock, followup]
+extensions: [document, einv, teledec, crm, modeles, choruspro]
+exercices: [N-1, N]           # exercices créés avant les opérations
+utilisateurs:                 # le premier porte les opérations ; mots de passe générés au chargement
+  - {email: gerante@atelier.demo.test, prenom: Sophie, nom: Lambert, profil: ADMIN, role: member}
+parcours: ["…"]               # ce qu'on peut essayer, affiché par scripts/demo
+----
+
+Un dossier `household` (foyer) n'admet aucun module d'entreprise
+(`invoicing`, `micro`, `liberal`, `stock`, `followup`, `analytic`) et exige
+`accounting` ; il reçoit le plan réduit d'un foyer au provisionnement.
+
+=== referentiel.yml
+
+[source,yaml]
+----
+format: 1
+comptes:      [{numero: "601", libelle: "…", parent: "60"}]      # plan propre, en plus du plan chargé
+taux_tva:     [{code: HC, libelle: "…", taux: "0", categorie: O, exoneration_code: VATEX-EU-O, exoneration_motif: "…"}]
+tiers:
+  - {code: CLI-MOREAU, categorie: client, nom: "…", nature: individual, courriel: "…", adresse: {ligne1: "…", code_postal: "…", ville: "…"}}
+  - {code: CLI-DECOVAL, categorie: client, …, facturation: {rythme: monthly, encours_max: "4200"}}
+  - {code: FOU-GARNIER, categorie: fournisseur, nature: individual, personne: {nom: Garnier, prenoms: Hélène, naissance: "1984-05-17"}}
+articles:
+  - {code: ETAG, categorie: vente, nom: "…", unite: C62, prix_vente: "145", taux: NOR, compte: "701", stock: true, poste: MOBILIER}
+  - {code: REVISION, categorie: vente, …, taux: FRANC, nature_micro: SERVICE}
+analytique:
+  plans: [{nom: Activités, postes: [{code: MOBILIER, description: "…"}]}]
+  cles:  [{nom: "…", journaux: [achats], repartition: [{pourcentage: "50", postes: [MOBILIER]}]}]
+stock:
+  depots: [{nom: "Atelier de Tours", adresse: "…", ville: Tours, defaut: true}]
+----
+
+Taux de TVA du socle utilisables sans les déclarer : `NOR` (20 %), `INT`,
+`TR55`, `TP021`, `FRANC` (franchise en base)… Un client `public` doté d'un
+SIRET est une structure du Chorus Pro simulé.
+
+=== parametres.yml
+
+[source,yaml]
+----
+format: 1
+comptabilite: {journal_achats: {compte_defaut: "601"}}
+facturation:  {tva_sur_debits: true, iban: "…", bic: "…", courriel_expediteur: "…", nom_expediteur: "…",
+               taux_penalites: "12.5", categorie_operation: mixed, delai_paiement: 15, envoi_automatique: true}
+analytique:   {ventilation_ventes: true}       # ventes ventilées selon le poste de l'article
+micro:        {periodicite: quarterly, debut_activite: "2021-03-01", nature_defaut: SERVICE}
+liberal:      {profession: "…", debut_activite: "2019-09-01", rubrique_defaut: receipts}
+einv:         {plateforme: simulee, profil: AFNOR}
+choruspro:    {plateforme: simulee}
+urssaf:       {plateforme: simulee}
+teledec:      {plateforme: simulee, regime: is_rsi, tva: ca3_monthly, courriel: "…", siret: "84731562900018"}
+bankimport:
+  formats: [{nom: "Banque du Val de Loire", journal: banque, compte: "512001", separateur: semicolon,
+             encodage: utf-8, lignes_entete: 1, format_date: dd/mm/yyyy, separateur_decimal: comma,
+             colonnes: {date: 1, libelle: 2, debit: 3, credit: 4, reference: 5}}]
+  regles:  [{libelle_contient: "ECHEANCE PRET", compte: "164"}]
+----
+
+`plateforme` vaut toujours `simulee` : une démonstration ne joint aucun
+service réel. Chaque section exige le module ou l'extension correspondant
+dans `dossier.yml`.
+
+=== operations.yml
+
+[source,yaml]
+----
+format: 1
+operations:     # datées, jouées dans l'ordre chronologique puis de déclaration
+  - {date: N-1-01-06, type: facture, client: CLI-MOREAU, …}
+recentes:       # datées relativement au mois du chargement (M-2-04…), même agenda
+  - {date: M-2-04, type: bon_de_livraison, si: {depuis: N-01-01}, …}
+fin:            # sans date : jouées au jour du chargement, dans l'ordre, après l'agenda
+  - {type: relances, envoyer: 1}
+----
+
+Le chargeur place l'horloge du dossier au jour de chaque opération (les
+règles du cœur s'appliquent comme en usage réel) et ne joue pas les
+opérations postérieures au jour du chargement : les totaux d'un exercice
+complet (`N-1`) ne dépendent pas du jour du chargement.
+
+Champs communs : `date`, `type`, `ref` (nom d'un document, repris par une
+opération ultérieure), `si: {depuis: <date>, avant: <date>}` (opération
+jouée seulement si sa date est dans l'intervalle).
+
+Les délais (`delai`, en jours) programment une suite à partir de la date de
+l'opération : règlement, avoir, acceptation d'un devis…
+
+[cols="1,3",options="header"]
+|===
+|Type |Champs et effet
+
+|`ecriture` |`journal` (`divers`, `banque`, `achats`, `ventes`), `libelle`, `piece`, `lignes: [{compte, debit \| credit, tiers?, libelle?}]` — écriture équilibrée
+|`banque` |`lignes: [{compte \| tiers, montant (signé, + entrée), libelle}]` — une écriture par ligne
+|`achat` |`fournisseur`, `numero`, `libelle`, `lignes: [{article, quantite, prix, taux} \| {compte, montant, taux?, libelle}]`, `copie` (copie numérisée générée), `ventilation` (clé analytique), `reglement: {delai}`
+|`facture_plateforme` |facture d'un fournisseur reçue par la plateforme agréée simulée (UBL) : `fournisseur`, `numero`, `taux`, `lignes: [{libelle, quantite, prix, unite}]`, `comptabiliser: {avant}`, `reglement`
+|`justificatif` |ticket photographié (image générée) : `fichier`, `nom_fournisseur`, `fournisseur?`, `montant`, `image: {enseigne, adresse, lignes, tva, paiement, couleur}`, `saisie?: {si, libelle, numero, lignes, reglement}`
+|`facture` |`client`, `objet`, `categorie` (`goods`, `services`, `mixed`), `lignes: [{article, quantite}]`, `reference_commande`, `chorus_pro`, `avoir: {delai, motif, categorie, lignes}`, `reglement: {delai, mode: banque \| encaissement, moyen}`
+|`devis` |`client`, `objet`, `categorie`, `lignes`, `acceptation: {delai, acompte (%), reglement_acompte, facture_finale: {delai, reglement}}` ou `refus: {delai}`
+|`bon_de_livraison`, `bon_de_retour` |bons d'un client facturé en fin de mois ; le retour cite le bon (`bon: <ref>`) et un `motif`
+|`fin_de_mois`, `recapitulatives` |fin de mois planifiée ; factures récapitulatives émises et envoyées (`reglement`)
+|`declaration_tva` |`formulaire` (`fr_ca3`), `periodicite`, `periode`, `journal`, `paiement: {delai, compte, libelle}` — déclaration close avec son écriture de liquidation
+|`rapprochement` |`mois` : relevé « Relevé MM/AAAA » des opérations bancaires du mois
+|`inventaire`, `mouvement_stock` |`libelle`, `lignes: [{article, quantite, cout}]` (dépôt par défaut)
+|`micro_recette`, `micro_achat` |livre des recettes et registre des achats : `nature`, `montant`, `moyen`, `tiers`, `libelle`, `reference`, `copie`
+|`urssaf_mandat`, `urssaf_declaration` |mandats ; déclaration de la `periode` à l'URSSAF simulée, `paiement`
+|`liberal_recette`, `liberal_depense`, `liberal_immobilisation`, `liberal_cloture` |livre-journal par rubrique de la 2035 (`rubrique`, `part_privee`), immobilisations, clôture d'un `exercice`
+|`import_releve` |relevé CSV (`fichier`, `format`) importé par BANKIMPORT, lignes catégorisées par les règles puis transférées (`transferer`), relevé pointé (`pointage: {reference, solde_debut, solde_fin}`)
+|`prevision` |prévision budgétaire `nom`, de `debut` à `fin` (périodes), `categories: [{libelle, elements: [{libelle, formule, montant}]}]`
+|`rejet_reglement` |virement retourné : le règlement le plus récent d'un des `clients`, `motif`, `frais`, `refacturer`, `taux_frais`
+|`relances` |relances proposées au jour, les `envoyer` premières envoyées
+|`synchronisation_plateforme` |relève de la plateforme agréée simulée
+|`teledeclarations` |`declarations: [{nature: liasse \| das2 \| vat_ca3, exercice \| annee \| derniere_de}]` transmises au TELEDEC simulé
+|`crm` |relation client décrite par `fichier` (`crm.yml` : organisations, contacts, opportunités, activités)
+|`modeles` |modèles de factures de départ chargés, `defaut` (format), `rendre_derniere_facture`
+|===
+
+=== attendus.yml
+
+[source,yaml]
+----
+format: 1
+controles:
+  - {type: balance_equilibree, exercice: N-1}
+  - {type: solde_comptes, exercice: N-1, prefixe: "70", sens: credit, montant: "141156.00"}
+  - {type: solde_comptes, exercice: N-1, prefixe: "44571", journaux: ventes, sens: credit, montant: "28231.20"}
+----
+
+[cols="1,2,1",options="header"]
+|===
+|Contrôle |Vérifié au chargement (`demo verifier`) |Recalculé par le validateur
+
+|`balance_equilibree` |écart débit − crédit de la balance de l'exercice nul |écritures déclarées équilibrées
+|`total_debit_minimum` |total des débits de l'exercice au moins égal à `montant` |non
+|`solde_comptes` |solde des mouvements de l'exercice des comptes `prefixe*` (`sens`, `journaux`) |oui, si aucune opération non recalculable ne touche ces comptes
+|`declarations_tva` |`nombre` de déclarations `formulaire` de l'exercice (`statut`) |oui
+|`factures` |`nombre` de factures émises dans l'exercice, numéros uniques, `comptabilisees` |oui, hors factures récapitulatives
+|`releves` |`nombre` de relevés rapprochés « …/AAAA » |oui
+|`mouvements_stock` |au moins `minimum` mouvements |oui
+|`teledeclarations` |`natures` transmises (`statut`) |oui
+|`rejets_reglement` |`nombre` de rejets, `frais` |oui
+|`micro_registres` |`recettes` et `achats` de l'année |oui
+|`urssaf_declarations` |`nombre` de déclarations acceptées, `payees` |oui
+|`liberal_journal` |`recettes` et `depenses` du livre-journal |oui
+|`exercice_liberal` |`etat` de l'exercice (`open`, `closed`, `locked`) |oui
+|`previsions` |`nombre` de prévisions |oui
+|===
+
+== Valider, charger, vérifier
+
+[source,sh]
+----
+shards install && shards build partiduo-demo-valider
+bin/partiduo-demo-valider --detail                 # tous les dossiers de dossiers/
+bin/partiduo-demo-valider dossiers foyer           # un dossier
+bin/partiduo-demo-valider --jour=2027-01-10        # chargement simulé à une autre date
+
+# Avec le binaire de la distribution (voir le README de partiduo-dist) :
+createdb partiduo_demo_atelier_verif
+DATABASE_URL='postgres:///partiduo_demo_atelier_verif?host=/tmp' \
+  partiduo-manage demo charger --dossier=atelier --source=dossiers
+DATABASE_URL='postgres:///partiduo_demo_atelier_verif?host=/tmp' \
+  partiduo-manage demo verifier --dossier=atelier --source=dossiers
+----
+
+== Évolutions du format
+
+Toute évolution incompatible change le numéro (`format: 2`) dans tous les
+fichiers, le chargeur de la distribution et le validateur, ensemble.

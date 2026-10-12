@@ -1,0 +1,16 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# Grands totaux attendus du dossier « atelier » (exercice N-1 complet), vérifiés
+# par `partiduo-manage demo verifier` et recalculés par le validateur.
+format: 1
+controles:
+  - {type: balance_equilibree, exercice: N-1}
+  - {type: balance_equilibree, exercice: "N"}
+  - {type: total_debit_minimum, exercice: N-1, montant: "500000"}
+  - {type: solde_comptes, exercice: N-1, prefixe: "70", sens: credit, montant: "141156.00"}
+  - {type: solde_comptes, exercice: N-1, prefixe: "44571", journaux: ventes, sens: credit, montant: "28231.20"}
+  - {type: declarations_tva, exercice: N-1, formulaire: fr_ca3, nombre: 12, statut: closed}
+  - {type: factures, exercice: N-1, nombre: 54, comptabilisees: true}
+  - {type: releves, exercice: N-1, nombre: 12}
+  - {type: mouvements_stock, minimum: 1}
+  - {type: teledeclarations, natures: [das2, liasse, vat_ca3], statut: acknowledged}
+  - {type: rejets_reglement, nombre: 1, frais: "15"}

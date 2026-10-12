@@ -1,0 +1,257 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# Référentiel du dossier « atelier » : plan comptable propre, taux, tiers, articles, analytique, stock.
+format: 1
+comptes:
+  - {numero: "110", libelle: "Report à nouveau (solde créditeur)", parent: "1"}
+  - {numero: "164", libelle: "Emprunts auprès des établissements de crédit", parent: "16"}
+  - {numero: "2154", libelle: "Matériel industriel", parent: "21"}
+  - {numero: "311", libelle: "Stocks de matières premières", parent: "31"}
+  - {numero: "28154", libelle: "Amortissements du matériel industriel", parent: "281"}
+  - {numero: "431", libelle: "Sécurité sociale", parent: "43"}
+  - {numero: "601", libelle: "Achats de matières premières", parent: "60"}
+  - {numero: "6061", libelle: "Fournitures non stockables (eau, énergie, carburant)", parent: "60"}
+  - {numero: "6063", libelle: "Fournitures d'entretien et de petit équipement", parent: "60"}
+  - {numero: "6132", libelle: "Locations immobilières", parent: "61"}
+  - {numero: "616", libelle: "Primes d'assurance", parent: "61"}
+  - {numero: "6226", libelle: Honoraires, parent: "62"}
+  - {numero: "6256", libelle: "Missions et réceptions", parent: "62"}
+  - {numero: "626", libelle: "Frais postaux et de télécommunications", parent: "62"}
+  - {numero: "627", libelle: "Services bancaires et assimilés", parent: "62"}
+  - {numero: "661", libelle: "Charges d'intérêts", parent: "66"}
+taux_tva:
+  - code: HC
+    libelle: "Hors champ de la TVA"
+    taux: "0"
+    categorie: O
+    exoneration_code: VATEX-EU-O
+    exoneration_motif: "Indemnité hors champ de la TVA"
+tiers:
+  - code: CLI-MOREAU
+    categorie: client
+    nom: "Claire Moreau"
+    nature: individual
+    courriel: "claire.moreau@exemple.test"
+    adresse: {ligne1: "8 allée des Tilleuls", code_postal: "37000", ville: Tours, pays: FR}
+  - code: CLI-GIRARD
+    categorie: client
+    nom: "Thomas Girard"
+    nature: individual
+    courriel: "thomas.girard@exemple.test"
+    adresse: {ligne1: "21 rue du Commerce", code_postal: "37300", ville: "Joué-lès-Tours", pays: FR}
+  - code: CLI-BERNARD
+    categorie: client
+    nom: "Émilie et Paul Bernard"
+    nature: individual
+    courriel: "famille.bernard@exemple.test"
+    adresse: {ligne1: "3 impasse des Vignes", code_postal: "37540", ville: Saint-Cyr-sur-Loire, pays: FR}
+  - code: CLI-MARINIERS
+    categorie: client
+    nom: "Hôtel des Mariniers SAS"
+    nature: business
+    siren: "812649036"
+    tva: FR45812649036
+    courriel: "compta@hotel-mariniers.test"
+    adresse: {ligne1: "2 quai des Mariniers", code_postal: "37000", ville: Tours, pays: FR}
+  - code: CLI-PAINDORE
+    categorie: client
+    nom: "Boulangerie Au Pain Doré SARL"
+    nature: business
+    siren: "795301480"
+    tva: FR11795301480
+    courriel: "contact@paindore.test"
+    adresse: {ligne1: "45 rue Nationale", code_postal: "37400", ville: Amboise, pays: FR}
+  - code: CLI-AUBERT
+    categorie: client
+    nom: "Cabinet Aubert Architectes SELARL"
+    nature: business
+    siren: "882136575"
+    tva: FR59882136575
+    courriel: "agence@aubert-architectes.test"
+    adresse: {ligne1: "10 place Plumereau", code_postal: "37000", ville: Tours, pays: FR}
+  - code: CLI-GUINGUETTE
+    categorie: client
+    nom: "Restaurant La Guinguette SAS"
+    nature: business
+    siren: "829471036"
+    tva: FR49829471036
+    courriel: "gerance@la-guinguette.test"
+    adresse: {ligne1: "1 chemin de Loire", code_postal: "37210", ville: Vouvray, pays: FR}
+  - code: CLI-DECOVAL
+    categorie: client
+    nom: "Décoration Val de Loire SARL"
+    nature: business
+    siren: "518400007"
+    tva: FR03518400007
+    courriel: "achats@deco-valdeloire.test"
+    adresse: {ligne1: "18 avenue de Grammont", code_postal: "37000", ville: Tours, pays: FR}
+    facturation: {rythme: monthly, encours_max: "4200"}
+  - code: CLI-VALBRENNE
+    categorie: client
+    nom: "Commune de Val-de-Brenne"
+    nature: public
+    siren: "213709991"
+    siret: "21370999100011"
+    courriel: "factures@val-de-brenne.test"
+    adresse: {ligne1: "Place de la Mairie", code_postal: "37190", ville: Val-de-Brenne, pays: FR}
+  - code: FOU-SCIERIE
+    categorie: fournisseur
+    nom: "Scierie du Val de Loir SAS"
+    nature: business
+    siren: "831904768"
+    tva: FR55831904768
+    courriel: "factures@scierie-valdeloir.test"
+    adresse: {ligne1: "ZA des Grands Champs", code_postal: "72500", ville: "Château-du-Loir", pays: FR}
+  - code: FOU-QUINC
+    categorie: fournisseur
+    nom: "Quincaillerie Rousseau SARL"
+    nature: business
+    siren: "876543216"
+    tva: FR12876543216
+    courriel: "ventes@quincaillerie-rousseau.test"
+    adresse: {ligne1: "17 rue de la Fonderie", code_postal: "37100", ville: Tours, pays: FR}
+  - code: FOU-SCI
+    categorie: fournisseur
+    nom: "SCI Les Charpentiers"
+    nature: business
+    siren: "804172591"
+    tva: FR36804172591
+    courriel: "gestion@sci-charpentiers.test"
+    adresse: {ligne1: "14 rue des Charpentiers", code_postal: "37100", ville: Tours, pays: FR}
+  - code: FOU-ENERGIE
+    categorie: fournisseur
+    nom: "Énergies Centre Loire"
+    nature: business
+    courriel: "clients@energies-centre-loire.test"
+    adresse: {ligne1: "5 boulevard Heurteloup", code_postal: "37000", ville: Tours, pays: FR}
+  - code: FOU-TELECOM
+    categorie: fournisseur
+    nom: "Télécom Touraine"
+    nature: business
+    courriel: "service@telecom-touraine.test"
+    adresse: {ligne1: "30 avenue de Grammont", code_postal: "37000", ville: Tours, pays: FR}
+  - code: FOU-ASSUR
+    categorie: fournisseur
+    nom: "Mutuelle des Artisans du Centre"
+    nature: business
+    courriel: "contrats@mutuelle-artisans.test"
+    adresse: {ligne1: "12 rue Édouard-Vaillant", code_postal: "45000", ville: "Orléans", pays: FR}
+  - code: FOU-EXPERT
+    categorie: fournisseur
+    nom: "Delorme & Associés, experts-comptables"
+    nature: business
+    courriel: "cabinet@delorme-associes.test"
+    adresse: {ligne1: "6 rue de Bordeaux", code_postal: "37000", ville: Tours, pays: FR}
+  - code: FOU-GARNIER
+    categorie: fournisseur
+    nature: individual
+    courriel: "helene.garnier@exemple.test"
+    personne: {nom: Garnier, prenoms: "Hélène", naissance: "1984-05-17", description: "Architecte d'intérieur"}
+    adresse: {ligne1: "9 rue Colbert", code_postal: "37000", ville: Tours, pays: FR}
+  - code: FOU-STATION
+    categorie: fournisseur
+    nom: "Station-service du Cher"
+    nature: business
+    adresse: {ligne1: "Route de Savonnières", code_postal: "37510", ville: "Ballan-Miré", pays: FR}
+articles:
+  - code: ETAG
+    categorie: vente
+    nom: "Étagère murale en chêne massif"
+    unite: C62
+    prix_vente: "145"
+    taux: NOR
+    compte: "701"
+    stock: true
+    poste: MOBILIER
+  - code: TABLE
+    categorie: vente
+    nom: "Table basse en noyer"
+    unite: C62
+    prix_vente: "690"
+    taux: NOR
+    compte: "701"
+    stock: true
+    poste: MOBILIER
+  - code: BIBLIO
+    categorie: vente
+    nom: "Bibliothèque sur mesure (module)"
+    unite: C62
+    prix_vente: "1180"
+    taux: NOR
+    compte: "701"
+    stock: true
+    poste: MOBILIER
+  - code: AGENC
+    categorie: vente
+    nom: "Agencement sur mesure (mètre linéaire)"
+    unite: MTR
+    prix_vente: "420"
+    taux: NOR
+    compte: "706"
+    stock: false
+    poste: AGENCEMENT
+  - code: POSE
+    categorie: vente
+    nom: "Pose et installation (heure)"
+    unite: HUR
+    prix_vente: "52"
+    taux: NOR
+    compte: "706"
+    stock: false
+    poste: POSE
+  - code: CONCEPT
+    categorie: vente
+    nom: "Conception et plans (forfait)"
+    unite: C62
+    prix_vente: "350"
+    taux: NOR
+    compte: "706"
+    stock: false
+    poste: AGENCEMENT
+  - code: PL-CHENE
+    categorie: achat
+    nom: "Plateau chêne 27 mm"
+    unite: MTK
+    prix_achat: "68"
+    taux: NOR
+    compte: "601"
+    stock: true
+  - code: PL-NOYER
+    categorie: achat
+    nom: "Plateau noyer 27 mm"
+    unite: MTK
+    prix_achat: "95"
+    taux: NOR
+    compte: "601"
+    stock: true
+  - code: QUINC
+    categorie: achat
+    nom: "Quincaillerie (lot)"
+    unite: C62
+    prix_achat: "38"
+    taux: NOR
+    compte: "601"
+analytique:
+  plans:
+    - nom: "Activités"
+      description: "Rentabilité par ligne d'activité"
+      postes:
+        - {code: AGENCEMENT, description: "Agencement sur mesure"}
+        - {code: MOBILIER, description: "Mobilier fabriqué à l'atelier"}
+        - {code: POSE, description: "Pose et installation"}
+        - {code: STRUCTURE, description: "Frais de structure"}
+  cles:
+    - nom: "Matières par activité"
+      description: "Répartition des achats de bois et de quincaillerie"
+      journaux: [achats]
+      repartition:
+        - {pourcentage: "50", postes: [MOBILIER]}
+        - {pourcentage: "40", postes: [AGENCEMENT]}
+        - {pourcentage: "10", postes: [POSE]}
+stock:
+  depots:
+    - nom: "Atelier de Tours"
+      adresse: "14 rue des Charpentiers"
+      ville: Tours
+      pays: FR
+      telephone: "02 47 00 00 00"
+      defaut: true

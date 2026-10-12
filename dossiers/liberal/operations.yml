@@ -1,0 +1,1634 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# Opérations datées du dossier « liberal » : recettes et dépenses par
+# rubrique de la 2035, immobilisations ; exercice N-1 clôturé et sa 2035
+# transmise en fin de chargement. Format : doc/format-dossiers.adoc.
+format: 1
+operations:
+  - date: N-1-01-02
+    type: liberal_depense
+    rubrique: rent
+    montant: "680.00"
+    libelle: "Loyer du cabinet"
+    tiers: "SCI du Mail"
+    moyen: transfer
+  - date: N-1-01-07
+    type: liberal_recette
+    montant: "1180.00"
+    libelle: "Honoraires de la semaine (tiers payant et patients)"
+    moyen: transfer
+  - date: N-1-01-09
+    type: liberal_depense
+    rubrique: insurance
+    montant: "436.00"
+    libelle: "Responsabilité civile professionnelle"
+    tiers: "Mutuelle des soignants"
+    moyen: transfer
+  - {date: N-1-01-10, type: liberal_recette, montant: "240.00", libelle: "Séances à domicile", moyen: cheque}
+  - date: N-1-01-12
+    type: liberal_depense
+    rubrique: vehicle
+    montant: "110.00"
+    libelle: "Carburant et entretien du véhicule"
+    tiers: "Garage du Mail"
+    part_privee: "33"
+    moyen: card
+  - date: N-1-01-14
+    type: liberal_recette
+    montant: "1233.00"
+    libelle: "Honoraires de la semaine (tiers payant et patients)"
+    moyen: transfer
+  - date: N-1-01-15
+    type: liberal_depense
+    rubrique: utilities
+    montant: "58.40"
+    libelle: "Électricité du cabinet"
+    tiers: "Énergies Val de Loire"
+    moyen: transfer
+  - date: N-1-01-18
+    type: liberal_depense
+    rubrique: office
+    montant: "32.00"
+    libelle: "Téléphone, internet et petites fournitures"
+    tiers: "Télécom Blésois"
+    moyen: transfer
+  - date: N-1-01-21
+    type: liberal_recette
+    montant: "1286.00"
+    libelle: "Honoraires de la semaine (tiers payant et patients)"
+    moyen: transfer
+  - date: N-1-01-25
+    type: liberal_depense
+    rubrique: purchases
+    montant: "45.00"
+    libelle: "Huiles de massage et consommables"
+    tiers: "Kiné Fournitures"
+    moyen: transfer
+  - date: N-1-01-28
+    type: liberal_recette
+    montant: "1339.00"
+    libelle: "Honoraires de la semaine (tiers payant et patients)"
+    moyen: transfer
+  - date: N-1-01-28
+    type: liberal_depense
+    rubrique: withdrawal
+    montant: "2400.00"
+    libelle: "Prélèvement personnel"
+    moyen: transfer
+  - date: N-1-02-02
+    type: liberal_depense
+    rubrique: rent
+    montant: "680.00"
+    libelle: "Loyer du cabinet"
+    tiers: "SCI du Mail"
+    moyen: transfer
+  - date: N-1-02-05
+    type: liberal_depense
+    rubrique: personal_social_mandatory
+    montant: "1840.00"
+    libelle: "Cotisations URSSAF et caisse de retraite"
+    tiers: Urssaf
+    moyen: transfer
+  - date: N-1-02-07
+    type: liberal_recette
+    montant: "1217.00"
+    libelle: "Honoraires de la semaine (tiers payant et patients)"
+    moyen: transfer
+  - {date: N-1-02-10, type: liberal_recette, montant: "270.00", libelle: "Séances à domicile", moyen: cheque}
+  - date: N-1-02-12
+    type: liberal_depense
+    rubrique: vehicle
+    montant: "119.00"
+    libelle: "Carburant et entretien du véhicule"
+    tiers: "Garage du Mail"
+    part_privee: "33"
+    moyen: card
+  - date: N-1-02-14
+    type: liberal_recette
+    montant: "1270.00"
+    libelle: "Honoraires de la semaine (tiers payant et patients)"
+    moyen: transfer
+  - date: N-1-02-15
+    type: liberal_depense
+    rubrique: utilities
+    montant: "58.40"
+    libelle: "Électricité du cabinet"
+    tiers: "Énergies Val de Loire"
+    moyen: transfer
+  - date: N-1-02-18
+    type: liberal_depense
+    rubrique: office
+    montant: "43.00"
+    libelle: "Téléphone, internet et petites fournitures"
+    tiers: "Télécom Blésois"
+    moyen: transfer
+  - date: N-1-02-21
+    type: liberal_recette
+    montant: "1323.00"
+    libelle: "Honoraires de la semaine (tiers payant et patients)"
+    moyen: transfer
+  - date: N-1-02-25
+    type: liberal_depense
+    rubrique: purchases
+    montant: "57.00"
+    libelle: "Huiles de massage et consommables"
+    tiers: "Kiné Fournitures"
+    moyen: transfer
+  - date: N-1-02-28
+    type: liberal_recette
+    montant: "1376.00"
+    libelle: "Honoraires de la semaine (tiers payant et patients)"
+    moyen: transfer
+  - date: N-1-02-28
+    type: liberal_depense
+    rubrique: withdrawal
+    montant: "2400.00"
+    libelle: "Prélèvement personnel"
+    moyen: transfer
+  - date: N-1-03-02
+    type: liberal_depense
+    rubrique: rent
+    montant: "680.00"
+    libelle: "Loyer du cabinet"
+    tiers: "SCI du Mail"
+    moyen: transfer
+  - date: N-1-03-07
+    type: liberal_recette
+    montant: "1254.00"
+    libelle: "Honoraires de la semaine (tiers payant et patients)"
+    moyen: transfer
+  - date: N-1-03-09
+    type: liberal_depense
+    rubrique: professional_dues
+    montant: "320.00"
+    libelle: "Cotisation ordinale"
+    moyen: transfer
+  - {date: N-1-03-10, type: liberal_recette, montant: "300.00", libelle: "Séances à domicile", moyen: cheque}
+  - date: N-1-03-12
+    type: liberal_depense
+    rubrique: vehicle
+    montant: "128.00"
+    libelle: "Carburant et entretien du véhicule"
+    tiers: "Garage du Mail"
+    part_privee: "33"
+    moyen: card
+  - date: N-1-03-14
+    type: liberal_recette
+    montant: "1307.00"
+    libelle: "Honoraires de la semaine (tiers payant et patients)"
+    moyen: transfer
+  - date: N-1-03-15
+    type: liberal_depense
+    rubrique: utilities
+    montant: "58.40"
+    libelle: "Électricité du cabinet"
+    tiers: "Énergies Val de Loire"
+    moyen: transfer
+  - date: N-1-03-18
+    type: liberal_depense
+    rubrique: office
+    montant: "54.00"
+    libelle: "Téléphone, internet et petites fournitures"
+    tiers: "Télécom Blésois"
+    moyen: transfer
+  - date: N-1-03-21
+    type: liberal_recette
+    montant: "1360.00"
+    libelle: "Honoraires de la semaine (tiers payant et patients)"
+    moyen: transfer
+  - date: N-1-03-25
+    type: liberal_depense
+    rubrique: purchases
+    montant: "69.00"
+    libelle: "Huiles de massage et consommables"
+    tiers: "Kiné Fournitures"
+    moyen: transfer
+  - date: N-1-03-28
+    type: liberal_recette
+    montant: "1413.00"
+    libelle: "Honoraires de la semaine (tiers payant et patients)"
+    moyen: transfer
+  - date: N-1-03-28
+    type: liberal_depense
+    rubrique: withdrawal
+    montant: "2400.00"
+    libelle: "Prélèvement personnel"
+    moyen: transfer
+  - date: N-1-04-01
+    type: liberal_immobilisation
+    libelle: "Table de massage électrique"
+    categorie: equipment
+    montant: "3000.00"
+    duree: 3
+    moyen: transfer
+    tiers: "Kiné Équipement"
+  - date: N-1-04-02
+    type: liberal_depense
+    rubrique: rent
+    montant: "680.00"
+    libelle: "Loyer du cabinet"
+    tiers: "SCI du Mail"
+    moyen: transfer
+  - date: N-1-04-07
+    type: liberal_recette
+    montant: "1291.00"
+    libelle: "Honoraires de la semaine (tiers payant et patients)"
+    moyen: transfer
+  - {date: N-1-04-10, type: liberal_recette, montant: "330.00", libelle: "Séances à domicile", moyen: cheque}
+  - date: N-1-04-12
+    type: liberal_depense
+    rubrique: vehicle
+    montant: "137.00"
+    libelle: "Carburant et entretien du véhicule"
+    tiers: "Garage du Mail"
+    part_privee: "33"
+    moyen: card
+  - date: N-1-04-14
+    type: liberal_recette
+    montant: "1344.00"
+    libelle: "Honoraires de la semaine (tiers payant et patients)"
+    moyen: transfer
+  - date: N-1-04-15
+    type: liberal_depense
+    rubrique: utilities
+    montant: "58.40"
+    libelle: "Électricité du cabinet"
+    tiers: "Énergies Val de Loire"
+    moyen: transfer
+  - date: N-1-04-18
+    type: liberal_depense
+    rubrique: office
+    montant: "32.00"
+    libelle: "Téléphone, internet et petites fournitures"
+    tiers: "Télécom Blésois"
+    moyen: transfer
+  - date: N-1-04-20
+    type: liberal_depense
+    rubrique: fees
+    montant: "390.00"
+    libelle: "Adhésion à l'association de gestion agréée"
+    tiers: "AGA du Loir-et-Cher"
+    moyen: transfer
+  - date: N-1-04-21
+    type: liberal_recette
+    montant: "1397.00"
+    libelle: "Honoraires de la semaine (tiers payant et patients)"
+    moyen: transfer
+  - date: N-1-04-25
+    type: liberal_depense
+    rubrique: purchases
+    montant: "81.00"
+    libelle: "Huiles de massage et consommables"
+    tiers: "Kiné Fournitures"
+    moyen: transfer
+  - date: N-1-04-28
+    type: liberal_recette
+    montant: "1190.00"
+    libelle: "Honoraires de la semaine (tiers payant et patients)"
+    moyen: transfer
+  - date: N-1-04-28
+    type: liberal_depense
+    rubrique: withdrawal
+    montant: "2400.00"
+    libelle: "Prélèvement personnel"
+    moyen: transfer
+  - date: N-1-05-02
+    type: liberal_depense
+    rubrique: rent
+    montant: "680.00"
+    libelle: "Loyer du cabinet"
+    tiers: "SCI du Mail"
+    moyen: transfer
+  - date: N-1-05-05
+    type: liberal_depense
+    rubrique: personal_social_mandatory
+    montant: "1840.00"
+    libelle: "Cotisations URSSAF et caisse de retraite"
+    tiers: Urssaf
+    moyen: transfer
+  - date: N-1-05-07
+    type: liberal_recette
+    montant: "1328.00"
+    libelle: "Honoraires de la semaine (tiers payant et patients)"
+    moyen: transfer
+  - {date: N-1-05-10, type: liberal_recette, montant: "240.00", libelle: "Séances à domicile", moyen: cheque}
+  - date: N-1-05-12
+    type: liberal_depense
+    rubrique: vehicle
+    montant: "146.00"
+    libelle: "Carburant et entretien du véhicule"
+    tiers: "Garage du Mail"
+    part_privee: "33"
+    moyen: card
+  - date: N-1-05-14
+    type: liberal_recette
+    montant: "1381.00"
+    libelle: "Honoraires de la semaine (tiers payant et patients)"
+    moyen: transfer
+  - date: N-1-05-15
+    type: liberal_depense
+    rubrique: utilities
+    montant: "58.40"
+    libelle: "Électricité du cabinet"
+    tiers: "Énergies Val de Loire"
+    moyen: transfer
+  - date: N-1-05-18
+    type: liberal_depense
+    rubrique: office
+    montant: "43.00"
+    libelle: "Téléphone, internet et petites fournitures"
+    tiers: "Télécom Blésois"
+    moyen: transfer
+  - date: N-1-05-21
+    type: liberal_recette
+    montant: "1434.00"
+    libelle: "Honoraires de la semaine (tiers payant et patients)"
+    moyen: transfer
+  - date: N-1-05-25
+    type: liberal_depense
+    rubrique: purchases
+    montant: "45.00"
+    libelle: "Huiles de massage et consommables"
+    tiers: "Kiné Fournitures"
+    moyen: transfer
+  - date: N-1-05-28
+    type: liberal_recette
+    montant: "1227.00"
+    libelle: "Honoraires de la semaine (tiers payant et patients)"
+    moyen: transfer
+  - date: N-1-05-28
+    type: liberal_depense
+    rubrique: withdrawal
+    montant: "2400.00"
+    libelle: "Prélèvement personnel"
+    moyen: transfer
+  - date: N-1-06-02
+    type: liberal_depense
+    rubrique: rent
+    montant: "680.00"
+    libelle: "Loyer du cabinet"
+    tiers: "SCI du Mail"
+    moyen: transfer
+  - date: N-1-06-07
+    type: liberal_recette
+    montant: "1365.00"
+    libelle: "Honoraires de la semaine (tiers payant et patients)"
+    moyen: transfer
+  - {date: N-1-06-10, type: liberal_recette, montant: "270.00", libelle: "Séances à domicile", moyen: cheque}
+  - date: N-1-06-12
+    type: liberal_depense
+    rubrique: vehicle
+    montant: "110.00"
+    libelle: "Carburant et entretien du véhicule"
+    tiers: "Garage du Mail"
+    part_privee: "33"
+    moyen: card
+  - date: N-1-06-14
+    type: liberal_recette
+    montant: "1418.00"
+    libelle: "Honoraires de la semaine (tiers payant et patients)"
+    moyen: transfer
+  - date: N-1-06-15
+    type: liberal_depense
+    rubrique: utilities
+    montant: "58.40"
+    libelle: "Électricité du cabinet"
+    tiers: "Énergies Val de Loire"
+    moyen: transfer
+  - date: N-1-06-18
+    type: liberal_depense
+    rubrique: office
+    montant: "54.00"
+    libelle: "Téléphone, internet et petites fournitures"
+    tiers: "Télécom Blésois"
+    moyen: transfer
+  - date: N-1-06-21
+    type: liberal_recette
+    montant: "1211.00"
+    libelle: "Honoraires de la semaine (tiers payant et patients)"
+    moyen: transfer
+  - date: N-1-06-25
+    type: liberal_depense
+    rubrique: purchases
+    montant: "57.00"
+    libelle: "Huiles de massage et consommables"
+    tiers: "Kiné Fournitures"
+    moyen: transfer
+  - date: N-1-06-28
+    type: liberal_recette
+    montant: "1264.00"
+    libelle: "Honoraires de la semaine (tiers payant et patients)"
+    moyen: transfer
+  - date: N-1-06-28
+    type: liberal_depense
+    rubrique: withdrawal
+    montant: "2400.00"
+    libelle: "Prélèvement personnel"
+    moyen: transfer
+  - date: N-1-07-02
+    type: liberal_depense
+    rubrique: rent
+    montant: "680.00"
+    libelle: "Loyer du cabinet"
+    tiers: "SCI du Mail"
+    moyen: transfer
+  - date: N-1-07-07
+    type: liberal_recette
+    montant: "1402.00"
+    libelle: "Honoraires de la semaine (tiers payant et patients)"
+    moyen: transfer
+  - {date: N-1-07-10, type: liberal_recette, montant: "300.00", libelle: "Séances à domicile", moyen: cheque}
+  - date: N-1-07-12
+    type: liberal_depense
+    rubrique: vehicle
+    montant: "119.00"
+    libelle: "Carburant et entretien du véhicule"
+    tiers: "Garage du Mail"
+    part_privee: "33"
+    moyen: card
+  - date: N-1-07-14
+    type: liberal_recette
+    montant: "1195.00"
+    libelle: "Honoraires de la semaine (tiers payant et patients)"
+    moyen: transfer
+  - date: N-1-07-15
+    type: liberal_depense
+    rubrique: utilities
+    montant: "58.40"
+    libelle: "Électricité du cabinet"
+    tiers: "Énergies Val de Loire"
+    moyen: transfer
+  - date: N-1-07-18
+    type: liberal_depense
+    rubrique: office
+    montant: "32.00"
+    libelle: "Téléphone, internet et petites fournitures"
+    tiers: "Télécom Blésois"
+    moyen: transfer
+  - date: N-1-07-21
+    type: liberal_recette
+    montant: "1248.00"
+    libelle: "Honoraires de la semaine (tiers payant et patients)"
+    moyen: transfer
+  - date: N-1-07-25
+    type: liberal_depense
+    rubrique: purchases
+    montant: "69.00"
+    libelle: "Huiles de massage et consommables"
+    tiers: "Kiné Fournitures"
+    moyen: transfer
+  - date: N-1-07-28
+    type: liberal_recette
+    montant: "1301.00"
+    libelle: "Honoraires de la semaine (tiers payant et patients)"
+    moyen: transfer
+  - date: N-1-07-28
+    type: liberal_depense
+    rubrique: withdrawal
+    montant: "2400.00"
+    libelle: "Prélèvement personnel"
+    moyen: transfer
+  - date: N-1-08-02
+    type: liberal_depense
+    rubrique: rent
+    montant: "680.00"
+    libelle: "Loyer du cabinet"
+    tiers: "SCI du Mail"
+    moyen: transfer
+  - date: N-1-08-05
+    type: liberal_depense
+    rubrique: personal_social_mandatory
+    montant: "1840.00"
+    libelle: "Cotisations URSSAF et caisse de retraite"
+    tiers: Urssaf
+    moyen: transfer
+  - date: N-1-08-07
+    type: liberal_recette
+    montant: "719.50"
+    libelle: "Honoraires de la semaine (tiers payant et patients)"
+    moyen: transfer
+  - {date: N-1-08-10, type: liberal_recette, montant: "330.00", libelle: "Séances à domicile", moyen: cheque}
+  - date: N-1-08-12
+    type: liberal_depense
+    rubrique: vehicle
+    montant: "128.00"
+    libelle: "Carburant et entretien du véhicule"
+    tiers: "Garage du Mail"
+    part_privee: "33"
+    moyen: card
+  - date: N-1-08-14
+    type: liberal_recette
+    montant: "616.00"
+    libelle: "Honoraires de la semaine (tiers payant et patients)"
+    moyen: transfer
+  - date: N-1-08-15
+    type: liberal_depense
+    rubrique: utilities
+    montant: "58.40"
+    libelle: "Électricité du cabinet"
+    tiers: "Énergies Val de Loire"
+    moyen: transfer
+  - date: N-1-08-18
+    type: liberal_depense
+    rubrique: office
+    montant: "43.00"
+    libelle: "Téléphone, internet et petites fournitures"
+    tiers: "Télécom Blésois"
+    moyen: transfer
+  - date: N-1-08-21
+    type: liberal_recette
+    montant: "642.50"
+    libelle: "Honoraires de la semaine (tiers payant et patients)"
+    moyen: transfer
+  - date: N-1-08-25
+    type: liberal_depense
+    rubrique: purchases
+    montant: "81.00"
+    libelle: "Huiles de massage et consommables"
+    tiers: "Kiné Fournitures"
+    moyen: transfer
+  - date: N-1-08-28
+    type: liberal_recette
+    montant: "669.00"
+    libelle: "Honoraires de la semaine (tiers payant et patients)"
+    moyen: transfer
+  - date: N-1-08-28
+    type: liberal_depense
+    rubrique: withdrawal
+    montant: "2400.00"
+    libelle: "Prélèvement personnel"
+    moyen: transfer
+  - date: N-1-09-02
+    type: liberal_depense
+    rubrique: rent
+    montant: "680.00"
+    libelle: "Loyer du cabinet"
+    tiers: "SCI du Mail"
+    moyen: transfer
+  - date: N-1-09-07
+    type: liberal_recette
+    montant: "1216.00"
+    libelle: "Honoraires de la semaine (tiers payant et patients)"
+    moyen: transfer
+  - {date: N-1-09-10, type: liberal_recette, montant: "240.00", libelle: "Séances à domicile", moyen: cheque}
+  - date: N-1-09-12
+    type: liberal_depense
+    rubrique: vehicle
+    montant: "137.00"
+    libelle: "Carburant et entretien du véhicule"
+    tiers: "Garage du Mail"
+    part_privee: "33"
+    moyen: card
+  - date: N-1-09-14
+    type: liberal_recette
+    montant: "1269.00"
+    libelle: "Honoraires de la semaine (tiers payant et patients)"
+    moyen: transfer
+  - date: N-1-09-15
+    type: liberal_depense
+    rubrique: utilities
+    montant: "58.40"
+    libelle: "Électricité du cabinet"
+    tiers: "Énergies Val de Loire"
+    moyen: transfer
+  - date: N-1-09-18
+    type: liberal_depense
+    rubrique: office
+    montant: "54.00"
+    libelle: "Téléphone, internet et petites fournitures"
+    tiers: "Télécom Blésois"
+    moyen: transfer
+  - date: N-1-09-21
+    type: liberal_recette
+    montant: "1322.00"
+    libelle: "Honoraires de la semaine (tiers payant et patients)"
+    moyen: transfer
+  - date: N-1-09-25
+    type: liberal_depense
+    rubrique: purchases
+    montant: "45.00"
+    libelle: "Huiles de massage et consommables"
+    tiers: "Kiné Fournitures"
+    moyen: transfer
+  - date: N-1-09-28
+    type: liberal_recette
+    montant: "1375.00"
+    libelle: "Honoraires de la semaine (tiers payant et patients)"
+    moyen: transfer
+  - date: N-1-09-28
+    type: liberal_depense
+    rubrique: withdrawal
+    montant: "2400.00"
+    libelle: "Prélèvement personnel"
+    moyen: transfer
+  - date: N-1-10-02
+    type: liberal_depense
+    rubrique: rent
+    montant: "680.00"
+    libelle: "Loyer du cabinet"
+    tiers: "SCI du Mail"
+    moyen: transfer
+  - date: N-1-10-07
+    type: liberal_recette
+    montant: "1253.00"
+    libelle: "Honoraires de la semaine (tiers payant et patients)"
+    moyen: transfer
+  - {date: N-1-10-10, type: liberal_recette, montant: "270.00", libelle: "Séances à domicile", moyen: cheque}
+  - date: N-1-10-12
+    type: liberal_depense
+    rubrique: vehicle
+    montant: "146.00"
+    libelle: "Carburant et entretien du véhicule"
+    tiers: "Garage du Mail"
+    part_privee: "33"
+    moyen: card
+  - date: N-1-10-14
+    type: liberal_recette
+    montant: "1306.00"
+    libelle: "Honoraires de la semaine (tiers payant et patients)"
+    moyen: transfer
+  - date: N-1-10-15
+    type: liberal_depense
+    rubrique: utilities
+    montant: "58.40"
+    libelle: "Électricité du cabinet"
+    tiers: "Énergies Val de Loire"
+    moyen: transfer
+  - date: N-1-10-18
+    type: liberal_depense
+    rubrique: office
+    montant: "32.00"
+    libelle: "Téléphone, internet et petites fournitures"
+    tiers: "Télécom Blésois"
+    moyen: transfer
+  - date: N-1-10-21
+    type: liberal_recette
+    montant: "1359.00"
+    libelle: "Honoraires de la semaine (tiers payant et patients)"
+    moyen: transfer
+  - date: N-1-10-25
+    type: liberal_depense
+    rubrique: purchases
+    montant: "57.00"
+    libelle: "Huiles de massage et consommables"
+    tiers: "Kiné Fournitures"
+    moyen: transfer
+  - date: N-1-10-28
+    type: liberal_recette
+    montant: "1412.00"
+    libelle: "Honoraires de la semaine (tiers payant et patients)"
+    moyen: transfer
+  - date: N-1-10-28
+    type: liberal_depense
+    rubrique: withdrawal
+    montant: "2400.00"
+    libelle: "Prélèvement personnel"
+    moyen: transfer
+  - date: N-1-11-02
+    type: liberal_depense
+    rubrique: rent
+    montant: "680.00"
+    libelle: "Loyer du cabinet"
+    tiers: "SCI du Mail"
+    moyen: transfer
+  - date: N-1-11-05
+    type: liberal_depense
+    rubrique: personal_social_mandatory
+    montant: "1840.00"
+    libelle: "Cotisations URSSAF et caisse de retraite"
+    tiers: Urssaf
+    moyen: transfer
+  - date: N-1-11-07
+    type: liberal_recette
+    montant: "1290.00"
+    libelle: "Honoraires de la semaine (tiers payant et patients)"
+    moyen: transfer
+  - {date: N-1-11-10, type: liberal_recette, montant: "300.00", libelle: "Séances à domicile", moyen: cheque}
+  - date: N-1-11-12
+    type: liberal_depense
+    rubrique: vehicle
+    montant: "110.00"
+    libelle: "Carburant et entretien du véhicule"
+    tiers: "Garage du Mail"
+    part_privee: "33"
+    moyen: card
+  - date: N-1-11-14
+    type: liberal_recette
+    montant: "1343.00"
+    libelle: "Honoraires de la semaine (tiers payant et patients)"
+    moyen: transfer
+  - date: N-1-11-15
+    type: liberal_depense
+    rubrique: utilities
+    montant: "58.40"
+    libelle: "Électricité du cabinet"
+    tiers: "Énergies Val de Loire"
+    moyen: transfer
+  - date: N-1-11-18
+    type: liberal_depense
+    rubrique: office
+    montant: "43.00"
+    libelle: "Téléphone, internet et petites fournitures"
+    tiers: "Télécom Blésois"
+    moyen: transfer
+  - date: N-1-11-21
+    type: liberal_recette
+    montant: "1396.00"
+    libelle: "Honoraires de la semaine (tiers payant et patients)"
+    moyen: transfer
+  - date: N-1-11-25
+    type: liberal_depense
+    rubrique: purchases
+    montant: "69.00"
+    libelle: "Huiles de massage et consommables"
+    tiers: "Kiné Fournitures"
+    moyen: transfer
+  - date: N-1-11-28
+    type: liberal_recette
+    montant: "1189.00"
+    libelle: "Honoraires de la semaine (tiers payant et patients)"
+    moyen: transfer
+  - date: N-1-11-28
+    type: liberal_depense
+    rubrique: withdrawal
+    montant: "2400.00"
+    libelle: "Prélèvement personnel"
+    moyen: transfer
+  - date: N-1-12-02
+    type: liberal_depense
+    rubrique: rent
+    montant: "680.00"
+    libelle: "Loyer du cabinet"
+    tiers: "SCI du Mail"
+    moyen: transfer
+  - date: N-1-12-07
+    type: liberal_recette
+    montant: "1327.00"
+    libelle: "Honoraires de la semaine (tiers payant et patients)"
+    moyen: transfer
+  - {date: N-1-12-10, type: liberal_recette, montant: "330.00", libelle: "Séances à domicile", moyen: cheque}
+  - date: N-1-12-12
+    type: liberal_depense
+    rubrique: vehicle
+    montant: "119.00"
+    libelle: "Carburant et entretien du véhicule"
+    tiers: "Garage du Mail"
+    part_privee: "33"
+    moyen: card
+  - date: N-1-12-14
+    type: liberal_recette
+    montant: "1380.00"
+    libelle: "Honoraires de la semaine (tiers payant et patients)"
+    moyen: transfer
+  - date: N-1-12-15
+    type: liberal_depense
+    rubrique: utilities
+    montant: "58.40"
+    libelle: "Électricité du cabinet"
+    tiers: "Énergies Val de Loire"
+    moyen: transfer
+  - date: N-1-12-18
+    type: liberal_depense
+    rubrique: office
+    montant: "54.00"
+    libelle: "Téléphone, internet et petites fournitures"
+    tiers: "Télécom Blésois"
+    moyen: transfer
+  - date: N-1-12-21
+    type: liberal_recette
+    montant: "1433.00"
+    libelle: "Honoraires de la semaine (tiers payant et patients)"
+    moyen: transfer
+  - date: N-1-12-25
+    type: liberal_depense
+    rubrique: purchases
+    montant: "81.00"
+    libelle: "Huiles de massage et consommables"
+    tiers: "Kiné Fournitures"
+    moyen: transfer
+  - date: N-1-12-28
+    type: liberal_recette
+    montant: "1226.00"
+    libelle: "Honoraires de la semaine (tiers payant et patients)"
+    moyen: transfer
+  - date: N-1-12-28
+    type: liberal_depense
+    rubrique: withdrawal
+    montant: "2400.00"
+    libelle: "Prélèvement personnel"
+    moyen: transfer
+  - date: N-01-02
+    type: liberal_depense
+    rubrique: rent
+    montant: "680.00"
+    libelle: "Loyer du cabinet"
+    tiers: "SCI du Mail"
+    moyen: transfer
+  - date: N-01-07
+    type: liberal_recette
+    montant: "1364.00"
+    libelle: "Honoraires de la semaine (tiers payant et patients)"
+    moyen: transfer
+  - date: N-01-09
+    type: liberal_depense
+    rubrique: insurance
+    montant: "436.00"
+    libelle: "Responsabilité civile professionnelle"
+    tiers: "Mutuelle des soignants"
+    moyen: transfer
+  - {date: N-01-10, type: liberal_recette, montant: "240.00", libelle: "Séances à domicile", moyen: cheque}
+  - date: N-01-12
+    type: liberal_depense
+    rubrique: vehicle
+    montant: "128.00"
+    libelle: "Carburant et entretien du véhicule"
+    tiers: "Garage du Mail"
+    part_privee: "33"
+    moyen: card
+  - date: N-01-14
+    type: liberal_recette
+    montant: "1417.00"
+    libelle: "Honoraires de la semaine (tiers payant et patients)"
+    moyen: transfer
+  - date: N-01-15
+    type: liberal_depense
+    rubrique: utilities
+    montant: "58.40"
+    libelle: "Électricité du cabinet"
+    tiers: "Énergies Val de Loire"
+    moyen: transfer
+  - date: N-01-18
+    type: liberal_depense
+    rubrique: office
+    montant: "32.00"
+    libelle: "Téléphone, internet et petites fournitures"
+    tiers: "Télécom Blésois"
+    moyen: transfer
+  - date: N-01-21
+    type: liberal_recette
+    montant: "1210.00"
+    libelle: "Honoraires de la semaine (tiers payant et patients)"
+    moyen: transfer
+  - date: N-01-25
+    type: liberal_depense
+    rubrique: purchases
+    montant: "45.00"
+    libelle: "Huiles de massage et consommables"
+    tiers: "Kiné Fournitures"
+    moyen: transfer
+  - date: N-01-28
+    type: liberal_recette
+    montant: "1263.00"
+    libelle: "Honoraires de la semaine (tiers payant et patients)"
+    moyen: transfer
+  - date: N-01-28
+    type: liberal_depense
+    rubrique: withdrawal
+    montant: "2400.00"
+    libelle: "Prélèvement personnel"
+    moyen: transfer
+  - date: N-02-02
+    type: liberal_depense
+    rubrique: rent
+    montant: "680.00"
+    libelle: "Loyer du cabinet"
+    tiers: "SCI du Mail"
+    moyen: transfer
+  - date: N-02-05
+    type: liberal_depense
+    rubrique: personal_social_mandatory
+    montant: "1840.00"
+    libelle: "Cotisations URSSAF et caisse de retraite"
+    tiers: Urssaf
+    moyen: transfer
+  - date: N-02-07
+    type: liberal_recette
+    montant: "1401.00"
+    libelle: "Honoraires de la semaine (tiers payant et patients)"
+    moyen: transfer
+  - {date: N-02-10, type: liberal_recette, montant: "270.00", libelle: "Séances à domicile", moyen: cheque}
+  - date: N-02-10
+    type: liberal_immobilisation
+    libelle: "Ordinateur portable"
+    categorie: office
+    montant: "1140.00"
+    duree: 3
+    moyen: card
+    tiers: "Informatique Blésoise"
+  - date: N-02-12
+    type: liberal_depense
+    rubrique: vehicle
+    montant: "137.00"
+    libelle: "Carburant et entretien du véhicule"
+    tiers: "Garage du Mail"
+    part_privee: "33"
+    moyen: card
+  - date: N-02-14
+    type: liberal_recette
+    montant: "1194.00"
+    libelle: "Honoraires de la semaine (tiers payant et patients)"
+    moyen: transfer
+  - date: N-02-15
+    type: liberal_depense
+    rubrique: utilities
+    montant: "58.40"
+    libelle: "Électricité du cabinet"
+    tiers: "Énergies Val de Loire"
+    moyen: transfer
+  - date: N-02-18
+    type: liberal_depense
+    rubrique: office
+    montant: "43.00"
+    libelle: "Téléphone, internet et petites fournitures"
+    tiers: "Télécom Blésois"
+    moyen: transfer
+  - date: N-02-21
+    type: liberal_recette
+    montant: "1247.00"
+    libelle: "Honoraires de la semaine (tiers payant et patients)"
+    moyen: transfer
+  - date: N-02-25
+    type: liberal_depense
+    rubrique: purchases
+    montant: "57.00"
+    libelle: "Huiles de massage et consommables"
+    tiers: "Kiné Fournitures"
+    moyen: transfer
+  - date: N-02-28
+    type: liberal_recette
+    montant: "1300.00"
+    libelle: "Honoraires de la semaine (tiers payant et patients)"
+    moyen: transfer
+  - date: N-02-28
+    type: liberal_depense
+    rubrique: withdrawal
+    montant: "2400.00"
+    libelle: "Prélèvement personnel"
+    moyen: transfer
+  - date: N-03-02
+    type: liberal_depense
+    rubrique: rent
+    montant: "680.00"
+    libelle: "Loyer du cabinet"
+    tiers: "SCI du Mail"
+    moyen: transfer
+  - date: N-03-07
+    type: liberal_recette
+    montant: "1438.00"
+    libelle: "Honoraires de la semaine (tiers payant et patients)"
+    moyen: transfer
+  - date: N-03-09
+    type: liberal_depense
+    rubrique: professional_dues
+    montant: "320.00"
+    libelle: "Cotisation ordinale"
+    moyen: transfer
+  - {date: N-03-10, type: liberal_recette, montant: "300.00", libelle: "Séances à domicile", moyen: cheque}
+  - date: N-03-12
+    type: liberal_depense
+    rubrique: vehicle
+    montant: "146.00"
+    libelle: "Carburant et entretien du véhicule"
+    tiers: "Garage du Mail"
+    part_privee: "33"
+    moyen: card
+  - date: N-03-14
+    type: liberal_recette
+    montant: "1231.00"
+    libelle: "Honoraires de la semaine (tiers payant et patients)"
+    moyen: transfer
+  - date: N-03-15
+    type: liberal_depense
+    rubrique: utilities
+    montant: "58.40"
+    libelle: "Électricité du cabinet"
+    tiers: "Énergies Val de Loire"
+    moyen: transfer
+  - date: N-03-18
+    type: liberal_depense
+    rubrique: office
+    montant: "54.00"
+    libelle: "Téléphone, internet et petites fournitures"
+    tiers: "Télécom Blésois"
+    moyen: transfer
+  - date: N-03-21
+    type: liberal_recette
+    montant: "1284.00"
+    libelle: "Honoraires de la semaine (tiers payant et patients)"
+    moyen: transfer
+  - date: N-03-25
+    type: liberal_depense
+    rubrique: purchases
+    montant: "69.00"
+    libelle: "Huiles de massage et consommables"
+    tiers: "Kiné Fournitures"
+    moyen: transfer
+  - date: N-03-28
+    type: liberal_recette
+    montant: "1337.00"
+    libelle: "Honoraires de la semaine (tiers payant et patients)"
+    moyen: transfer
+  - date: N-03-28
+    type: liberal_depense
+    rubrique: withdrawal
+    montant: "2400.00"
+    libelle: "Prélèvement personnel"
+    moyen: transfer
+  - date: N-04-02
+    type: liberal_depense
+    rubrique: rent
+    montant: "680.00"
+    libelle: "Loyer du cabinet"
+    tiers: "SCI du Mail"
+    moyen: transfer
+  - date: N-04-07
+    type: liberal_recette
+    montant: "1215.00"
+    libelle: "Honoraires de la semaine (tiers payant et patients)"
+    moyen: transfer
+  - {date: N-04-10, type: liberal_recette, montant: "330.00", libelle: "Séances à domicile", moyen: cheque}
+  - date: N-04-12
+    type: liberal_depense
+    rubrique: vehicle
+    montant: "110.00"
+    libelle: "Carburant et entretien du véhicule"
+    tiers: "Garage du Mail"
+    part_privee: "33"
+    moyen: card
+  - date: N-04-14
+    type: liberal_recette
+    montant: "1268.00"
+    libelle: "Honoraires de la semaine (tiers payant et patients)"
+    moyen: transfer
+  - date: N-04-15
+    type: liberal_depense
+    rubrique: utilities
+    montant: "58.40"
+    libelle: "Électricité du cabinet"
+    tiers: "Énergies Val de Loire"
+    moyen: transfer
+  - date: N-04-18
+    type: liberal_depense
+    rubrique: office
+    montant: "32.00"
+    libelle: "Téléphone, internet et petites fournitures"
+    tiers: "Télécom Blésois"
+    moyen: transfer
+  - date: N-04-20
+    type: liberal_depense
+    rubrique: fees
+    montant: "390.00"
+    libelle: "Adhésion à l'association de gestion agréée"
+    tiers: "AGA du Loir-et-Cher"
+    moyen: transfer
+  - date: N-04-21
+    type: liberal_recette
+    montant: "1321.00"
+    libelle: "Honoraires de la semaine (tiers payant et patients)"
+    moyen: transfer
+  - date: N-04-25
+    type: liberal_depense
+    rubrique: purchases
+    montant: "81.00"
+    libelle: "Huiles de massage et consommables"
+    tiers: "Kiné Fournitures"
+    moyen: transfer
+  - date: N-04-28
+    type: liberal_recette
+    montant: "1374.00"
+    libelle: "Honoraires de la semaine (tiers payant et patients)"
+    moyen: transfer
+  - date: N-04-28
+    type: liberal_depense
+    rubrique: withdrawal
+    montant: "2400.00"
+    libelle: "Prélèvement personnel"
+    moyen: transfer
+  - date: N-05-02
+    type: liberal_depense
+    rubrique: rent
+    montant: "680.00"
+    libelle: "Loyer du cabinet"
+    tiers: "SCI du Mail"
+    moyen: transfer
+  - date: N-05-05
+    type: liberal_depense
+    rubrique: personal_social_mandatory
+    montant: "1840.00"
+    libelle: "Cotisations URSSAF et caisse de retraite"
+    tiers: Urssaf
+    moyen: transfer
+  - date: N-05-07
+    type: liberal_recette
+    montant: "1252.00"
+    libelle: "Honoraires de la semaine (tiers payant et patients)"
+    moyen: transfer
+  - {date: N-05-10, type: liberal_recette, montant: "240.00", libelle: "Séances à domicile", moyen: cheque}
+  - date: N-05-12
+    type: liberal_depense
+    rubrique: vehicle
+    montant: "119.00"
+    libelle: "Carburant et entretien du véhicule"
+    tiers: "Garage du Mail"
+    part_privee: "33"
+    moyen: card
+  - date: N-05-14
+    type: liberal_recette
+    montant: "1305.00"
+    libelle: "Honoraires de la semaine (tiers payant et patients)"
+    moyen: transfer
+  - date: N-05-15
+    type: liberal_depense
+    rubrique: utilities
+    montant: "58.40"
+    libelle: "Électricité du cabinet"
+    tiers: "Énergies Val de Loire"
+    moyen: transfer
+  - date: N-05-18
+    type: liberal_depense
+    rubrique: office
+    montant: "43.00"
+    libelle: "Téléphone, internet et petites fournitures"
+    tiers: "Télécom Blésois"
+    moyen: transfer
+  - date: N-05-21
+    type: liberal_recette
+    montant: "1358.00"
+    libelle: "Honoraires de la semaine (tiers payant et patients)"
+    moyen: transfer
+  - date: N-05-25
+    type: liberal_depense
+    rubrique: purchases
+    montant: "45.00"
+    libelle: "Huiles de massage et consommables"
+    tiers: "Kiné Fournitures"
+    moyen: transfer
+  - date: N-05-28
+    type: liberal_recette
+    montant: "1411.00"
+    libelle: "Honoraires de la semaine (tiers payant et patients)"
+    moyen: transfer
+  - date: N-05-28
+    type: liberal_depense
+    rubrique: withdrawal
+    montant: "2400.00"
+    libelle: "Prélèvement personnel"
+    moyen: transfer
+  - date: N-06-02
+    type: liberal_depense
+    rubrique: rent
+    montant: "680.00"
+    libelle: "Loyer du cabinet"
+    tiers: "SCI du Mail"
+    moyen: transfer
+  - date: N-06-07
+    type: liberal_recette
+    montant: "1289.00"
+    libelle: "Honoraires de la semaine (tiers payant et patients)"
+    moyen: transfer
+  - {date: N-06-10, type: liberal_recette, montant: "270.00", libelle: "Séances à domicile", moyen: cheque}
+  - date: N-06-12
+    type: liberal_depense
+    rubrique: vehicle
+    montant: "128.00"
+    libelle: "Carburant et entretien du véhicule"
+    tiers: "Garage du Mail"
+    part_privee: "33"
+    moyen: card
+  - date: N-06-14
+    type: liberal_recette
+    montant: "1342.00"
+    libelle: "Honoraires de la semaine (tiers payant et patients)"
+    moyen: transfer
+  - date: N-06-15
+    type: liberal_depense
+    rubrique: utilities
+    montant: "58.40"
+    libelle: "Électricité du cabinet"
+    tiers: "Énergies Val de Loire"
+    moyen: transfer
+  - date: N-06-18
+    type: liberal_depense
+    rubrique: office
+    montant: "54.00"
+    libelle: "Téléphone, internet et petites fournitures"
+    tiers: "Télécom Blésois"
+    moyen: transfer
+  - date: N-06-21
+    type: liberal_recette
+    montant: "1395.00"
+    libelle: "Honoraires de la semaine (tiers payant et patients)"
+    moyen: transfer
+  - date: N-06-25
+    type: liberal_depense
+    rubrique: purchases
+    montant: "57.00"
+    libelle: "Huiles de massage et consommables"
+    tiers: "Kiné Fournitures"
+    moyen: transfer
+  - date: N-06-28
+    type: liberal_recette
+    montant: "1188.00"
+    libelle: "Honoraires de la semaine (tiers payant et patients)"
+    moyen: transfer
+  - date: N-06-28
+    type: liberal_depense
+    rubrique: withdrawal
+    montant: "2400.00"
+    libelle: "Prélèvement personnel"
+    moyen: transfer
+  - date: N-07-02
+    type: liberal_depense
+    rubrique: rent
+    montant: "680.00"
+    libelle: "Loyer du cabinet"
+    tiers: "SCI du Mail"
+    moyen: transfer
+  - date: N-07-07
+    type: liberal_recette
+    montant: "1326.00"
+    libelle: "Honoraires de la semaine (tiers payant et patients)"
+    moyen: transfer
+  - {date: N-07-10, type: liberal_recette, montant: "300.00", libelle: "Séances à domicile", moyen: cheque}
+  - date: N-07-12
+    type: liberal_depense
+    rubrique: vehicle
+    montant: "137.00"
+    libelle: "Carburant et entretien du véhicule"
+    tiers: "Garage du Mail"
+    part_privee: "33"
+    moyen: card
+  - date: N-07-14
+    type: liberal_recette
+    montant: "1379.00"
+    libelle: "Honoraires de la semaine (tiers payant et patients)"
+    moyen: transfer
+  - date: N-07-15
+    type: liberal_depense
+    rubrique: utilities
+    montant: "58.40"
+    libelle: "Électricité du cabinet"
+    tiers: "Énergies Val de Loire"
+    moyen: transfer
+  - date: N-07-18
+    type: liberal_depense
+    rubrique: office
+    montant: "32.00"
+    libelle: "Téléphone, internet et petites fournitures"
+    tiers: "Télécom Blésois"
+    moyen: transfer
+  - date: N-07-21
+    type: liberal_recette
+    montant: "1432.00"
+    libelle: "Honoraires de la semaine (tiers payant et patients)"
+    moyen: transfer
+  - date: N-07-25
+    type: liberal_depense
+    rubrique: purchases
+    montant: "69.00"
+    libelle: "Huiles de massage et consommables"
+    tiers: "Kiné Fournitures"
+    moyen: transfer
+  - date: N-07-28
+    type: liberal_recette
+    montant: "1225.00"
+    libelle: "Honoraires de la semaine (tiers payant et patients)"
+    moyen: transfer
+  - date: N-07-28
+    type: liberal_depense
+    rubrique: withdrawal
+    montant: "2400.00"
+    libelle: "Prélèvement personnel"
+    moyen: transfer
+  - date: N-08-02
+    type: liberal_depense
+    rubrique: rent
+    montant: "680.00"
+    libelle: "Loyer du cabinet"
+    tiers: "SCI du Mail"
+    moyen: transfer
+  - date: N-08-05
+    type: liberal_depense
+    rubrique: personal_social_mandatory
+    montant: "1840.00"
+    libelle: "Cotisations URSSAF et caisse de retraite"
+    tiers: Urssaf
+    moyen: transfer
+  - date: N-08-07
+    type: liberal_recette
+    montant: "681.50"
+    libelle: "Honoraires de la semaine (tiers payant et patients)"
+    moyen: transfer
+  - {date: N-08-10, type: liberal_recette, montant: "330.00", libelle: "Séances à domicile", moyen: cheque}
+  - date: N-08-12
+    type: liberal_depense
+    rubrique: vehicle
+    montant: "146.00"
+    libelle: "Carburant et entretien du véhicule"
+    tiers: "Garage du Mail"
+    part_privee: "33"
+    moyen: card
+  - date: N-08-14
+    type: liberal_recette
+    montant: "708.00"
+    libelle: "Honoraires de la semaine (tiers payant et patients)"
+    moyen: transfer
+  - date: N-08-15
+    type: liberal_depense
+    rubrique: utilities
+    montant: "58.40"
+    libelle: "Électricité du cabinet"
+    tiers: "Énergies Val de Loire"
+    moyen: transfer
+  - date: N-08-18
+    type: liberal_depense
+    rubrique: office
+    montant: "43.00"
+    libelle: "Téléphone, internet et petites fournitures"
+    tiers: "Télécom Blésois"
+    moyen: transfer
+  - date: N-08-21
+    type: liberal_recette
+    montant: "604.50"
+    libelle: "Honoraires de la semaine (tiers payant et patients)"
+    moyen: transfer
+  - date: N-08-25
+    type: liberal_depense
+    rubrique: purchases
+    montant: "81.00"
+    libelle: "Huiles de massage et consommables"
+    tiers: "Kiné Fournitures"
+    moyen: transfer
+  - date: N-08-28
+    type: liberal_recette
+    montant: "631.00"
+    libelle: "Honoraires de la semaine (tiers payant et patients)"
+    moyen: transfer
+  - date: N-08-28
+    type: liberal_depense
+    rubrique: withdrawal
+    montant: "2400.00"
+    libelle: "Prélèvement personnel"
+    moyen: transfer
+  - date: N-09-02
+    type: liberal_depense
+    rubrique: rent
+    montant: "680.00"
+    libelle: "Loyer du cabinet"
+    tiers: "SCI du Mail"
+    moyen: transfer
+  - date: N-09-07
+    type: liberal_recette
+    montant: "1400.00"
+    libelle: "Honoraires de la semaine (tiers payant et patients)"
+    moyen: transfer
+  - {date: N-09-10, type: liberal_recette, montant: "240.00", libelle: "Séances à domicile", moyen: cheque}
+  - date: N-09-12
+    type: liberal_depense
+    rubrique: vehicle
+    montant: "110.00"
+    libelle: "Carburant et entretien du véhicule"
+    tiers: "Garage du Mail"
+    part_privee: "33"
+    moyen: card
+  - date: N-09-14
+    type: liberal_recette
+    montant: "1193.00"
+    libelle: "Honoraires de la semaine (tiers payant et patients)"
+    moyen: transfer
+  - date: N-09-15
+    type: liberal_depense
+    rubrique: utilities
+    montant: "58.40"
+    libelle: "Électricité du cabinet"
+    tiers: "Énergies Val de Loire"
+    moyen: transfer
+  - date: N-09-18
+    type: liberal_depense
+    rubrique: office
+    montant: "54.00"
+    libelle: "Téléphone, internet et petites fournitures"
+    tiers: "Télécom Blésois"
+    moyen: transfer
+  - date: N-09-21
+    type: liberal_recette
+    montant: "1246.00"
+    libelle: "Honoraires de la semaine (tiers payant et patients)"
+    moyen: transfer
+  - date: N-09-25
+    type: liberal_depense
+    rubrique: purchases
+    montant: "45.00"
+    libelle: "Huiles de massage et consommables"
+    tiers: "Kiné Fournitures"
+    moyen: transfer
+  - date: N-09-28
+    type: liberal_recette
+    montant: "1299.00"
+    libelle: "Honoraires de la semaine (tiers payant et patients)"
+    moyen: transfer
+  - date: N-09-28
+    type: liberal_depense
+    rubrique: withdrawal
+    montant: "2400.00"
+    libelle: "Prélèvement personnel"
+    moyen: transfer
+  - date: N-10-02
+    type: liberal_depense
+    rubrique: rent
+    montant: "680.00"
+    libelle: "Loyer du cabinet"
+    tiers: "SCI du Mail"
+    moyen: transfer
+  - date: N-10-07
+    type: liberal_recette
+    montant: "1437.00"
+    libelle: "Honoraires de la semaine (tiers payant et patients)"
+    moyen: transfer
+  - {date: N-10-10, type: liberal_recette, montant: "270.00", libelle: "Séances à domicile", moyen: cheque}
+  - date: N-10-12
+    type: liberal_depense
+    rubrique: vehicle
+    montant: "119.00"
+    libelle: "Carburant et entretien du véhicule"
+    tiers: "Garage du Mail"
+    part_privee: "33"
+    moyen: card
+  - date: N-10-14
+    type: liberal_recette
+    montant: "1230.00"
+    libelle: "Honoraires de la semaine (tiers payant et patients)"
+    moyen: transfer
+  - date: N-10-15
+    type: liberal_depense
+    rubrique: utilities
+    montant: "58.40"
+    libelle: "Électricité du cabinet"
+    tiers: "Énergies Val de Loire"
+    moyen: transfer
+  - date: N-10-18
+    type: liberal_depense
+    rubrique: office
+    montant: "32.00"
+    libelle: "Téléphone, internet et petites fournitures"
+    tiers: "Télécom Blésois"
+    moyen: transfer
+  - date: N-10-21
+    type: liberal_recette
+    montant: "1283.00"
+    libelle: "Honoraires de la semaine (tiers payant et patients)"
+    moyen: transfer
+  - date: N-10-25
+    type: liberal_depense
+    rubrique: purchases
+    montant: "57.00"
+    libelle: "Huiles de massage et consommables"
+    tiers: "Kiné Fournitures"
+    moyen: transfer
+  - date: N-10-28
+    type: liberal_recette
+    montant: "1336.00"
+    libelle: "Honoraires de la semaine (tiers payant et patients)"
+    moyen: transfer
+  - date: N-10-28
+    type: liberal_depense
+    rubrique: withdrawal
+    montant: "2400.00"
+    libelle: "Prélèvement personnel"
+    moyen: transfer
+  - date: N-11-02
+    type: liberal_depense
+    rubrique: rent
+    montant: "680.00"
+    libelle: "Loyer du cabinet"
+    tiers: "SCI du Mail"
+    moyen: transfer
+  - date: N-11-05
+    type: liberal_depense
+    rubrique: personal_social_mandatory
+    montant: "1840.00"
+    libelle: "Cotisations URSSAF et caisse de retraite"
+    tiers: Urssaf
+    moyen: transfer
+  - date: N-11-07
+    type: liberal_recette
+    montant: "1214.00"
+    libelle: "Honoraires de la semaine (tiers payant et patients)"
+    moyen: transfer
+  - {date: N-11-10, type: liberal_recette, montant: "300.00", libelle: "Séances à domicile", moyen: cheque}
+  - date: N-11-12
+    type: liberal_depense
+    rubrique: vehicle
+    montant: "128.00"
+    libelle: "Carburant et entretien du véhicule"
+    tiers: "Garage du Mail"
+    part_privee: "33"
+    moyen: card
+  - date: N-11-14
+    type: liberal_recette
+    montant: "1267.00"
+    libelle: "Honoraires de la semaine (tiers payant et patients)"
+    moyen: transfer
+  - date: N-11-15
+    type: liberal_depense
+    rubrique: utilities
+    montant: "58.40"
+    libelle: "Électricité du cabinet"
+    tiers: "Énergies Val de Loire"
+    moyen: transfer
+  - date: N-11-18
+    type: liberal_depense
+    rubrique: office
+    montant: "43.00"
+    libelle: "Téléphone, internet et petites fournitures"
+    tiers: "Télécom Blésois"
+    moyen: transfer
+  - date: N-11-21
+    type: liberal_recette
+    montant: "1320.00"
+    libelle: "Honoraires de la semaine (tiers payant et patients)"
+    moyen: transfer
+  - date: N-11-25
+    type: liberal_depense
+    rubrique: purchases
+    montant: "69.00"
+    libelle: "Huiles de massage et consommables"
+    tiers: "Kiné Fournitures"
+    moyen: transfer
+  - date: N-11-28
+    type: liberal_recette
+    montant: "1373.00"
+    libelle: "Honoraires de la semaine (tiers payant et patients)"
+    moyen: transfer
+  - date: N-11-28
+    type: liberal_depense
+    rubrique: withdrawal
+    montant: "2400.00"
+    libelle: "Prélèvement personnel"
+    moyen: transfer
+  - date: N-12-02
+    type: liberal_depense
+    rubrique: rent
+    montant: "680.00"
+    libelle: "Loyer du cabinet"
+    tiers: "SCI du Mail"
+    moyen: transfer
+  - date: N-12-07
+    type: liberal_recette
+    montant: "1251.00"
+    libelle: "Honoraires de la semaine (tiers payant et patients)"
+    moyen: transfer
+  - {date: N-12-10, type: liberal_recette, montant: "330.00", libelle: "Séances à domicile", moyen: cheque}
+  - date: N-12-12
+    type: liberal_depense
+    rubrique: vehicle
+    montant: "137.00"
+    libelle: "Carburant et entretien du véhicule"
+    tiers: "Garage du Mail"
+    part_privee: "33"
+    moyen: card
+  - date: N-12-14
+    type: liberal_recette
+    montant: "1304.00"
+    libelle: "Honoraires de la semaine (tiers payant et patients)"
+    moyen: transfer
+  - date: N-12-15
+    type: liberal_depense
+    rubrique: utilities
+    montant: "58.40"
+    libelle: "Électricité du cabinet"
+    tiers: "Énergies Val de Loire"
+    moyen: transfer
+  - date: N-12-18
+    type: liberal_depense
+    rubrique: office
+    montant: "54.00"
+    libelle: "Téléphone, internet et petites fournitures"
+    tiers: "Télécom Blésois"
+    moyen: transfer
+  - date: N-12-21
+    type: liberal_recette
+    montant: "1357.00"
+    libelle: "Honoraires de la semaine (tiers payant et patients)"
+    moyen: transfer
+  - date: N-12-25
+    type: liberal_depense
+    rubrique: purchases
+    montant: "81.00"
+    libelle: "Huiles de massage et consommables"
+    tiers: "Kiné Fournitures"
+    moyen: transfer
+  - date: N-12-28
+    type: liberal_recette
+    montant: "1410.00"
+    libelle: "Honoraires de la semaine (tiers payant et patients)"
+    moyen: transfer
+  - date: N-12-28
+    type: liberal_depense
+    rubrique: withdrawal
+    montant: "2400.00"
+    libelle: "Prélèvement personnel"
+    moyen: transfer
+fin:
+  - {type: liberal_cloture, exercice: N-1}
+  - type: teledeclarations
+    declarations: [{nature: liasse, exercice: N-1}]

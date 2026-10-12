@@ -1,0 +1,14 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# Grands totaux attendus du dossier « foyer » (exercice N-1 complet).
+format: 1
+controles:
+  - {type: balance_equilibree, exercice: N-1}
+  - {type: balance_equilibree, exercice: "N"}
+  - {type: solde_comptes, exercice: N-1, prefixe: "512001", sens: debit, montant: "12340.50"}
+  - {type: solde_comptes, exercice: N-1, prefixe: "514001", sens: debit, montant: "19971.20"}
+  - {type: solde_comptes, exercice: N-1, prefixe: "2711", sens: debit, montant: "35332.40"}
+  - {type: solde_comptes, exercice: N-1, prefixe: "164", sens: credit, montant: "157800.00"}
+  - {type: solde_comptes, exercice: N-1, prefixe: "7", sens: credit, montant: "58570.84"}
+  - {type: solde_comptes, exercice: N-1, prefixe: "6", sens: debit, montant: "26476.74"}
+  - {type: releves, exercice: N-1, nombre: 12}
+  - {type: previsions, nombre: 1}

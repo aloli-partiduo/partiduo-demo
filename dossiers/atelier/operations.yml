@@ -1,0 +1,4033 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# Opérations datées du dossier « atelier » : exercice N-1 complet, exercice N
+# jusqu'au jour du chargement (les opérations postérieures ne sont pas
+# jouées). Format : doc/format-dossiers.adoc.
+format: 1
+operations:
+  - date: N-1-01-01
+    type: ecriture
+    journal: divers
+    libelle: "Reprise des soldes au 1er janvier"
+    piece: "AN-{aaaa}"
+    lignes:
+      - {compte: "510001", debit: "24350"}
+      - {compte: "2154", debit: "38000"}
+      - {compte: "311", debit: "4200"}
+      - {compte: "28154", credit: "12600"}
+      - {compte: "101", credit: "20000"}
+      - {compte: "1061", credit: "2000"}
+      - {compte: "110", credit: "11950"}
+      - {compte: "164", credit: "20000"}
+  - date: N-1-01-01
+    type: inventaire
+    libelle: "Inventaire d'ouverture"
+    lignes:
+      - {article: ETAG, quantite: 12, cout: "48"}
+      - {article: TABLE, quantite: 3, cout: "260"}
+      - {article: BIBLIO, quantite: 4, cout: "430"}
+      - {article: PL-CHENE, quantite: 40, cout: "68"}
+      - {article: PL-NOYER, quantite: 20, cout: "95"}
+  - date: N-1-01-03
+    type: achat
+    si: {avant: M-1-01}
+    fournisseur: FOU-SCIERIE
+    numero: "SVL-{aaaa}-0107"
+    libelle: "Plateaux de chêne et de noyer"
+    lignes:
+      - {article: PL-CHENE, quantite: 12, prix: "68", taux: NOR}
+      - {article: PL-NOYER, quantite: 6, prix: "95", taux: NOR}
+    copie: true
+    ventilation: true
+    reglement: {delai: 30}
+  - date: N-1-01-03
+    type: facture_plateforme
+    si: {depuis: M-1-01}
+    fournisseur: FOU-SCIERIE
+    numero: "SVL-{aaaa}-0107"
+    libelle: "Plateaux de chêne et de noyer"
+    note: "Plateaux de bois massif"
+    taux: "20"
+    lignes:
+      - {libelle: "Plateau chêne 27 mm", quantite: 12, prix: "68", unite: MTK}
+      - {libelle: "Plateau noyer 27 mm", quantite: 6, prix: "95", unite: MTK}
+    comptabiliser: {avant: M-01}
+    reglement: {delai: 30}
+  - date: N-1-01-05
+    type: achat
+    fournisseur: FOU-SCI
+    numero: "LOYER-{aaaa}-{mm}"
+    libelle: "Loyer {mm}/{aaaa}"
+    lignes: [{compte: "6132", montant: "1200", taux: NOR, libelle: "Loyer de l'atelier"}]
+    copie: true
+    reglement: {delai: 0}
+  - date: N-1-01-06
+    type: facture
+    client: CLI-MOREAU
+    objet: "Pose d'étagères"
+    categorie: mixed
+    lignes: [{article: ETAG, quantite: 2}, {article: POSE, quantite: 3}]
+    reglement: {delai: 21}
+  - date: N-1-01-08
+    type: devis
+    client: CLI-MARINIERS
+    objet: "Projet d'agencement n° 1"
+    categorie: mixed
+    lignes: [{article: AGENC, quantite: 8}, {article: BIBLIO, quantite: 2}, {article: POSE, quantite: 16}]
+    acceptation:
+      delai: 7
+      acompte: "30"
+      reglement_acompte: {delai: 8}
+      facture_finale:
+        delai: 30
+        reglement: {delai: 30}
+  - date: N-1-01-10
+    type: achat
+    fournisseur: FOU-ENERGIE
+    numero: "ECL-{aaaa}{mm}-4000"
+    libelle: "Électricité {mm}/{aaaa}"
+    lignes: [{compte: "6061", montant: "250", taux: NOR, libelle: "Électricité de l'atelier"}]
+    copie: true
+    reglement: {delai: 12}
+  - date: N-1-01-10
+    type: achat
+    fournisseur: FOU-TELECOM
+    numero: "TT-{aaaa}{mm}-88"
+    libelle: "Télécommunications {mm}/{aaaa}"
+    lignes: [{compte: "626", montant: "54.90", taux: NOR, libelle: "Téléphone et internet"}]
+    copie: true
+    reglement: {delai: 8}
+  - date: N-1-01-11
+    type: facture
+    client: CLI-MARINIERS
+    objet: Agencement
+    categorie: services
+    lignes: [{article: AGENC, quantite: 5}, {article: POSE, quantite: 12}]
+    reglement: {delai: 35}
+  - date: N-1-01-12
+    type: achat
+    fournisseur: FOU-ASSUR
+    numero: "MAC-{aaaa}-T1"
+    libelle: "Assurance du trimestre"
+    lignes: [{compte: "616", montant: "486", libelle: "Multirisque professionnelle (trimestre)"}]
+    copie: true
+    reglement: {delai: 10}
+  - date: N-1-01-14
+    type: justificatif
+    fichier: "ticket-carburant-{aaaa}{mm}{jj}.png"
+    source: photo
+    genre: ticket
+    fournisseur: FOU-STATION
+    nom_fournisseur: "Station-service du Cher"
+    montant: "58.50"
+    reference: "T{aa}{mm}{jj}"
+    image:
+      modele: ticket
+      enseigne: "STATION DU CHER"
+      adresse: "ROUTE DE SAVONNIERES 37510 BALLAN-MIRE"
+      lignes: [{libelle: "GAZOLE 30,00 L", montant: "58.50"}]
+      tva: "9.75"
+      paiement: CARTE
+      couleur: [33, 102, 172]
+    saisie:
+      si: {avant: M-01}
+      libelle: "Carburant du camion"
+      numero: "T{aa}{mm}{jj}"
+      lignes: [{compte: "6061", montant: "48.75", taux: NOR, tva: "9.75", libelle: Gazole}]
+      reglement: {delai: 0, libelle: Carburant}
+  - date: N-1-01-17
+    type: facture
+    client: CLI-GIRARD
+    objet: "Mobilier sur mesure"
+    categorie: goods
+    lignes: [{article: TABLE, quantite: 1}, {article: BIBLIO, quantite: 1}]
+    reglement: {delai: 28}
+  - date: N-1-01-20
+    type: mouvement_stock
+    libelle: "Fabrication du mois à l'atelier"
+    lignes:
+      - {article: ETAG, quantite: 4, cout: "48"}
+      - {article: TABLE, quantite: 2, cout: "260"}
+      - {article: BIBLIO, quantite: 3, cout: "430"}
+      - {article: PL-CHENE, quantite: -10}
+      - {article: PL-NOYER, quantite: -5}
+  - date: N-1-01-24
+    type: facture
+    client: CLI-BERNARD
+    objet: "Étude et relevés"
+    categorie: services
+    lignes: [{article: CONCEPT, quantite: 1}, {article: POSE, quantite: 4}]
+    reglement: {delai: 30}
+  - date: N-1-01-28
+    type: ecriture
+    journal: divers
+    libelle: "Salaires {mm}/{aaaa}"
+    piece: "PAIE-{aaaa}{mm}"
+    lignes:
+      - {compte: "641", debit: "3400"}
+      - {compte: "645", debit: "1380"}
+      - {compte: "421", credit: "2640"}
+      - {compte: "431", credit: "2140"}
+  - date: N-1-01-28
+    type: banque
+    lignes: [{compte: "421", montant: "-2640", libelle: "Virement des salaires nets"}]
+  - date: N-1-01-28
+    type: banque
+    lignes:
+      - {compte: "164", montant: "-380", libelle: "Échéance d'emprunt (capital)"}
+      - {compte: "661", montant: "-42", libelle: "Échéance d'emprunt (intérêts)"}
+      - {compte: "627", montant: "-14.90", libelle: "Frais de tenue de compte"}
+  - {date: N-1-02-03, type: rapprochement, mois: N-1-01}
+  - date: N-1-02-03
+    type: achat
+    si: {avant: M-1-01}
+    fournisseur: FOU-SCIERIE
+    numero: "SVL-{aaaa}-0114"
+    libelle: "Plateaux de chêne et de noyer"
+    lignes:
+      - {article: PL-CHENE, quantite: 13, prix: "68", taux: NOR}
+      - {article: PL-NOYER, quantite: 7, prix: "95", taux: NOR}
+    copie: true
+    ventilation: true
+    reglement: {delai: 30}
+  - date: N-1-02-03
+    type: facture_plateforme
+    si: {depuis: M-1-01}
+    fournisseur: FOU-SCIERIE
+    numero: "SVL-{aaaa}-0114"
+    libelle: "Plateaux de chêne et de noyer"
+    note: "Plateaux de bois massif"
+    taux: "20"
+    lignes:
+      - {libelle: "Plateau chêne 27 mm", quantite: 13, prix: "68", unite: MTK}
+      - {libelle: "Plateau noyer 27 mm", quantite: 7, prix: "95", unite: MTK}
+    comptabiliser: {avant: M-01}
+    reglement: {delai: 30}
+  - date: N-1-02-05
+    type: achat
+    fournisseur: FOU-SCI
+    numero: "LOYER-{aaaa}-{mm}"
+    libelle: "Loyer {mm}/{aaaa}"
+    lignes: [{compte: "6132", montant: "1200", taux: NOR, libelle: "Loyer de l'atelier"}]
+    copie: true
+    reglement: {delai: 0}
+  - date: N-1-02-06
+    type: facture
+    client: CLI-GIRARD
+    objet: "Pose d'étagères"
+    categorie: mixed
+    lignes: [{article: ETAG, quantite: 3}, {article: POSE, quantite: 4}]
+    reglement: {delai: 21}
+  - date: N-1-02-08
+    type: devis
+    client: CLI-PAINDORE
+    objet: "Projet d'agencement n° 2"
+    categorie: mixed
+    lignes: [{article: AGENC, quantite: 9}, {article: BIBLIO, quantite: 3}, {article: POSE, quantite: 16}]
+    refus: {delai: 12}
+  - date: N-1-02-09
+    type: achat
+    fournisseur: FOU-QUINC
+    numero: "QR-{aaaa}{mm}-26"
+    libelle: "Quincaillerie et consommables"
+    lignes:
+      - {article: QUINC, quantite: 5, prix: "38", taux: NOR}
+      - {compte: "6063", montant: "64.50", taux: NOR, libelle: "Abrasifs et lames de scie"}
+    copie: true
+    ventilation: true
+    reglement: {delai: 30}
+  - date: N-1-02-10
+    type: achat
+    fournisseur: FOU-ENERGIE
+    numero: "ECL-{aaaa}{mm}-4001"
+    libelle: "Électricité {mm}/{aaaa}"
+    lignes: [{compte: "6061", montant: "257", taux: NOR, libelle: "Électricité de l'atelier"}]
+    copie: true
+    reglement: {delai: 12}
+  - date: N-1-02-10
+    type: achat
+    fournisseur: FOU-TELECOM
+    numero: "TT-{aaaa}{mm}-88"
+    libelle: "Télécommunications {mm}/{aaaa}"
+    lignes: [{compte: "626", montant: "54.90", taux: NOR, libelle: "Téléphone et internet"}]
+    copie: true
+    reglement: {delai: 8}
+  - date: N-1-02-11
+    type: facture
+    client: CLI-PAINDORE
+    objet: Agencement
+    categorie: services
+    lignes: [{article: AGENC, quantite: 6}, {article: POSE, quantite: 14}]
+    reglement: {delai: 35}
+  - date: N-1-01-28+17j
+    type: banque
+    lignes: [{compte: "431", montant: "-2140", libelle: "Prélèvement URSSAF (cotisations)"}]
+  - date: N-1-02-14
+    type: justificatif
+    fichier: "ticket-carburant-{aaaa}{mm}{jj}.png"
+    source: photo
+    genre: ticket
+    fournisseur: FOU-STATION
+    nom_fournisseur: "Station-service du Cher"
+    montant: "65.70"
+    reference: "T{aa}{mm}{jj}"
+    image:
+      modele: ticket
+      enseigne: "STATION DU CHER"
+      adresse: "ROUTE DE SAVONNIERES 37510 BALLAN-MIRE"
+      lignes: [{libelle: "GAZOLE 31,10 L", montant: "65.70"}]
+      tva: "10.95"
+      paiement: CARTE
+      couleur: [33, 102, 172]
+    saisie:
+      si: {avant: M-01}
+      libelle: "Carburant du camion"
+      numero: "T{aa}{mm}{jj}"
+      lignes: [{compte: "6061", montant: "54.75", taux: NOR, tva: "10.95", libelle: Gazole}]
+      reglement: {delai: 0, libelle: Carburant}
+  - date: N-1-02-15
+    type: declaration_tva
+    formulaire: fr_ca3
+    periodicite: month
+    periode: N-1-01
+    journal: divers
+    paiement: {delai: 5, compte: "44551", libelle: "TVA de {periode} (télépaiement)"}
+  - date: N-1-02-17
+    type: facture
+    client: CLI-BERNARD
+    objet: "Mobilier sur mesure"
+    categorie: goods
+    lignes: [{article: TABLE, quantite: 2}, {article: BIBLIO, quantite: 2}]
+    reglement: {delai: 28}
+  - date: N-1-02-20
+    type: mouvement_stock
+    libelle: "Fabrication du mois à l'atelier"
+    lignes:
+      - {article: ETAG, quantite: 5, cout: "48"}
+      - {article: TABLE, quantite: 2, cout: "260"}
+      - {article: BIBLIO, quantite: 4, cout: "430"}
+      - {article: PL-CHENE, quantite: -11}
+      - {article: PL-NOYER, quantite: -6}
+  - date: N-1-02-24
+    type: facture
+    client: CLI-MARINIERS
+    objet: "Étude et relevés"
+    categorie: services
+    lignes: [{article: CONCEPT, quantite: 1}, {article: POSE, quantite: 5}]
+    reglement: {delai: 30}
+  - date: N-1-02-28
+    type: ecriture
+    journal: divers
+    libelle: "Salaires {mm}/{aaaa}"
+    piece: "PAIE-{aaaa}{mm}"
+    lignes:
+      - {compte: "641", debit: "3400"}
+      - {compte: "645", debit: "1380"}
+      - {compte: "421", credit: "2640"}
+      - {compte: "431", credit: "2140"}
+  - date: N-1-02-28
+    type: banque
+    lignes: [{compte: "421", montant: "-2640", libelle: "Virement des salaires nets"}]
+  - date: N-1-02-28
+    type: banque
+    lignes:
+      - {compte: "164", montant: "-380", libelle: "Échéance d'emprunt (capital)"}
+      - {compte: "661", montant: "-42", libelle: "Échéance d'emprunt (intérêts)"}
+      - {compte: "627", montant: "-14.90", libelle: "Frais de tenue de compte"}
+  - {date: N-1-03-03, type: rapprochement, mois: N-1-02}
+  - date: N-1-03-03
+    type: achat
+    si: {avant: M-1-01}
+    fournisseur: FOU-SCIERIE
+    numero: "SVL-{aaaa}-0121"
+    libelle: "Plateaux de chêne et de noyer"
+    lignes:
+      - {article: PL-CHENE, quantite: 14, prix: "68", taux: NOR}
+      - {article: PL-NOYER, quantite: 8, prix: "95", taux: NOR}
+    copie: true
+    ventilation: true
+    reglement: {delai: 30}
+  - date: N-1-03-03
+    type: facture_plateforme
+    si: {depuis: M-1-01}
+    fournisseur: FOU-SCIERIE
+    numero: "SVL-{aaaa}-0121"
+    libelle: "Plateaux de chêne et de noyer"
+    note: "Plateaux de bois massif"
+    taux: "20"
+    lignes:
+      - {libelle: "Plateau chêne 27 mm", quantite: 14, prix: "68", unite: MTK}
+      - {libelle: "Plateau noyer 27 mm", quantite: 8, prix: "95", unite: MTK}
+    comptabiliser: {avant: M-01}
+    reglement: {delai: 30}
+  - date: N-1-03-05
+    type: achat
+    fournisseur: FOU-SCI
+    numero: "LOYER-{aaaa}-{mm}"
+    libelle: "Loyer {mm}/{aaaa}"
+    lignes: [{compte: "6132", montant: "1200", taux: NOR, libelle: "Loyer de l'atelier"}]
+    copie: true
+    reglement: {delai: 0}
+  - date: N-1-03-06
+    type: facture
+    client: CLI-BERNARD
+    objet: "Pose d'étagères"
+    categorie: mixed
+    lignes: [{article: ETAG, quantite: 4}, {article: POSE, quantite: 5}]
+    avoir:
+      delai: 6
+      motif: "Étagère au vernis défectueux, reprise"
+      categorie: goods
+      lignes: [{article: ETAG, quantite: 1}]
+    reglement: {delai: 21}
+  - date: N-1-03-08
+    type: devis
+    client: CLI-AUBERT
+    objet: "Projet d'agencement n° 3"
+    categorie: mixed
+    lignes: [{article: AGENC, quantite: 10}, {article: BIBLIO, quantite: 2}, {article: POSE, quantite: 16}]
+    acceptation:
+      delai: 7
+      acompte: "30"
+      reglement_acompte: {delai: 8}
+      facture_finale:
+        delai: 30
+        reglement: {delai: 30}
+  - date: N-1-03-10
+    type: achat
+    fournisseur: FOU-ENERGIE
+    numero: "ECL-{aaaa}{mm}-4002"
+    libelle: "Électricité {mm}/{aaaa}"
+    lignes: [{compte: "6061", montant: "174", taux: NOR, libelle: "Électricité de l'atelier"}]
+    copie: true
+    reglement: {delai: 12}
+  - date: N-1-03-10
+    type: achat
+    fournisseur: FOU-TELECOM
+    numero: "TT-{aaaa}{mm}-88"
+    libelle: "Télécommunications {mm}/{aaaa}"
+    lignes: [{compte: "626", montant: "54.90", taux: NOR, libelle: "Téléphone et internet"}]
+    copie: true
+    reglement: {delai: 8}
+  - date: N-1-03-11
+    type: facture
+    client: CLI-AUBERT
+    objet: Agencement
+    categorie: services
+    lignes: [{article: AGENC, quantite: 7}, {article: POSE, quantite: 16}]
+    reglement: {delai: 35}
+  - date: N-1-03-14
+    type: justificatif
+    fichier: "ticket-carburant-{aaaa}{mm}{jj}.png"
+    source: photo
+    genre: ticket
+    fournisseur: FOU-STATION
+    nom_fournisseur: "Station-service du Cher"
+    montant: "72.90"
+    reference: "T{aa}{mm}{jj}"
+    image:
+      modele: ticket
+      enseigne: "STATION DU CHER"
+      adresse: "ROUTE DE SAVONNIERES 37510 BALLAN-MIRE"
+      lignes: [{libelle: "GAZOLE 32,20 L", montant: "72.90"}]
+      tva: "12.15"
+      paiement: CARTE
+      couleur: [33, 102, 172]
+    saisie:
+      si: {avant: M-01}
+      libelle: "Carburant du camion"
+      numero: "T{aa}{mm}{jj}"
+      lignes: [{compte: "6061", montant: "60.75", taux: NOR, tva: "12.15", libelle: Gazole}]
+      reglement: {delai: 0, libelle: Carburant}
+  - date: N-1-03-15
+    type: declaration_tva
+    formulaire: fr_ca3
+    periodicite: month
+    periode: N-1-02
+    journal: divers
+    paiement: {delai: 5, compte: "44551", libelle: "TVA de {periode} (télépaiement)"}
+  - date: N-1-02-28+17j
+    type: banque
+    lignes: [{compte: "431", montant: "-2140", libelle: "Prélèvement URSSAF (cotisations)"}]
+  - date: N-1-03-17
+    type: facture
+    client: CLI-MARINIERS
+    objet: "Mobilier sur mesure"
+    categorie: goods
+    lignes: [{article: TABLE, quantite: 1}, {article: BIBLIO, quantite: 3}]
+    reglement: {delai: 28}
+  - date: N-1-03-18
+    type: achat
+    fournisseur: FOU-GARNIER
+    numero: "HG-{aaaa}-3"
+    libelle: "Honoraires d'architecte d'intérieur"
+    lignes: [{compte: "6226", montant: "1650", libelle: "Plans d'aménagement intérieur"}]
+    copie: true
+    reglement: {delai: 20}
+  - date: N-1-03-20
+    type: mouvement_stock
+    libelle: "Fabrication du mois à l'atelier"
+    lignes:
+      - {article: ETAG, quantite: 6, cout: "48"}
+      - {article: TABLE, quantite: 2, cout: "260"}
+      - {article: BIBLIO, quantite: 3, cout: "430"}
+      - {article: PL-CHENE, quantite: -12}
+      - {article: PL-NOYER, quantite: -7}
+  - date: N-1-03-22
+    type: achat
+    fournisseur: FOU-EXPERT
+    numero: "DA-{aaaa}-{mm}"
+    libelle: "Honoraires comptables"
+    lignes: [{compte: "6226", montant: "950", taux: NOR, libelle: "Tenue et révision"}]
+    copie: true
+    reglement: {delai: 30}
+  - date: N-1-03-24
+    type: facture
+    client: CLI-PAINDORE
+    objet: "Étude et relevés"
+    categorie: services
+    lignes: [{article: CONCEPT, quantite: 1}, {article: POSE, quantite: 6}]
+    reglement: {delai: 30}
+  - date: N-1-03-28
+    type: ecriture
+    journal: divers
+    libelle: "Salaires {mm}/{aaaa}"
+    piece: "PAIE-{aaaa}{mm}"
+    lignes:
+      - {compte: "641", debit: "3400"}
+      - {compte: "645", debit: "1380"}
+      - {compte: "421", credit: "2640"}
+      - {compte: "431", credit: "2140"}
+  - date: N-1-03-28
+    type: banque
+    lignes: [{compte: "421", montant: "-2640", libelle: "Virement des salaires nets"}]
+  - date: N-1-03-28
+    type: banque
+    lignes:
+      - {compte: "164", montant: "-380", libelle: "Échéance d'emprunt (capital)"}
+      - {compte: "661", montant: "-42", libelle: "Échéance d'emprunt (intérêts)"}
+      - {compte: "627", montant: "-14.90", libelle: "Frais de tenue de compte"}
+  - {date: N-1-04-03, type: rapprochement, mois: N-1-03}
+  - date: N-1-04-03
+    type: achat
+    si: {avant: M-1-01}
+    fournisseur: FOU-SCIERIE
+    numero: "SVL-{aaaa}-0128"
+    libelle: "Plateaux de chêne et de noyer"
+    lignes:
+      - {article: PL-CHENE, quantite: 15, prix: "68", taux: NOR}
+      - {article: PL-NOYER, quantite: 6, prix: "95", taux: NOR}
+    copie: true
+    ventilation: true
+    reglement: {delai: 30}
+  - date: N-1-04-03
+    type: facture_plateforme
+    si: {depuis: M-1-01}
+    fournisseur: FOU-SCIERIE
+    numero: "SVL-{aaaa}-0128"
+    libelle: "Plateaux de chêne et de noyer"
+    note: "Plateaux de bois massif"
+    taux: "20"
+    lignes:
+      - {libelle: "Plateau chêne 27 mm", quantite: 15, prix: "68", unite: MTK}
+      - {libelle: "Plateau noyer 27 mm", quantite: 6, prix: "95", unite: MTK}
+    comptabiliser: {avant: M-01}
+    reglement: {delai: 30}
+  - date: N-1-04-05
+    type: achat
+    fournisseur: FOU-SCI
+    numero: "LOYER-{aaaa}-{mm}"
+    libelle: "Loyer {mm}/{aaaa}"
+    lignes: [{compte: "6132", montant: "1200", taux: NOR, libelle: "Loyer de l'atelier"}]
+    copie: true
+    reglement: {delai: 0}
+  - date: N-1-04-06
+    type: facture
+    client: CLI-MOREAU
+    objet: "Pose d'étagères"
+    categorie: mixed
+    lignes: [{article: ETAG, quantite: 2}, {article: POSE, quantite: 3}]
+    reglement: {delai: 21}
+  - date: N-1-04-08
+    type: devis
+    client: CLI-GUINGUETTE
+    objet: "Projet d'agencement n° 4"
+    categorie: mixed
+    lignes: [{article: AGENC, quantite: 11}, {article: BIBLIO, quantite: 3}, {article: POSE, quantite: 16}]
+  - date: N-1-04-09
+    type: achat
+    fournisseur: FOU-QUINC
+    numero: "QR-{aaaa}{mm}-52"
+    libelle: "Quincaillerie et consommables"
+    lignes:
+      - {article: QUINC, quantite: 4, prix: "38", taux: NOR}
+      - {compte: "6063", montant: "64.50", taux: NOR, libelle: "Abrasifs et lames de scie"}
+    copie: true
+    ventilation: true
+    reglement: {delai: 30}
+  - date: N-1-04-10
+    type: achat
+    fournisseur: FOU-ENERGIE
+    numero: "ECL-{aaaa}{mm}-4003"
+    libelle: "Électricité {mm}/{aaaa}"
+    lignes: [{compte: "6061", montant: "181", taux: NOR, libelle: "Électricité de l'atelier"}]
+    copie: true
+    reglement: {delai: 12}
+  - date: N-1-04-10
+    type: achat
+    fournisseur: FOU-TELECOM
+    numero: "TT-{aaaa}{mm}-88"
+    libelle: "Télécommunications {mm}/{aaaa}"
+    lignes: [{compte: "626", montant: "54.90", taux: NOR, libelle: "Téléphone et internet"}]
+    copie: true
+    reglement: {delai: 8}
+  - date: N-1-04-11
+    type: facture
+    client: CLI-GUINGUETTE
+    objet: Agencement
+    categorie: services
+    lignes: [{article: AGENC, quantite: 5}, {article: POSE, quantite: 12}]
+    reglement: {delai: 75}
+  - date: N-1-04-12
+    type: achat
+    fournisseur: FOU-ASSUR
+    numero: "MAC-{aaaa}-T2"
+    libelle: "Assurance du trimestre"
+    lignes: [{compte: "616", montant: "486", libelle: "Multirisque professionnelle (trimestre)"}]
+    copie: true
+    reglement: {delai: 10}
+  - date: N-1-03-28+17j
+    type: banque
+    lignes: [{compte: "431", montant: "-2140", libelle: "Prélèvement URSSAF (cotisations)"}]
+  - date: N-1-04-14
+    type: justificatif
+    fichier: "ticket-carburant-{aaaa}{mm}{jj}.png"
+    source: photo
+    genre: ticket
+    fournisseur: FOU-STATION
+    nom_fournisseur: "Station-service du Cher"
+    montant: "80.10"
+    reference: "T{aa}{mm}{jj}"
+    image:
+      modele: ticket
+      enseigne: "STATION DU CHER"
+      adresse: "ROUTE DE SAVONNIERES 37510 BALLAN-MIRE"
+      lignes: [{libelle: "GAZOLE 33,30 L", montant: "80.10"}]
+      tva: "13.35"
+      paiement: CARTE
+      couleur: [33, 102, 172]
+    saisie:
+      si: {avant: M-01}
+      libelle: "Carburant du camion"
+      numero: "T{aa}{mm}{jj}"
+      lignes: [{compte: "6061", montant: "66.75", taux: NOR, tva: "13.35", libelle: Gazole}]
+      reglement: {delai: 0, libelle: Carburant}
+  - date: N-1-04-15
+    type: declaration_tva
+    formulaire: fr_ca3
+    periodicite: month
+    periode: N-1-03
+    journal: divers
+    paiement: {delai: 5, compte: "44551", libelle: "TVA de {periode} (télépaiement)"}
+  - date: N-1-04-17
+    type: facture
+    client: CLI-VALBRENNE
+    objet: "Bibliothèques de la médiathèque"
+    categorie: mixed
+    reference_commande: "BC-{aaaa}-{mm}"
+    chorus_pro: true
+    lignes: [{article: BIBLIO, quantite: 4}, {article: POSE, quantite: 8}]
+    reglement: {delai: 40}
+  - date: N-1-04-20
+    type: mouvement_stock
+    libelle: "Fabrication du mois à l'atelier"
+    lignes:
+      - {article: ETAG, quantite: 4, cout: "48"}
+      - {article: TABLE, quantite: 2, cout: "260"}
+      - {article: BIBLIO, quantite: 4, cout: "430"}
+      - {article: PL-CHENE, quantite: -13}
+      - {article: PL-NOYER, quantite: -5}
+  - date: N-1-04-24
+    type: facture
+    client: CLI-AUBERT
+    objet: "Étude et relevés"
+    categorie: services
+    lignes: [{article: CONCEPT, quantite: 1}, {article: POSE, quantite: 4}]
+    reglement: {delai: 30}
+  - date: N-1-04-28
+    type: ecriture
+    journal: divers
+    libelle: "Salaires {mm}/{aaaa}"
+    piece: "PAIE-{aaaa}{mm}"
+    lignes:
+      - {compte: "641", debit: "3400"}
+      - {compte: "645", debit: "1380"}
+      - {compte: "421", credit: "2640"}
+      - {compte: "431", credit: "2140"}
+  - date: N-1-04-28
+    type: banque
+    lignes: [{compte: "421", montant: "-2640", libelle: "Virement des salaires nets"}]
+  - date: N-1-04-28
+    type: banque
+    lignes:
+      - {compte: "164", montant: "-380", libelle: "Échéance d'emprunt (capital)"}
+      - {compte: "661", montant: "-42", libelle: "Échéance d'emprunt (intérêts)"}
+      - {compte: "627", montant: "-14.90", libelle: "Frais de tenue de compte"}
+  - {date: N-1-05-03, type: rapprochement, mois: N-1-04}
+  - date: N-1-05-03
+    type: achat
+    si: {avant: M-1-01}
+    fournisseur: FOU-SCIERIE
+    numero: "SVL-{aaaa}-0135"
+    libelle: "Plateaux de chêne et de noyer"
+    lignes:
+      - {article: PL-CHENE, quantite: 12, prix: "68", taux: NOR}
+      - {article: PL-NOYER, quantite: 7, prix: "95", taux: NOR}
+    copie: true
+    ventilation: true
+    reglement: {delai: 30}
+  - date: N-1-05-03
+    type: facture_plateforme
+    si: {depuis: M-1-01}
+    fournisseur: FOU-SCIERIE
+    numero: "SVL-{aaaa}-0135"
+    libelle: "Plateaux de chêne et de noyer"
+    note: "Plateaux de bois massif"
+    taux: "20"
+    lignes:
+      - {libelle: "Plateau chêne 27 mm", quantite: 12, prix: "68", unite: MTK}
+      - {libelle: "Plateau noyer 27 mm", quantite: 7, prix: "95", unite: MTK}
+    comptabiliser: {avant: M-01}
+    reglement: {delai: 30}
+  - date: N-1-05-05
+    type: achat
+    fournisseur: FOU-SCI
+    numero: "LOYER-{aaaa}-{mm}"
+    libelle: "Loyer {mm}/{aaaa}"
+    lignes: [{compte: "6132", montant: "1200", taux: NOR, libelle: "Loyer de l'atelier"}]
+    copie: true
+    reglement: {delai: 0}
+  - date: N-1-05-06
+    type: facture
+    client: CLI-GIRARD
+    objet: "Pose d'étagères"
+    categorie: mixed
+    lignes: [{article: ETAG, quantite: 3}, {article: POSE, quantite: 4}]
+    reglement: {delai: 21}
+  - date: N-1-05-08
+    type: devis
+    client: CLI-MOREAU
+    objet: "Projet d'agencement n° 5"
+    categorie: mixed
+    lignes: [{article: AGENC, quantite: 8}, {article: BIBLIO, quantite: 2}, {article: POSE, quantite: 16}]
+    acceptation:
+      delai: 7
+      acompte: "30"
+      reglement_acompte: {delai: 8}
+      facture_finale:
+        delai: 30
+        reglement: {delai: 30}
+  - date: N-1-05-10
+    type: achat
+    fournisseur: FOU-ENERGIE
+    numero: "ECL-{aaaa}{mm}-4004"
+    libelle: "Électricité {mm}/{aaaa}"
+    lignes: [{compte: "6061", montant: "188", taux: NOR, libelle: "Électricité de l'atelier"}]
+    copie: true
+    reglement: {delai: 12}
+  - date: N-1-05-10
+    type: achat
+    fournisseur: FOU-TELECOM
+    numero: "TT-{aaaa}{mm}-88"
+    libelle: "Télécommunications {mm}/{aaaa}"
+    lignes: [{compte: "626", montant: "54.90", taux: NOR, libelle: "Téléphone et internet"}]
+    copie: true
+    reglement: {delai: 8}
+  - date: N-1-05-11
+    type: facture
+    client: CLI-MARINIERS
+    objet: Agencement
+    categorie: services
+    lignes: [{article: AGENC, quantite: 6}, {article: POSE, quantite: 14}]
+    reglement: {delai: 35}
+  - date: N-1-05-14
+    type: justificatif
+    fichier: "ticket-carburant-{aaaa}{mm}{jj}.png"
+    source: photo
+    genre: ticket
+    fournisseur: FOU-STATION
+    nom_fournisseur: "Station-service du Cher"
+    montant: "58.50"
+    reference: "T{aa}{mm}{jj}"
+    image:
+      modele: ticket
+      enseigne: "STATION DU CHER"
+      adresse: "ROUTE DE SAVONNIERES 37510 BALLAN-MIRE"
+      lignes: [{libelle: "GAZOLE 34,40 L", montant: "58.50"}]
+      tva: "9.75"
+      paiement: CARTE
+      couleur: [33, 102, 172]
+    saisie:
+      si: {avant: M-01}
+      libelle: "Carburant du camion"
+      numero: "T{aa}{mm}{jj}"
+      lignes: [{compte: "6061", montant: "48.75", taux: NOR, tva: "9.75", libelle: Gazole}]
+      reglement: {delai: 0, libelle: Carburant}
+  - date: N-1-04-28+17j
+    type: banque
+    lignes: [{compte: "431", montant: "-2140", libelle: "Prélèvement URSSAF (cotisations)"}]
+  - date: N-1-05-15
+    type: declaration_tva
+    formulaire: fr_ca3
+    periodicite: month
+    periode: N-1-04
+    journal: divers
+    paiement: {delai: 5, compte: "44551", libelle: "TVA de {periode} (télépaiement)"}
+  - date: N-1-05-17
+    type: facture
+    client: CLI-AUBERT
+    objet: "Mobilier sur mesure"
+    categorie: goods
+    lignes: [{article: TABLE, quantite: 2}, {article: BIBLIO, quantite: 2}]
+    reglement: {delai: 28}
+  - date: N-1-05-20
+    type: mouvement_stock
+    libelle: "Fabrication du mois à l'atelier"
+    lignes:
+      - {article: ETAG, quantite: 5, cout: "48"}
+      - {article: TABLE, quantite: 2, cout: "260"}
+      - {article: BIBLIO, quantite: 3, cout: "430"}
+      - {article: PL-CHENE, quantite: -10}
+      - {article: PL-NOYER, quantite: -6}
+  - date: N-1-05-24
+    type: facture
+    client: CLI-GUINGUETTE
+    objet: "Étude et relevés"
+    categorie: services
+    lignes: [{article: CONCEPT, quantite: 1}, {article: POSE, quantite: 5}]
+    reglement: {delai: 30}
+  - date: N-1-05-28
+    type: ecriture
+    journal: divers
+    libelle: "Salaires {mm}/{aaaa}"
+    piece: "PAIE-{aaaa}{mm}"
+    lignes:
+      - {compte: "641", debit: "3400"}
+      - {compte: "645", debit: "1380"}
+      - {compte: "421", credit: "2640"}
+      - {compte: "431", credit: "2140"}
+  - date: N-1-05-28
+    type: banque
+    lignes: [{compte: "421", montant: "-2640", libelle: "Virement des salaires nets"}]
+  - date: N-1-05-28
+    type: banque
+    lignes:
+      - {compte: "164", montant: "-380", libelle: "Échéance d'emprunt (capital)"}
+      - {compte: "661", montant: "-42", libelle: "Échéance d'emprunt (intérêts)"}
+      - {compte: "627", montant: "-14.90", libelle: "Frais de tenue de compte"}
+  - {date: N-1-06-03, type: rapprochement, mois: N-1-05}
+  - date: N-1-06-03
+    type: achat
+    si: {avant: M-1-01}
+    fournisseur: FOU-SCIERIE
+    numero: "SVL-{aaaa}-0142"
+    libelle: "Plateaux de chêne et de noyer"
+    lignes:
+      - {article: PL-CHENE, quantite: 13, prix: "68", taux: NOR}
+      - {article: PL-NOYER, quantite: 8, prix: "95", taux: NOR}
+    copie: true
+    ventilation: true
+    reglement: {delai: 30}
+  - date: N-1-06-03
+    type: facture_plateforme
+    si: {depuis: M-1-01}
+    fournisseur: FOU-SCIERIE
+    numero: "SVL-{aaaa}-0142"
+    libelle: "Plateaux de chêne et de noyer"
+    note: "Plateaux de bois massif"
+    taux: "20"
+    lignes:
+      - {libelle: "Plateau chêne 27 mm", quantite: 13, prix: "68", unite: MTK}
+      - {libelle: "Plateau noyer 27 mm", quantite: 8, prix: "95", unite: MTK}
+    comptabiliser: {avant: M-01}
+    reglement: {delai: 30}
+  - date: N-1-06-05
+    type: achat
+    fournisseur: FOU-SCI
+    numero: "LOYER-{aaaa}-{mm}"
+    libelle: "Loyer {mm}/{aaaa}"
+    lignes: [{compte: "6132", montant: "1200", taux: NOR, libelle: "Loyer de l'atelier"}]
+    copie: true
+    reglement: {delai: 0}
+  - date: N-1-06-06
+    type: facture
+    client: CLI-BERNARD
+    objet: "Pose d'étagères"
+    categorie: mixed
+    lignes: [{article: ETAG, quantite: 4}, {article: POSE, quantite: 5}]
+    avoir:
+      delai: 6
+      motif: "Étagère au vernis défectueux, reprise"
+      categorie: goods
+      lignes: [{article: ETAG, quantite: 1}]
+    reglement: {delai: 21}
+  - date: N-1-06-08
+    type: devis
+    client: CLI-GIRARD
+    objet: "Projet d'agencement n° 6"
+    categorie: mixed
+    lignes: [{article: AGENC, quantite: 9}, {article: BIBLIO, quantite: 3}, {article: POSE, quantite: 16}]
+    refus: {delai: 12}
+  - date: N-1-06-09
+    type: achat
+    fournisseur: FOU-QUINC
+    numero: "QR-{aaaa}{mm}-78"
+    libelle: "Quincaillerie et consommables"
+    lignes:
+      - {article: QUINC, quantite: 3, prix: "38", taux: NOR}
+      - {compte: "6063", montant: "64.50", taux: NOR, libelle: "Abrasifs et lames de scie"}
+    copie: true
+    ventilation: true
+    reglement: {delai: 30}
+  - date: N-1-06-10
+    type: achat
+    fournisseur: FOU-ENERGIE
+    numero: "ECL-{aaaa}{mm}-4005"
+    libelle: "Électricité {mm}/{aaaa}"
+    lignes: [{compte: "6061", montant: "160", taux: NOR, libelle: "Électricité de l'atelier"}]
+    copie: true
+    reglement: {delai: 12}
+  - date: N-1-06-10
+    type: achat
+    fournisseur: FOU-TELECOM
+    numero: "TT-{aaaa}{mm}-88"
+    libelle: "Télécommunications {mm}/{aaaa}"
+    lignes: [{compte: "626", montant: "54.90", taux: NOR, libelle: "Téléphone et internet"}]
+    copie: true
+    reglement: {delai: 8}
+  - date: N-1-06-11
+    type: facture
+    client: CLI-PAINDORE
+    objet: Agencement
+    categorie: services
+    lignes: [{article: AGENC, quantite: 7}, {article: POSE, quantite: 16}]
+    reglement: {delai: 35}
+  - date: N-1-05-28+17j
+    type: banque
+    lignes: [{compte: "431", montant: "-2140", libelle: "Prélèvement URSSAF (cotisations)"}]
+  - date: N-1-06-14
+    type: justificatif
+    fichier: "ticket-carburant-{aaaa}{mm}{jj}.png"
+    source: photo
+    genre: ticket
+    fournisseur: FOU-STATION
+    nom_fournisseur: "Station-service du Cher"
+    montant: "65.70"
+    reference: "T{aa}{mm}{jj}"
+    image:
+      modele: ticket
+      enseigne: "STATION DU CHER"
+      adresse: "ROUTE DE SAVONNIERES 37510 BALLAN-MIRE"
+      lignes: [{libelle: "GAZOLE 35,50 L", montant: "65.70"}]
+      tva: "10.95"
+      paiement: CARTE
+      couleur: [33, 102, 172]
+    saisie:
+      si: {avant: M-01}
+      libelle: "Carburant du camion"
+      numero: "T{aa}{mm}{jj}"
+      lignes: [{compte: "6061", montant: "54.75", taux: NOR, tva: "10.95", libelle: Gazole}]
+      reglement: {delai: 0, libelle: Carburant}
+  - date: N-1-06-15
+    type: declaration_tva
+    formulaire: fr_ca3
+    periodicite: month
+    periode: N-1-05
+    journal: divers
+    paiement: {delai: 5, compte: "44551", libelle: "TVA de {periode} (télépaiement)"}
+  - date: N-1-06-17
+    type: facture
+    client: CLI-GUINGUETTE
+    objet: "Mobilier sur mesure"
+    categorie: goods
+    lignes: [{article: TABLE, quantite: 1}, {article: BIBLIO, quantite: 3}]
+    reglement: {delai: 80}
+  - date: N-1-06-20
+    type: mouvement_stock
+    libelle: "Fabrication du mois à l'atelier"
+    lignes:
+      - {article: ETAG, quantite: 6, cout: "48"}
+      - {article: TABLE, quantite: 2, cout: "260"}
+      - {article: BIBLIO, quantite: 4, cout: "430"}
+      - {article: PL-CHENE, quantite: -11}
+      - {article: PL-NOYER, quantite: -7}
+  - date: N-1-06-22
+    type: achat
+    fournisseur: FOU-EXPERT
+    numero: "DA-{aaaa}-{mm}"
+    libelle: "Honoraires comptables"
+    lignes: [{compte: "6226", montant: "950", taux: NOR, libelle: "Tenue et révision"}]
+    copie: true
+    reglement: {delai: 30}
+  - date: N-1-06-24
+    type: facture
+    client: CLI-MOREAU
+    objet: "Étude et relevés"
+    categorie: services
+    lignes: [{article: CONCEPT, quantite: 1}, {article: POSE, quantite: 6}]
+    reglement: {delai: 30}
+  - date: N-1-06-28
+    type: ecriture
+    journal: divers
+    libelle: "Salaires {mm}/{aaaa}"
+    piece: "PAIE-{aaaa}{mm}"
+    lignes:
+      - {compte: "641", debit: "3400"}
+      - {compte: "645", debit: "1380"}
+      - {compte: "421", credit: "2640"}
+      - {compte: "431", credit: "2140"}
+  - date: N-1-06-28
+    type: banque
+    lignes: [{compte: "421", montant: "-2640", libelle: "Virement des salaires nets"}]
+  - date: N-1-06-28
+    type: banque
+    lignes:
+      - {compte: "164", montant: "-380", libelle: "Échéance d'emprunt (capital)"}
+      - {compte: "661", montant: "-42", libelle: "Échéance d'emprunt (intérêts)"}
+      - {compte: "627", montant: "-14.90", libelle: "Frais de tenue de compte"}
+  - {date: N-1-07-03, type: rapprochement, mois: N-1-06}
+  - date: N-1-07-03
+    type: achat
+    si: {avant: M-1-01}
+    fournisseur: FOU-SCIERIE
+    numero: "SVL-{aaaa}-0149"
+    libelle: "Plateaux de chêne et de noyer"
+    lignes:
+      - {article: PL-CHENE, quantite: 14, prix: "68", taux: NOR}
+      - {article: PL-NOYER, quantite: 6, prix: "95", taux: NOR}
+    copie: true
+    ventilation: true
+    reglement: {delai: 30}
+  - date: N-1-07-03
+    type: facture_plateforme
+    si: {depuis: M-1-01}
+    fournisseur: FOU-SCIERIE
+    numero: "SVL-{aaaa}-0149"
+    libelle: "Plateaux de chêne et de noyer"
+    note: "Plateaux de bois massif"
+    taux: "20"
+    lignes:
+      - {libelle: "Plateau chêne 27 mm", quantite: 14, prix: "68", unite: MTK}
+      - {libelle: "Plateau noyer 27 mm", quantite: 6, prix: "95", unite: MTK}
+    comptabiliser: {avant: M-01}
+    reglement: {delai: 30}
+  - date: N-1-07-05
+    type: achat
+    fournisseur: FOU-SCI
+    numero: "LOYER-{aaaa}-{mm}"
+    libelle: "Loyer {mm}/{aaaa}"
+    lignes: [{compte: "6132", montant: "1200", taux: NOR, libelle: "Loyer de l'atelier"}]
+    copie: true
+    reglement: {delai: 0}
+  - date: N-1-07-06
+    type: facture
+    client: CLI-MOREAU
+    objet: "Pose d'étagères"
+    categorie: mixed
+    lignes: [{article: ETAG, quantite: 2}, {article: POSE, quantite: 3}]
+    reglement: {delai: 21}
+  - date: N-1-07-08
+    type: devis
+    client: CLI-BERNARD
+    objet: "Projet d'agencement n° 7"
+    categorie: mixed
+    lignes: [{article: AGENC, quantite: 10}, {article: BIBLIO, quantite: 2}, {article: POSE, quantite: 16}]
+    acceptation:
+      delai: 7
+      acompte: "30"
+      reglement_acompte: {delai: 8}
+      facture_finale:
+        delai: 30
+        reglement: {delai: 30}
+  - date: N-1-07-10
+    type: achat
+    fournisseur: FOU-ENERGIE
+    numero: "ECL-{aaaa}{mm}-4006"
+    libelle: "Électricité {mm}/{aaaa}"
+    lignes: [{compte: "6061", montant: "167", taux: NOR, libelle: "Électricité de l'atelier"}]
+    copie: true
+    reglement: {delai: 12}
+  - date: N-1-07-10
+    type: achat
+    fournisseur: FOU-TELECOM
+    numero: "TT-{aaaa}{mm}-88"
+    libelle: "Télécommunications {mm}/{aaaa}"
+    lignes: [{compte: "626", montant: "54.90", taux: NOR, libelle: "Téléphone et internet"}]
+    copie: true
+    reglement: {delai: 8}
+  - date: N-1-07-11
+    type: facture
+    client: CLI-AUBERT
+    objet: Agencement
+    categorie: services
+    lignes: [{article: AGENC, quantite: 5}, {article: POSE, quantite: 12}]
+    reglement: {delai: 35}
+  - date: N-1-07-12
+    type: achat
+    fournisseur: FOU-ASSUR
+    numero: "MAC-{aaaa}-T3"
+    libelle: "Assurance du trimestre"
+    lignes: [{compte: "616", montant: "486", libelle: "Multirisque professionnelle (trimestre)"}]
+    copie: true
+    reglement: {delai: 10}
+  - date: N-1-07-14
+    type: justificatif
+    fichier: "ticket-carburant-{aaaa}{mm}{jj}.png"
+    source: photo
+    genre: ticket
+    fournisseur: FOU-STATION
+    nom_fournisseur: "Station-service du Cher"
+    montant: "72.90"
+    reference: "T{aa}{mm}{jj}"
+    image:
+      modele: ticket
+      enseigne: "STATION DU CHER"
+      adresse: "ROUTE DE SAVONNIERES 37510 BALLAN-MIRE"
+      lignes: [{libelle: "GAZOLE 36,60 L", montant: "72.90"}]
+      tva: "12.15"
+      paiement: CARTE
+      couleur: [33, 102, 172]
+    saisie:
+      si: {avant: M-01}
+      libelle: "Carburant du camion"
+      numero: "T{aa}{mm}{jj}"
+      lignes: [{compte: "6061", montant: "60.75", taux: NOR, tva: "12.15", libelle: Gazole}]
+      reglement: {delai: 0, libelle: Carburant}
+  - date: N-1-06-28+17j
+    type: banque
+    lignes: [{compte: "431", montant: "-2140", libelle: "Prélèvement URSSAF (cotisations)"}]
+  - date: N-1-07-15
+    type: declaration_tva
+    formulaire: fr_ca3
+    periodicite: month
+    periode: N-1-06
+    journal: divers
+    paiement: {delai: 5, compte: "44551", libelle: "TVA de {periode} (télépaiement)"}
+  - date: N-1-07-17
+    type: facture
+    client: CLI-MOREAU
+    objet: "Mobilier sur mesure"
+    categorie: goods
+    lignes: [{article: TABLE, quantite: 1}, {article: BIBLIO, quantite: 1}]
+    reglement: {delai: 28}
+  - date: N-1-07-20
+    type: mouvement_stock
+    libelle: "Fabrication du mois à l'atelier"
+    lignes:
+      - {article: ETAG, quantite: 4, cout: "48"}
+      - {article: TABLE, quantite: 2, cout: "260"}
+      - {article: BIBLIO, quantite: 3, cout: "430"}
+      - {article: PL-CHENE, quantite: -12}
+      - {article: PL-NOYER, quantite: -5}
+  - date: N-1-07-24
+    type: facture
+    client: CLI-GIRARD
+    objet: "Étude et relevés"
+    categorie: services
+    lignes: [{article: CONCEPT, quantite: 1}, {article: POSE, quantite: 4}]
+    reglement: {delai: 30}
+  - date: N-1-07-28
+    type: ecriture
+    journal: divers
+    libelle: "Salaires {mm}/{aaaa}"
+    piece: "PAIE-{aaaa}{mm}"
+    lignes:
+      - {compte: "641", debit: "3400"}
+      - {compte: "645", debit: "1380"}
+      - {compte: "421", credit: "2640"}
+      - {compte: "431", credit: "2140"}
+  - date: N-1-07-28
+    type: banque
+    lignes: [{compte: "421", montant: "-2640", libelle: "Virement des salaires nets"}]
+  - date: N-1-07-28
+    type: banque
+    lignes:
+      - {compte: "164", montant: "-380", libelle: "Échéance d'emprunt (capital)"}
+      - {compte: "661", montant: "-42", libelle: "Échéance d'emprunt (intérêts)"}
+      - {compte: "627", montant: "-14.90", libelle: "Frais de tenue de compte"}
+  - {date: N-1-08-03, type: rapprochement, mois: N-1-07}
+  - date: N-1-08-03
+    type: achat
+    si: {avant: M-1-01}
+    fournisseur: FOU-SCIERIE
+    numero: "SVL-{aaaa}-0156"
+    libelle: "Plateaux de chêne et de noyer"
+    lignes:
+      - {article: PL-CHENE, quantite: 15, prix: "68", taux: NOR}
+      - {article: PL-NOYER, quantite: 7, prix: "95", taux: NOR}
+    copie: true
+    ventilation: true
+    reglement: {delai: 30}
+  - date: N-1-08-03
+    type: facture_plateforme
+    si: {depuis: M-1-01}
+    fournisseur: FOU-SCIERIE
+    numero: "SVL-{aaaa}-0156"
+    libelle: "Plateaux de chêne et de noyer"
+    note: "Plateaux de bois massif"
+    taux: "20"
+    lignes:
+      - {libelle: "Plateau chêne 27 mm", quantite: 15, prix: "68", unite: MTK}
+      - {libelle: "Plateau noyer 27 mm", quantite: 7, prix: "95", unite: MTK}
+    comptabiliser: {avant: M-01}
+    reglement: {delai: 30}
+  - date: N-1-08-05
+    type: achat
+    fournisseur: FOU-SCI
+    numero: "LOYER-{aaaa}-{mm}"
+    libelle: "Loyer {mm}/{aaaa}"
+    lignes: [{compte: "6132", montant: "1200", taux: NOR, libelle: "Loyer de l'atelier"}]
+    copie: true
+    reglement: {delai: 0}
+  - date: N-1-08-06
+    type: facture
+    client: CLI-GIRARD
+    objet: "Pose d'étagères"
+    categorie: mixed
+    lignes: [{article: ETAG, quantite: 3}, {article: POSE, quantite: 4}]
+    reglement: {delai: 21}
+  - date: N-1-08-08
+    type: devis
+    client: CLI-MARINIERS
+    objet: "Projet d'agencement n° 8"
+    categorie: mixed
+    lignes: [{article: AGENC, quantite: 11}, {article: BIBLIO, quantite: 3}, {article: POSE, quantite: 16}]
+  - date: N-1-08-09
+    type: achat
+    fournisseur: FOU-QUINC
+    numero: "QR-{aaaa}{mm}-104"
+    libelle: "Quincaillerie et consommables"
+    lignes:
+      - {article: QUINC, quantite: 5, prix: "38", taux: NOR}
+      - {compte: "6063", montant: "64.50", taux: NOR, libelle: "Abrasifs et lames de scie"}
+    copie: true
+    ventilation: true
+    reglement: {delai: 30}
+  - date: N-1-08-10
+    type: achat
+    fournisseur: FOU-ENERGIE
+    numero: "ECL-{aaaa}{mm}-4007"
+    libelle: "Électricité {mm}/{aaaa}"
+    lignes: [{compte: "6061", montant: "174", taux: NOR, libelle: "Électricité de l'atelier"}]
+    copie: true
+    reglement: {delai: 12}
+  - date: N-1-08-10
+    type: achat
+    fournisseur: FOU-TELECOM
+    numero: "TT-{aaaa}{mm}-88"
+    libelle: "Télécommunications {mm}/{aaaa}"
+    lignes: [{compte: "626", montant: "54.90", taux: NOR, libelle: "Téléphone et internet"}]
+    copie: true
+    reglement: {delai: 8}
+  - date: N-1-08-11
+    type: facture
+    client: CLI-GUINGUETTE
+    objet: Agencement
+    categorie: services
+    lignes: [{article: AGENC, quantite: 6}, {article: POSE, quantite: 14}]
+    reglement: {delai: 75}
+  - date: N-1-07-28+17j
+    type: banque
+    lignes: [{compte: "431", montant: "-2140", libelle: "Prélèvement URSSAF (cotisations)"}]
+  - date: N-1-08-14
+    type: justificatif
+    fichier: "ticket-carburant-{aaaa}{mm}{jj}.png"
+    source: photo
+    genre: ticket
+    fournisseur: FOU-STATION
+    nom_fournisseur: "Station-service du Cher"
+    montant: "80.10"
+    reference: "T{aa}{mm}{jj}"
+    image:
+      modele: ticket
+      enseigne: "STATION DU CHER"
+      adresse: "ROUTE DE SAVONNIERES 37510 BALLAN-MIRE"
+      lignes: [{libelle: "GAZOLE 37,70 L", montant: "80.10"}]
+      tva: "13.35"
+      paiement: CARTE
+      couleur: [33, 102, 172]
+    saisie:
+      si: {avant: M-01}
+      libelle: "Carburant du camion"
+      numero: "T{aa}{mm}{jj}"
+      lignes: [{compte: "6061", montant: "66.75", taux: NOR, tva: "13.35", libelle: Gazole}]
+      reglement: {delai: 0, libelle: Carburant}
+  - date: N-1-08-15
+    type: declaration_tva
+    formulaire: fr_ca3
+    periodicite: month
+    periode: N-1-07
+    journal: divers
+    paiement: {delai: 5, compte: "44551", libelle: "TVA de {periode} (télépaiement)"}
+  - date: N-1-08-17
+    type: facture
+    client: CLI-GIRARD
+    objet: "Mobilier sur mesure"
+    categorie: goods
+    lignes: [{article: TABLE, quantite: 2}, {article: BIBLIO, quantite: 2}]
+    reglement: {delai: 28}
+  - date: N-1-08-20
+    type: mouvement_stock
+    libelle: "Fabrication du mois à l'atelier"
+    lignes:
+      - {article: ETAG, quantite: 5, cout: "48"}
+      - {article: TABLE, quantite: 2, cout: "260"}
+      - {article: BIBLIO, quantite: 4, cout: "430"}
+      - {article: PL-CHENE, quantite: -13}
+      - {article: PL-NOYER, quantite: -6}
+  - date: N-1-08-24
+    type: facture
+    client: CLI-BERNARD
+    objet: "Étude et relevés"
+    categorie: services
+    lignes: [{article: CONCEPT, quantite: 1}, {article: POSE, quantite: 5}]
+    reglement: {delai: 30}
+  - date: N-1-08-28
+    type: ecriture
+    journal: divers
+    libelle: "Salaires {mm}/{aaaa}"
+    piece: "PAIE-{aaaa}{mm}"
+    lignes:
+      - {compte: "641", debit: "3400"}
+      - {compte: "645", debit: "1380"}
+      - {compte: "421", credit: "2640"}
+      - {compte: "431", credit: "2140"}
+  - date: N-1-08-28
+    type: banque
+    lignes: [{compte: "421", montant: "-2640", libelle: "Virement des salaires nets"}]
+  - date: N-1-08-28
+    type: banque
+    lignes:
+      - {compte: "164", montant: "-380", libelle: "Échéance d'emprunt (capital)"}
+      - {compte: "661", montant: "-42", libelle: "Échéance d'emprunt (intérêts)"}
+      - {compte: "627", montant: "-14.90", libelle: "Frais de tenue de compte"}
+  - {date: N-1-09-03, type: rapprochement, mois: N-1-08}
+  - date: N-1-09-03
+    type: achat
+    si: {avant: M-1-01}
+    fournisseur: FOU-SCIERIE
+    numero: "SVL-{aaaa}-0163"
+    libelle: "Plateaux de chêne et de noyer"
+    lignes:
+      - {article: PL-CHENE, quantite: 12, prix: "68", taux: NOR}
+      - {article: PL-NOYER, quantite: 8, prix: "95", taux: NOR}
+    copie: true
+    ventilation: true
+    reglement: {delai: 30}
+  - date: N-1-09-03
+    type: facture_plateforme
+    si: {depuis: M-1-01}
+    fournisseur: FOU-SCIERIE
+    numero: "SVL-{aaaa}-0163"
+    libelle: "Plateaux de chêne et de noyer"
+    note: "Plateaux de bois massif"
+    taux: "20"
+    lignes:
+      - {libelle: "Plateau chêne 27 mm", quantite: 12, prix: "68", unite: MTK}
+      - {libelle: "Plateau noyer 27 mm", quantite: 8, prix: "95", unite: MTK}
+    comptabiliser: {avant: M-01}
+    reglement: {delai: 30}
+  - date: N-1-09-05
+    type: achat
+    fournisseur: FOU-SCI
+    numero: "LOYER-{aaaa}-{mm}"
+    libelle: "Loyer {mm}/{aaaa}"
+    lignes: [{compte: "6132", montant: "1200", taux: NOR, libelle: "Loyer de l'atelier"}]
+    copie: true
+    reglement: {delai: 0}
+  - date: N-1-09-06
+    type: facture
+    client: CLI-BERNARD
+    objet: "Pose d'étagères"
+    categorie: mixed
+    lignes: [{article: ETAG, quantite: 4}, {article: POSE, quantite: 5}]
+    avoir:
+      delai: 6
+      motif: "Étagère au vernis défectueux, reprise"
+      categorie: goods
+      lignes: [{article: ETAG, quantite: 1}]
+    reglement: {delai: 21}
+  - date: N-1-09-08
+    type: devis
+    client: CLI-PAINDORE
+    objet: "Projet d'agencement n° 9"
+    categorie: mixed
+    lignes: [{article: AGENC, quantite: 8}, {article: BIBLIO, quantite: 2}, {article: POSE, quantite: 16}]
+    acceptation:
+      delai: 7
+      acompte: "30"
+      reglement_acompte: {delai: 8}
+      facture_finale:
+        delai: 30
+        reglement: {delai: 30}
+  - date: N-1-09-10
+    type: achat
+    fournisseur: FOU-ENERGIE
+    numero: "ECL-{aaaa}{mm}-4008"
+    libelle: "Électricité {mm}/{aaaa}"
+    lignes: [{compte: "6061", montant: "181", taux: NOR, libelle: "Électricité de l'atelier"}]
+    copie: true
+    reglement: {delai: 12}
+  - date: N-1-09-10
+    type: achat
+    fournisseur: FOU-TELECOM
+    numero: "TT-{aaaa}{mm}-88"
+    libelle: "Télécommunications {mm}/{aaaa}"
+    lignes: [{compte: "626", montant: "54.90", taux: NOR, libelle: "Téléphone et internet"}]
+    copie: true
+    reglement: {delai: 8}
+  - date: N-1-09-11
+    type: facture
+    client: CLI-MARINIERS
+    objet: Agencement
+    categorie: services
+    lignes: [{article: AGENC, quantite: 7}, {article: POSE, quantite: 16}]
+    reglement: {delai: 35}
+  - date: N-1-08-28+17j
+    type: banque
+    lignes: [{compte: "431", montant: "-2140", libelle: "Prélèvement URSSAF (cotisations)"}]
+  - date: N-1-09-14
+    type: justificatif
+    fichier: "ticket-carburant-{aaaa}{mm}{jj}.png"
+    source: photo
+    genre: ticket
+    fournisseur: FOU-STATION
+    nom_fournisseur: "Station-service du Cher"
+    montant: "58.50"
+    reference: "T{aa}{mm}{jj}"
+    image:
+      modele: ticket
+      enseigne: "STATION DU CHER"
+      adresse: "ROUTE DE SAVONNIERES 37510 BALLAN-MIRE"
+      lignes: [{libelle: "GAZOLE 38,80 L", montant: "58.50"}]
+      tva: "9.75"
+      paiement: CARTE
+      couleur: [33, 102, 172]
+    saisie:
+      si: {avant: M-01}
+      libelle: "Carburant du camion"
+      numero: "T{aa}{mm}{jj}"
+      lignes: [{compte: "6061", montant: "48.75", taux: NOR, tva: "9.75", libelle: Gazole}]
+      reglement: {delai: 0, libelle: Carburant}
+  - date: N-1-09-15
+    type: declaration_tva
+    formulaire: fr_ca3
+    periodicite: month
+    periode: N-1-08
+    journal: divers
+    paiement: {delai: 5, compte: "44551", libelle: "TVA de {periode} (télépaiement)"}
+  - date: N-1-09-17
+    type: facture
+    client: CLI-BERNARD
+    objet: "Mobilier sur mesure"
+    categorie: goods
+    lignes: [{article: TABLE, quantite: 1}, {article: BIBLIO, quantite: 3}]
+    reglement: {delai: 28}
+  - date: N-1-09-20
+    type: mouvement_stock
+    libelle: "Fabrication du mois à l'atelier"
+    lignes:
+      - {article: ETAG, quantite: 6, cout: "48"}
+      - {article: TABLE, quantite: 2, cout: "260"}
+      - {article: BIBLIO, quantite: 3, cout: "430"}
+      - {article: PL-CHENE, quantite: -10}
+      - {article: PL-NOYER, quantite: -7}
+  - date: N-1-09-22
+    type: achat
+    fournisseur: FOU-EXPERT
+    numero: "DA-{aaaa}-{mm}"
+    libelle: "Honoraires comptables"
+    lignes: [{compte: "6226", montant: "950", taux: NOR, libelle: "Tenue et révision"}]
+    copie: true
+    reglement: {delai: 30}
+  - date: N-1-09-24
+    type: facture
+    client: CLI-MARINIERS
+    objet: "Étude et relevés"
+    categorie: services
+    lignes: [{article: CONCEPT, quantite: 1}, {article: POSE, quantite: 6}]
+    reglement: {delai: 30}
+  - date: N-1-09-28
+    type: ecriture
+    journal: divers
+    libelle: "Salaires {mm}/{aaaa}"
+    piece: "PAIE-{aaaa}{mm}"
+    lignes:
+      - {compte: "641", debit: "3400"}
+      - {compte: "645", debit: "1380"}
+      - {compte: "421", credit: "2640"}
+      - {compte: "431", credit: "2140"}
+  - date: N-1-09-28
+    type: banque
+    lignes: [{compte: "421", montant: "-2640", libelle: "Virement des salaires nets"}]
+  - date: N-1-09-28
+    type: banque
+    lignes:
+      - {compte: "164", montant: "-380", libelle: "Échéance d'emprunt (capital)"}
+      - {compte: "661", montant: "-42", libelle: "Échéance d'emprunt (intérêts)"}
+      - {compte: "627", montant: "-14.90", libelle: "Frais de tenue de compte"}
+  - {date: N-1-10-03, type: rapprochement, mois: N-1-09}
+  - date: N-1-10-03
+    type: achat
+    si: {avant: M-1-01}
+    fournisseur: FOU-SCIERIE
+    numero: "SVL-{aaaa}-0170"
+    libelle: "Plateaux de chêne et de noyer"
+    lignes:
+      - {article: PL-CHENE, quantite: 13, prix: "68", taux: NOR}
+      - {article: PL-NOYER, quantite: 6, prix: "95", taux: NOR}
+    copie: true
+    ventilation: true
+    reglement: {delai: 30}
+  - date: N-1-10-03
+    type: facture_plateforme
+    si: {depuis: M-1-01}
+    fournisseur: FOU-SCIERIE
+    numero: "SVL-{aaaa}-0170"
+    libelle: "Plateaux de chêne et de noyer"
+    note: "Plateaux de bois massif"
+    taux: "20"
+    lignes:
+      - {libelle: "Plateau chêne 27 mm", quantite: 13, prix: "68", unite: MTK}
+      - {libelle: "Plateau noyer 27 mm", quantite: 6, prix: "95", unite: MTK}
+    comptabiliser: {avant: M-01}
+    reglement: {delai: 30}
+  - date: N-1-10-05
+    type: achat
+    fournisseur: FOU-SCI
+    numero: "LOYER-{aaaa}-{mm}"
+    libelle: "Loyer {mm}/{aaaa}"
+    lignes: [{compte: "6132", montant: "1200", taux: NOR, libelle: "Loyer de l'atelier"}]
+    copie: true
+    reglement: {delai: 0}
+  - date: N-1-10-06
+    type: facture
+    client: CLI-MOREAU
+    objet: "Pose d'étagères"
+    categorie: mixed
+    lignes: [{article: ETAG, quantite: 2}, {article: POSE, quantite: 3}]
+    reglement: {delai: 21}
+  - date: N-1-10-08
+    type: devis
+    client: CLI-AUBERT
+    objet: "Projet d'agencement n° 10"
+    categorie: mixed
+    lignes: [{article: AGENC, quantite: 9}, {article: BIBLIO, quantite: 3}, {article: POSE, quantite: 16}]
+    refus: {delai: 12}
+  - date: N-1-10-09
+    type: achat
+    fournisseur: FOU-QUINC
+    numero: "QR-{aaaa}{mm}-130"
+    libelle: "Quincaillerie et consommables"
+    lignes:
+      - {article: QUINC, quantite: 4, prix: "38", taux: NOR}
+      - {compte: "6063", montant: "64.50", taux: NOR, libelle: "Abrasifs et lames de scie"}
+    copie: true
+    ventilation: true
+    reglement: {delai: 30}
+  - date: N-1-10-10
+    type: achat
+    fournisseur: FOU-ENERGIE
+    numero: "ECL-{aaaa}{mm}-4009"
+    libelle: "Électricité {mm}/{aaaa}"
+    lignes: [{compte: "6061", montant: "188", taux: NOR, libelle: "Électricité de l'atelier"}]
+    copie: true
+    reglement: {delai: 12}
+  - date: N-1-10-10
+    type: achat
+    fournisseur: FOU-TELECOM
+    numero: "TT-{aaaa}{mm}-88"
+    libelle: "Télécommunications {mm}/{aaaa}"
+    lignes: [{compte: "626", montant: "54.90", taux: NOR, libelle: "Téléphone et internet"}]
+    copie: true
+    reglement: {delai: 8}
+  - date: N-1-10-11
+    type: facture
+    client: CLI-PAINDORE
+    objet: Agencement
+    categorie: services
+    lignes: [{article: AGENC, quantite: 5}, {article: POSE, quantite: 12}]
+    reglement: {delai: 35}
+  - date: N-1-10-12
+    type: achat
+    fournisseur: FOU-ASSUR
+    numero: "MAC-{aaaa}-T4"
+    libelle: "Assurance du trimestre"
+    lignes: [{compte: "616", montant: "486", libelle: "Multirisque professionnelle (trimestre)"}]
+    copie: true
+    reglement: {delai: 10}
+  - date: N-1-10-14
+    type: justificatif
+    fichier: "ticket-carburant-{aaaa}{mm}{jj}.png"
+    source: photo
+    genre: ticket
+    fournisseur: FOU-STATION
+    nom_fournisseur: "Station-service du Cher"
+    montant: "65.70"
+    reference: "T{aa}{mm}{jj}"
+    image:
+      modele: ticket
+      enseigne: "STATION DU CHER"
+      adresse: "ROUTE DE SAVONNIERES 37510 BALLAN-MIRE"
+      lignes: [{libelle: "GAZOLE 30,90 L", montant: "65.70"}]
+      tva: "10.95"
+      paiement: CARTE
+      couleur: [33, 102, 172]
+    saisie:
+      si: {avant: M-01}
+      libelle: "Carburant du camion"
+      numero: "T{aa}{mm}{jj}"
+      lignes: [{compte: "6061", montant: "54.75", taux: NOR, tva: "10.95", libelle: Gazole}]
+      reglement: {delai: 0, libelle: Carburant}
+  - date: N-1-09-28+17j
+    type: banque
+    lignes: [{compte: "431", montant: "-2140", libelle: "Prélèvement URSSAF (cotisations)"}]
+  - date: N-1-10-15
+    type: declaration_tva
+    formulaire: fr_ca3
+    periodicite: month
+    periode: N-1-09
+    journal: divers
+    paiement: {delai: 5, compte: "44551", libelle: "TVA de {periode} (télépaiement)"}
+  - date: N-1-10-17
+    type: facture
+    client: CLI-VALBRENNE
+    objet: "Bibliothèques de la médiathèque"
+    categorie: mixed
+    reference_commande: "BC-{aaaa}-{mm}"
+    chorus_pro: true
+    lignes: [{article: BIBLIO, quantite: 4}, {article: POSE, quantite: 8}]
+    reglement: {delai: 40}
+  - date: N-1-10-18
+    type: achat
+    fournisseur: FOU-GARNIER
+    numero: "HG-{aaaa}-10"
+    libelle: "Honoraires d'architecte d'intérieur"
+    lignes: [{compte: "6226", montant: "1650", libelle: "Plans d'aménagement intérieur"}]
+    copie: true
+    reglement: {delai: 20}
+  - date: N-1-10-20
+    type: mouvement_stock
+    libelle: "Fabrication du mois à l'atelier"
+    lignes:
+      - {article: ETAG, quantite: 4, cout: "48"}
+      - {article: TABLE, quantite: 2, cout: "260"}
+      - {article: BIBLIO, quantite: 4, cout: "430"}
+      - {article: PL-CHENE, quantite: -11}
+      - {article: PL-NOYER, quantite: -5}
+  - date: N-1-10-24
+    type: facture
+    client: CLI-PAINDORE
+    objet: "Étude et relevés"
+    categorie: services
+    lignes: [{article: CONCEPT, quantite: 1}, {article: POSE, quantite: 4}]
+    reglement: {delai: 30}
+  - date: N-1-10-28
+    type: ecriture
+    journal: divers
+    libelle: "Salaires {mm}/{aaaa}"
+    piece: "PAIE-{aaaa}{mm}"
+    lignes:
+      - {compte: "641", debit: "3400"}
+      - {compte: "645", debit: "1380"}
+      - {compte: "421", credit: "2640"}
+      - {compte: "431", credit: "2140"}
+  - date: N-1-10-28
+    type: banque
+    lignes: [{compte: "421", montant: "-2640", libelle: "Virement des salaires nets"}]
+  - date: N-1-10-28
+    type: banque
+    lignes:
+      - {compte: "164", montant: "-380", libelle: "Échéance d'emprunt (capital)"}
+      - {compte: "661", montant: "-42", libelle: "Échéance d'emprunt (intérêts)"}
+      - {compte: "627", montant: "-14.90", libelle: "Frais de tenue de compte"}
+  - {date: N-1-11-03, type: rapprochement, mois: N-1-10}
+  - date: N-1-11-03
+    type: achat
+    si: {avant: M-1-01}
+    fournisseur: FOU-SCIERIE
+    numero: "SVL-{aaaa}-0177"
+    libelle: "Plateaux de chêne et de noyer"
+    lignes:
+      - {article: PL-CHENE, quantite: 14, prix: "68", taux: NOR}
+      - {article: PL-NOYER, quantite: 7, prix: "95", taux: NOR}
+    copie: true
+    ventilation: true
+    reglement: {delai: 30}
+  - date: N-1-11-03
+    type: facture_plateforme
+    si: {depuis: M-1-01}
+    fournisseur: FOU-SCIERIE
+    numero: "SVL-{aaaa}-0177"
+    libelle: "Plateaux de chêne et de noyer"
+    note: "Plateaux de bois massif"
+    taux: "20"
+    lignes:
+      - {libelle: "Plateau chêne 27 mm", quantite: 14, prix: "68", unite: MTK}
+      - {libelle: "Plateau noyer 27 mm", quantite: 7, prix: "95", unite: MTK}
+    comptabiliser: {avant: M-01}
+    reglement: {delai: 30}
+  - date: N-1-11-05
+    type: achat
+    fournisseur: FOU-SCI
+    numero: "LOYER-{aaaa}-{mm}"
+    libelle: "Loyer {mm}/{aaaa}"
+    lignes: [{compte: "6132", montant: "1200", taux: NOR, libelle: "Loyer de l'atelier"}]
+    copie: true
+    reglement: {delai: 0}
+  - date: N-1-11-06
+    type: facture
+    client: CLI-GIRARD
+    objet: "Pose d'étagères"
+    categorie: mixed
+    lignes: [{article: ETAG, quantite: 3}, {article: POSE, quantite: 4}]
+    reglement: {delai: 21}
+  - date: N-1-11-08
+    type: devis
+    client: CLI-GUINGUETTE
+    objet: "Projet d'agencement n° 11"
+    categorie: mixed
+    lignes: [{article: AGENC, quantite: 10}, {article: BIBLIO, quantite: 2}, {article: POSE, quantite: 16}]
+    acceptation:
+      delai: 7
+      acompte: "30"
+      reglement_acompte: {delai: 8}
+      facture_finale:
+        delai: 30
+        reglement: {delai: 30}
+  - date: N-1-11-10
+    type: achat
+    fournisseur: FOU-ENERGIE
+    numero: "ECL-{aaaa}{mm}-4010"
+    libelle: "Électricité {mm}/{aaaa}"
+    lignes: [{compte: "6061", montant: "250", taux: NOR, libelle: "Électricité de l'atelier"}]
+    copie: true
+    reglement: {delai: 12}
+  - date: N-1-11-10
+    type: achat
+    fournisseur: FOU-TELECOM
+    numero: "TT-{aaaa}{mm}-88"
+    libelle: "Télécommunications {mm}/{aaaa}"
+    lignes: [{compte: "626", montant: "54.90", taux: NOR, libelle: "Téléphone et internet"}]
+    copie: true
+    reglement: {delai: 8}
+  - date: N-1-11-11
+    type: facture
+    client: CLI-AUBERT
+    objet: Agencement
+    categorie: services
+    lignes: [{article: AGENC, quantite: 6}, {article: POSE, quantite: 14}]
+    reglement: {delai: 35}
+  - date: N-1-10-28+17j
+    type: banque
+    lignes: [{compte: "431", montant: "-2140", libelle: "Prélèvement URSSAF (cotisations)"}]
+  - date: N-1-11-14
+    type: justificatif
+    fichier: "ticket-carburant-{aaaa}{mm}{jj}.png"
+    source: photo
+    genre: ticket
+    fournisseur: FOU-STATION
+    nom_fournisseur: "Station-service du Cher"
+    montant: "72.90"
+    reference: "T{aa}{mm}{jj}"
+    image:
+      modele: ticket
+      enseigne: "STATION DU CHER"
+      adresse: "ROUTE DE SAVONNIERES 37510 BALLAN-MIRE"
+      lignes: [{libelle: "GAZOLE 31,00 L", montant: "72.90"}]
+      tva: "12.15"
+      paiement: CARTE
+      couleur: [33, 102, 172]
+    saisie:
+      si: {avant: M-01}
+      libelle: "Carburant du camion"
+      numero: "T{aa}{mm}{jj}"
+      lignes: [{compte: "6061", montant: "60.75", taux: NOR, tva: "12.15", libelle: Gazole}]
+      reglement: {delai: 0, libelle: Carburant}
+  - date: N-1-11-15
+    type: declaration_tva
+    formulaire: fr_ca3
+    periodicite: month
+    periode: N-1-10
+    journal: divers
+    paiement: {delai: 5, compte: "44551", libelle: "TVA de {periode} (télépaiement)"}
+  - date: N-1-11-17
+    type: facture
+    client: CLI-PAINDORE
+    objet: "Mobilier sur mesure"
+    categorie: goods
+    lignes: [{article: TABLE, quantite: 2}, {article: BIBLIO, quantite: 2}]
+    reglement: {delai: 28}
+  - date: N-1-11-20
+    type: mouvement_stock
+    libelle: "Fabrication du mois à l'atelier"
+    lignes:
+      - {article: ETAG, quantite: 5, cout: "48"}
+      - {article: TABLE, quantite: 2, cout: "260"}
+      - {article: BIBLIO, quantite: 3, cout: "430"}
+      - {article: PL-CHENE, quantite: -12}
+      - {article: PL-NOYER, quantite: -6}
+  - date: N-1-11-24
+    type: facture
+    client: CLI-AUBERT
+    objet: "Étude et relevés"
+    categorie: services
+    lignes: [{article: CONCEPT, quantite: 1}, {article: POSE, quantite: 5}]
+    reglement: {delai: 30}
+  - date: N-1-11-28
+    type: ecriture
+    journal: divers
+    libelle: "Salaires {mm}/{aaaa}"
+    piece: "PAIE-{aaaa}{mm}"
+    lignes:
+      - {compte: "641", debit: "3400"}
+      - {compte: "645", debit: "1380"}
+      - {compte: "421", credit: "2640"}
+      - {compte: "431", credit: "2140"}
+  - date: N-1-11-28
+    type: banque
+    lignes: [{compte: "421", montant: "-2640", libelle: "Virement des salaires nets"}]
+  - date: N-1-11-28
+    type: banque
+    lignes:
+      - {compte: "164", montant: "-380", libelle: "Échéance d'emprunt (capital)"}
+      - {compte: "661", montant: "-42", libelle: "Échéance d'emprunt (intérêts)"}
+      - {compte: "627", montant: "-14.90", libelle: "Frais de tenue de compte"}
+  - {date: N-1-12-03, type: rapprochement, mois: N-1-11}
+  - date: N-1-12-03
+    type: achat
+    si: {avant: M-1-01}
+    fournisseur: FOU-SCIERIE
+    numero: "SVL-{aaaa}-0184"
+    libelle: "Plateaux de chêne et de noyer"
+    lignes:
+      - {article: PL-CHENE, quantite: 15, prix: "68", taux: NOR}
+      - {article: PL-NOYER, quantite: 8, prix: "95", taux: NOR}
+    copie: true
+    ventilation: true
+    reglement: {delai: 30}
+  - date: N-1-12-03
+    type: facture_plateforme
+    si: {depuis: M-1-01}
+    fournisseur: FOU-SCIERIE
+    numero: "SVL-{aaaa}-0184"
+    libelle: "Plateaux de chêne et de noyer"
+    note: "Plateaux de bois massif"
+    taux: "20"
+    lignes:
+      - {libelle: "Plateau chêne 27 mm", quantite: 15, prix: "68", unite: MTK}
+      - {libelle: "Plateau noyer 27 mm", quantite: 8, prix: "95", unite: MTK}
+    comptabiliser: {avant: M-01}
+    reglement: {delai: 30}
+  - date: N-1-12-05
+    type: achat
+    fournisseur: FOU-SCI
+    numero: "LOYER-{aaaa}-{mm}"
+    libelle: "Loyer {mm}/{aaaa}"
+    lignes: [{compte: "6132", montant: "1200", taux: NOR, libelle: "Loyer de l'atelier"}]
+    copie: true
+    reglement: {delai: 0}
+  - date: N-1-12-06
+    type: facture
+    client: CLI-BERNARD
+    objet: "Pose d'étagères"
+    categorie: mixed
+    lignes: [{article: ETAG, quantite: 4}, {article: POSE, quantite: 5}]
+    avoir:
+      delai: 6
+      motif: "Étagère au vernis défectueux, reprise"
+      categorie: goods
+      lignes: [{article: ETAG, quantite: 1}]
+    reglement: {delai: 21}
+  - date: N-1-12-08
+    type: devis
+    client: CLI-MOREAU
+    objet: "Projet d'agencement n° 12"
+    categorie: mixed
+    lignes: [{article: AGENC, quantite: 11}, {article: BIBLIO, quantite: 3}, {article: POSE, quantite: 16}]
+  - date: N-1-12-09
+    type: achat
+    fournisseur: FOU-QUINC
+    numero: "QR-{aaaa}{mm}-156"
+    libelle: "Quincaillerie et consommables"
+    lignes:
+      - {article: QUINC, quantite: 3, prix: "38", taux: NOR}
+      - {compte: "6063", montant: "64.50", taux: NOR, libelle: "Abrasifs et lames de scie"}
+    copie: true
+    ventilation: true
+    reglement: {delai: 30}
+  - date: N-1-12-10
+    type: achat
+    fournisseur: FOU-ENERGIE
+    numero: "ECL-{aaaa}{mm}-4011"
+    libelle: "Électricité {mm}/{aaaa}"
+    lignes: [{compte: "6061", montant: "257", taux: NOR, libelle: "Électricité de l'atelier"}]
+    copie: true
+    reglement: {delai: 12}
+  - date: N-1-12-10
+    type: achat
+    fournisseur: FOU-TELECOM
+    numero: "TT-{aaaa}{mm}-88"
+    libelle: "Télécommunications {mm}/{aaaa}"
+    lignes: [{compte: "626", montant: "54.90", taux: NOR, libelle: "Téléphone et internet"}]
+    copie: true
+    reglement: {delai: 8}
+  - date: N-1-12-11
+    type: facture
+    client: CLI-GUINGUETTE
+    objet: Agencement
+    categorie: services
+    lignes: [{article: AGENC, quantite: 7}, {article: POSE, quantite: 16}]
+    reglement: {delai: 75}
+  - date: N-1-12-14
+    type: justificatif
+    fichier: "ticket-carburant-{aaaa}{mm}{jj}.png"
+    source: photo
+    genre: ticket
+    fournisseur: FOU-STATION
+    nom_fournisseur: "Station-service du Cher"
+    montant: "80.10"
+    reference: "T{aa}{mm}{jj}"
+    image:
+      modele: ticket
+      enseigne: "STATION DU CHER"
+      adresse: "ROUTE DE SAVONNIERES 37510 BALLAN-MIRE"
+      lignes: [{libelle: "GAZOLE 32,10 L", montant: "80.10"}]
+      tva: "13.35"
+      paiement: CARTE
+      couleur: [33, 102, 172]
+    saisie:
+      si: {avant: M-01}
+      libelle: "Carburant du camion"
+      numero: "T{aa}{mm}{jj}"
+      lignes: [{compte: "6061", montant: "66.75", taux: NOR, tva: "13.35", libelle: Gazole}]
+      reglement: {delai: 0, libelle: Carburant}
+  - date: N-1-11-28+17j
+    type: banque
+    lignes: [{compte: "431", montant: "-2140", libelle: "Prélèvement URSSAF (cotisations)"}]
+  - date: N-1-12-15
+    type: declaration_tva
+    formulaire: fr_ca3
+    periodicite: month
+    periode: N-1-11
+    journal: divers
+    paiement: {delai: 5, compte: "44551", libelle: "TVA de {periode} (télépaiement)"}
+  - date: N-1-12-17
+    type: facture
+    client: CLI-AUBERT
+    objet: "Mobilier sur mesure"
+    categorie: goods
+    lignes: [{article: TABLE, quantite: 1}, {article: BIBLIO, quantite: 3}]
+    reglement: {delai: 28}
+  - date: N-1-12-20
+    type: mouvement_stock
+    libelle: "Fabrication du mois à l'atelier"
+    lignes:
+      - {article: ETAG, quantite: 6, cout: "48"}
+      - {article: TABLE, quantite: 2, cout: "260"}
+      - {article: BIBLIO, quantite: 4, cout: "430"}
+      - {article: PL-CHENE, quantite: -13}
+      - {article: PL-NOYER, quantite: -7}
+  - date: N-1-12-22
+    type: achat
+    fournisseur: FOU-EXPERT
+    numero: "DA-{aaaa}-{mm}"
+    libelle: "Honoraires comptables"
+    lignes: [{compte: "6226", montant: "950", taux: NOR, libelle: "Tenue et révision"}]
+    copie: true
+    reglement: {delai: 30}
+  - date: N-1-12-24
+    type: facture
+    client: CLI-GUINGUETTE
+    objet: "Étude et relevés"
+    categorie: services
+    lignes: [{article: CONCEPT, quantite: 1}, {article: POSE, quantite: 6}]
+    reglement: {delai: 30}
+  - date: N-1-12-28
+    type: ecriture
+    journal: divers
+    libelle: "Salaires {mm}/{aaaa}"
+    piece: "PAIE-{aaaa}{mm}"
+    lignes:
+      - {compte: "641", debit: "3400"}
+      - {compte: "645", debit: "1380"}
+      - {compte: "421", credit: "2640"}
+      - {compte: "431", credit: "2140"}
+  - date: N-1-12-28
+    type: banque
+    lignes: [{compte: "421", montant: "-2640", libelle: "Virement des salaires nets"}]
+  - date: N-1-12-28
+    type: banque
+    lignes:
+      - {compte: "164", montant: "-380", libelle: "Échéance d'emprunt (capital)"}
+      - {compte: "661", montant: "-42", libelle: "Échéance d'emprunt (intérêts)"}
+      - {compte: "627", montant: "-14.90", libelle: "Frais de tenue de compte"}
+  - {date: N-01-03, type: rapprochement, mois: N-1-12}
+  - date: N-01-03
+    type: achat
+    si: {avant: M-1-01}
+    fournisseur: FOU-SCIERIE
+    numero: "SVL-{aaaa}-0191"
+    libelle: "Plateaux de chêne et de noyer"
+    lignes:
+      - {article: PL-CHENE, quantite: 12, prix: "68", taux: NOR}
+      - {article: PL-NOYER, quantite: 6, prix: "95", taux: NOR}
+    copie: true
+    ventilation: true
+    reglement: {delai: 30}
+  - date: N-01-03
+    type: facture_plateforme
+    si: {depuis: M-1-01}
+    fournisseur: FOU-SCIERIE
+    numero: "SVL-{aaaa}-0191"
+    libelle: "Plateaux de chêne et de noyer"
+    note: "Plateaux de bois massif"
+    taux: "20"
+    lignes:
+      - {libelle: "Plateau chêne 27 mm", quantite: 12, prix: "68", unite: MTK}
+      - {libelle: "Plateau noyer 27 mm", quantite: 6, prix: "95", unite: MTK}
+    comptabiliser: {avant: M-01}
+    reglement: {delai: 30}
+  - date: N-01-05
+    type: achat
+    fournisseur: FOU-SCI
+    numero: "LOYER-{aaaa}-{mm}"
+    libelle: "Loyer {mm}/{aaaa}"
+    lignes: [{compte: "6132", montant: "1200", taux: NOR, libelle: "Loyer de l'atelier"}]
+    copie: true
+    reglement: {delai: 0}
+  - date: N-01-06
+    type: facture
+    client: CLI-MOREAU
+    objet: "Pose d'étagères"
+    categorie: mixed
+    lignes: [{article: ETAG, quantite: 2}, {article: POSE, quantite: 3}]
+    reglement: {delai: 21}
+  - date: N-01-08
+    type: devis
+    client: CLI-GIRARD
+    objet: "Projet d'agencement n° 13"
+    categorie: mixed
+    lignes: [{article: AGENC, quantite: 8}, {article: BIBLIO, quantite: 2}, {article: POSE, quantite: 16}]
+    acceptation:
+      delai: 7
+      acompte: "30"
+      reglement_acompte: {delai: 8}
+      facture_finale:
+        delai: 30
+        reglement: {delai: 30}
+  - date: N-01-10
+    type: achat
+    fournisseur: FOU-ENERGIE
+    numero: "ECL-{aaaa}{mm}-4012"
+    libelle: "Électricité {mm}/{aaaa}"
+    lignes: [{compte: "6061", montant: "264", taux: NOR, libelle: "Électricité de l'atelier"}]
+    copie: true
+    reglement: {delai: 12}
+  - date: N-01-10
+    type: achat
+    fournisseur: FOU-TELECOM
+    numero: "TT-{aaaa}{mm}-88"
+    libelle: "Télécommunications {mm}/{aaaa}"
+    lignes: [{compte: "626", montant: "54.90", taux: NOR, libelle: "Téléphone et internet"}]
+    copie: true
+    reglement: {delai: 8}
+  - date: N-01-11
+    type: facture
+    client: CLI-MARINIERS
+    objet: Agencement
+    categorie: services
+    lignes: [{article: AGENC, quantite: 5}, {article: POSE, quantite: 12}]
+    reglement: {delai: 35}
+  - date: N-01-12
+    type: achat
+    fournisseur: FOU-ASSUR
+    numero: "MAC-{aaaa}-T1"
+    libelle: "Assurance du trimestre"
+    lignes: [{compte: "616", montant: "486", libelle: "Multirisque professionnelle (trimestre)"}]
+    copie: true
+    reglement: {delai: 10}
+  - date: N-1-12-28+17j
+    type: banque
+    lignes: [{compte: "431", montant: "-2140", libelle: "Prélèvement URSSAF (cotisations)"}]
+  - date: N-01-14
+    type: justificatif
+    fichier: "ticket-carburant-{aaaa}{mm}{jj}.png"
+    source: photo
+    genre: ticket
+    fournisseur: FOU-STATION
+    nom_fournisseur: "Station-service du Cher"
+    montant: "58.50"
+    reference: "T{aa}{mm}{jj}"
+    image:
+      modele: ticket
+      enseigne: "STATION DU CHER"
+      adresse: "ROUTE DE SAVONNIERES 37510 BALLAN-MIRE"
+      lignes: [{libelle: "GAZOLE 33,20 L", montant: "58.50"}]
+      tva: "9.75"
+      paiement: CARTE
+      couleur: [33, 102, 172]
+    saisie:
+      si: {avant: M-01}
+      libelle: "Carburant du camion"
+      numero: "T{aa}{mm}{jj}"
+      lignes: [{compte: "6061", montant: "48.75", taux: NOR, tva: "9.75", libelle: Gazole}]
+      reglement: {delai: 0, libelle: Carburant}
+  - date: N-01-15
+    type: declaration_tva
+    formulaire: fr_ca3
+    periodicite: month
+    periode: N-1-12
+    journal: divers
+    paiement: {delai: 5, compte: "44551", libelle: "TVA de {periode} (télépaiement)"}
+  - date: N-01-17
+    type: facture
+    client: CLI-GUINGUETTE
+    objet: "Mobilier sur mesure"
+    categorie: goods
+    lignes: [{article: TABLE, quantite: 1}, {article: BIBLIO, quantite: 1}]
+    reglement: {delai: 80}
+  - date: N-01-20
+    type: mouvement_stock
+    libelle: "Fabrication du mois à l'atelier"
+    lignes:
+      - {article: ETAG, quantite: 4, cout: "48"}
+      - {article: TABLE, quantite: 2, cout: "260"}
+      - {article: BIBLIO, quantite: 3, cout: "430"}
+      - {article: PL-CHENE, quantite: -10}
+      - {article: PL-NOYER, quantite: -5}
+  - date: N-01-24
+    type: facture
+    client: CLI-MOREAU
+    objet: "Étude et relevés"
+    categorie: services
+    lignes: [{article: CONCEPT, quantite: 1}, {article: POSE, quantite: 4}]
+    reglement: {delai: 30}
+  - date: N-01-28
+    type: ecriture
+    journal: divers
+    libelle: "Salaires {mm}/{aaaa}"
+    piece: "PAIE-{aaaa}{mm}"
+    lignes:
+      - {compte: "641", debit: "3400"}
+      - {compte: "645", debit: "1380"}
+      - {compte: "421", credit: "2640"}
+      - {compte: "431", credit: "2140"}
+  - date: N-01-28
+    type: banque
+    lignes: [{compte: "421", montant: "-2640", libelle: "Virement des salaires nets"}]
+  - date: N-01-28
+    type: banque
+    lignes:
+      - {compte: "164", montant: "-380", libelle: "Échéance d'emprunt (capital)"}
+      - {compte: "661", montant: "-42", libelle: "Échéance d'emprunt (intérêts)"}
+      - {compte: "627", montant: "-14.90", libelle: "Frais de tenue de compte"}
+  - {date: N-02-03, type: rapprochement, mois: N-01}
+  - date: N-02-03
+    type: achat
+    si: {avant: M-1-01}
+    fournisseur: FOU-SCIERIE
+    numero: "SVL-{aaaa}-0198"
+    libelle: "Plateaux de chêne et de noyer"
+    lignes:
+      - {article: PL-CHENE, quantite: 13, prix: "68", taux: NOR}
+      - {article: PL-NOYER, quantite: 7, prix: "95", taux: NOR}
+    copie: true
+    ventilation: true
+    reglement: {delai: 30}
+  - date: N-02-03
+    type: facture_plateforme
+    si: {depuis: M-1-01}
+    fournisseur: FOU-SCIERIE
+    numero: "SVL-{aaaa}-0198"
+    libelle: "Plateaux de chêne et de noyer"
+    note: "Plateaux de bois massif"
+    taux: "20"
+    lignes:
+      - {libelle: "Plateau chêne 27 mm", quantite: 13, prix: "68", unite: MTK}
+      - {libelle: "Plateau noyer 27 mm", quantite: 7, prix: "95", unite: MTK}
+    comptabiliser: {avant: M-01}
+    reglement: {delai: 30}
+  - date: N-02-05
+    type: achat
+    fournisseur: FOU-SCI
+    numero: "LOYER-{aaaa}-{mm}"
+    libelle: "Loyer {mm}/{aaaa}"
+    lignes: [{compte: "6132", montant: "1200", taux: NOR, libelle: "Loyer de l'atelier"}]
+    copie: true
+    reglement: {delai: 0}
+  - date: N-02-06
+    type: facture
+    client: CLI-GIRARD
+    objet: "Pose d'étagères"
+    categorie: mixed
+    lignes: [{article: ETAG, quantite: 3}, {article: POSE, quantite: 4}]
+    reglement: {delai: 21}
+  - date: N-02-08
+    type: devis
+    client: CLI-BERNARD
+    objet: "Projet d'agencement n° 14"
+    categorie: mixed
+    lignes: [{article: AGENC, quantite: 9}, {article: BIBLIO, quantite: 3}, {article: POSE, quantite: 16}]
+    refus: {delai: 12}
+  - date: N-02-09
+    type: achat
+    fournisseur: FOU-QUINC
+    numero: "QR-{aaaa}{mm}-26"
+    libelle: "Quincaillerie et consommables"
+    lignes:
+      - {article: QUINC, quantite: 5, prix: "38", taux: NOR}
+      - {compte: "6063", montant: "64.50", taux: NOR, libelle: "Abrasifs et lames de scie"}
+    copie: true
+    ventilation: true
+    reglement: {delai: 30}
+  - date: N-02-10
+    type: achat
+    fournisseur: FOU-ENERGIE
+    numero: "ECL-{aaaa}{mm}-4013"
+    libelle: "Électricité {mm}/{aaaa}"
+    lignes: [{compte: "6061", montant: "271", taux: NOR, libelle: "Électricité de l'atelier"}]
+    copie: true
+    reglement: {delai: 12}
+  - date: N-02-10
+    type: achat
+    fournisseur: FOU-TELECOM
+    numero: "TT-{aaaa}{mm}-88"
+    libelle: "Télécommunications {mm}/{aaaa}"
+    lignes: [{compte: "626", montant: "54.90", taux: NOR, libelle: "Téléphone et internet"}]
+    copie: true
+    reglement: {delai: 8}
+  - date: N-02-11
+    type: facture
+    client: CLI-PAINDORE
+    objet: Agencement
+    categorie: services
+    lignes: [{article: AGENC, quantite: 6}, {article: POSE, quantite: 14}]
+    reglement: {delai: 35}
+  - date: N-01-28+17j
+    type: banque
+    lignes: [{compte: "431", montant: "-2140", libelle: "Prélèvement URSSAF (cotisations)"}]
+  - date: N-02-14
+    type: justificatif
+    fichier: "ticket-carburant-{aaaa}{mm}{jj}.png"
+    source: photo
+    genre: ticket
+    fournisseur: FOU-STATION
+    nom_fournisseur: "Station-service du Cher"
+    montant: "65.70"
+    reference: "T{aa}{mm}{jj}"
+    image:
+      modele: ticket
+      enseigne: "STATION DU CHER"
+      adresse: "ROUTE DE SAVONNIERES 37510 BALLAN-MIRE"
+      lignes: [{libelle: "GAZOLE 34,30 L", montant: "65.70"}]
+      tva: "10.95"
+      paiement: CARTE
+      couleur: [33, 102, 172]
+    saisie:
+      si: {avant: M-01}
+      libelle: "Carburant du camion"
+      numero: "T{aa}{mm}{jj}"
+      lignes: [{compte: "6061", montant: "54.75", taux: NOR, tva: "10.95", libelle: Gazole}]
+      reglement: {delai: 0, libelle: Carburant}
+  - date: N-02-15
+    type: declaration_tva
+    formulaire: fr_ca3
+    periodicite: month
+    periode: N-01
+    journal: divers
+    paiement: {delai: 5, compte: "44551", libelle: "TVA de {periode} (télépaiement)"}
+  - date: N-02-17
+    type: facture
+    client: CLI-MOREAU
+    objet: "Mobilier sur mesure"
+    categorie: goods
+    lignes: [{article: TABLE, quantite: 2}, {article: BIBLIO, quantite: 2}]
+    reglement: {delai: 28}
+  - date: N-02-20
+    type: mouvement_stock
+    libelle: "Fabrication du mois à l'atelier"
+    lignes:
+      - {article: ETAG, quantite: 5, cout: "48"}
+      - {article: TABLE, quantite: 2, cout: "260"}
+      - {article: BIBLIO, quantite: 4, cout: "430"}
+      - {article: PL-CHENE, quantite: -11}
+      - {article: PL-NOYER, quantite: -6}
+  - date: N-02-24
+    type: facture
+    client: CLI-GIRARD
+    objet: "Étude et relevés"
+    categorie: services
+    lignes: [{article: CONCEPT, quantite: 1}, {article: POSE, quantite: 5}]
+    reglement: {delai: 30}
+  - date: N-02-28
+    type: ecriture
+    journal: divers
+    libelle: "Salaires {mm}/{aaaa}"
+    piece: "PAIE-{aaaa}{mm}"
+    lignes:
+      - {compte: "641", debit: "3400"}
+      - {compte: "645", debit: "1380"}
+      - {compte: "421", credit: "2640"}
+      - {compte: "431", credit: "2140"}
+  - date: N-02-28
+    type: banque
+    lignes: [{compte: "421", montant: "-2640", libelle: "Virement des salaires nets"}]
+  - date: N-02-28
+    type: banque
+    lignes:
+      - {compte: "164", montant: "-380", libelle: "Échéance d'emprunt (capital)"}
+      - {compte: "661", montant: "-42", libelle: "Échéance d'emprunt (intérêts)"}
+      - {compte: "627", montant: "-14.90", libelle: "Frais de tenue de compte"}
+  - {date: N-03-03, type: rapprochement, mois: N-02}
+  - date: N-03-03
+    type: achat
+    si: {avant: M-1-01}
+    fournisseur: FOU-SCIERIE
+    numero: "SVL-{aaaa}-0205"
+    libelle: "Plateaux de chêne et de noyer"
+    lignes:
+      - {article: PL-CHENE, quantite: 14, prix: "68", taux: NOR}
+      - {article: PL-NOYER, quantite: 8, prix: "95", taux: NOR}
+    copie: true
+    ventilation: true
+    reglement: {delai: 30}
+  - date: N-03-03
+    type: facture_plateforme
+    si: {depuis: M-1-01}
+    fournisseur: FOU-SCIERIE
+    numero: "SVL-{aaaa}-0205"
+    libelle: "Plateaux de chêne et de noyer"
+    note: "Plateaux de bois massif"
+    taux: "20"
+    lignes:
+      - {libelle: "Plateau chêne 27 mm", quantite: 14, prix: "68", unite: MTK}
+      - {libelle: "Plateau noyer 27 mm", quantite: 8, prix: "95", unite: MTK}
+    comptabiliser: {avant: M-01}
+    reglement: {delai: 30}
+  - date: N-03-05
+    type: achat
+    fournisseur: FOU-SCI
+    numero: "LOYER-{aaaa}-{mm}"
+    libelle: "Loyer {mm}/{aaaa}"
+    lignes: [{compte: "6132", montant: "1200", taux: NOR, libelle: "Loyer de l'atelier"}]
+    copie: true
+    reglement: {delai: 0}
+  - date: N-03-06
+    type: facture
+    client: CLI-BERNARD
+    objet: "Pose d'étagères"
+    categorie: mixed
+    lignes: [{article: ETAG, quantite: 4}, {article: POSE, quantite: 5}]
+    avoir:
+      delai: 6
+      motif: "Étagère au vernis défectueux, reprise"
+      categorie: goods
+      lignes: [{article: ETAG, quantite: 1}]
+    reglement: {delai: 21}
+  - date: N-03-08
+    type: devis
+    client: CLI-MARINIERS
+    objet: "Projet d'agencement n° 15"
+    categorie: mixed
+    lignes: [{article: AGENC, quantite: 10}, {article: BIBLIO, quantite: 2}, {article: POSE, quantite: 16}]
+    acceptation:
+      delai: 7
+      acompte: "30"
+      reglement_acompte: {delai: 8}
+      facture_finale:
+        delai: 30
+        reglement: {delai: 30}
+  - date: N-03-10
+    type: achat
+    fournisseur: FOU-ENERGIE
+    numero: "ECL-{aaaa}{mm}-4014"
+    libelle: "Électricité {mm}/{aaaa}"
+    lignes: [{compte: "6061", montant: "188", taux: NOR, libelle: "Électricité de l'atelier"}]
+    copie: true
+    reglement: {delai: 12}
+  - date: N-03-10
+    type: achat
+    fournisseur: FOU-TELECOM
+    numero: "TT-{aaaa}{mm}-88"
+    libelle: "Télécommunications {mm}/{aaaa}"
+    lignes: [{compte: "626", montant: "54.90", taux: NOR, libelle: "Téléphone et internet"}]
+    copie: true
+    reglement: {delai: 8}
+  - date: N-03-11
+    type: facture
+    client: CLI-AUBERT
+    objet: Agencement
+    categorie: services
+    lignes: [{article: AGENC, quantite: 7}, {article: POSE, quantite: 16}]
+    reglement: {delai: 35}
+  - date: N-03-14
+    type: justificatif
+    fichier: "ticket-carburant-{aaaa}{mm}{jj}.png"
+    source: photo
+    genre: ticket
+    fournisseur: FOU-STATION
+    nom_fournisseur: "Station-service du Cher"
+    montant: "72.90"
+    reference: "T{aa}{mm}{jj}"
+    image:
+      modele: ticket
+      enseigne: "STATION DU CHER"
+      adresse: "ROUTE DE SAVONNIERES 37510 BALLAN-MIRE"
+      lignes: [{libelle: "GAZOLE 35,40 L", montant: "72.90"}]
+      tva: "12.15"
+      paiement: CARTE
+      couleur: [33, 102, 172]
+    saisie:
+      si: {avant: M-01}
+      libelle: "Carburant du camion"
+      numero: "T{aa}{mm}{jj}"
+      lignes: [{compte: "6061", montant: "60.75", taux: NOR, tva: "12.15", libelle: Gazole}]
+      reglement: {delai: 0, libelle: Carburant}
+  - date: N-03-15
+    type: declaration_tva
+    formulaire: fr_ca3
+    periodicite: month
+    periode: N-02
+    journal: divers
+    paiement: {delai: 5, compte: "44551", libelle: "TVA de {periode} (télépaiement)"}
+  - date: N-02-28+17j
+    type: banque
+    lignes: [{compte: "431", montant: "-2140", libelle: "Prélèvement URSSAF (cotisations)"}]
+  - date: N-03-17
+    type: facture
+    client: CLI-GIRARD
+    objet: "Mobilier sur mesure"
+    categorie: goods
+    lignes: [{article: TABLE, quantite: 1}, {article: BIBLIO, quantite: 3}]
+    reglement: {delai: 28}
+  - date: N-03-18
+    type: achat
+    fournisseur: FOU-GARNIER
+    numero: "HG-{aaaa}-3"
+    libelle: "Honoraires d'architecte d'intérieur"
+    lignes: [{compte: "6226", montant: "1650", libelle: "Plans d'aménagement intérieur"}]
+    copie: true
+    reglement: {delai: 20}
+  - date: N-03-20
+    type: mouvement_stock
+    libelle: "Fabrication du mois à l'atelier"
+    lignes:
+      - {article: ETAG, quantite: 6, cout: "48"}
+      - {article: TABLE, quantite: 2, cout: "260"}
+      - {article: BIBLIO, quantite: 3, cout: "430"}
+      - {article: PL-CHENE, quantite: -12}
+      - {article: PL-NOYER, quantite: -7}
+  - date: N-03-22
+    type: achat
+    fournisseur: FOU-EXPERT
+    numero: "DA-{aaaa}-{mm}"
+    libelle: "Honoraires comptables"
+    lignes: [{compte: "6226", montant: "950", taux: NOR, libelle: "Tenue et révision"}]
+    copie: true
+    reglement: {delai: 30}
+  - date: N-03-24
+    type: facture
+    client: CLI-BERNARD
+    objet: "Étude et relevés"
+    categorie: services
+    lignes: [{article: CONCEPT, quantite: 1}, {article: POSE, quantite: 6}]
+    reglement: {delai: 30}
+  - date: N-03-28
+    type: ecriture
+    journal: divers
+    libelle: "Salaires {mm}/{aaaa}"
+    piece: "PAIE-{aaaa}{mm}"
+    lignes:
+      - {compte: "641", debit: "3400"}
+      - {compte: "645", debit: "1380"}
+      - {compte: "421", credit: "2640"}
+      - {compte: "431", credit: "2140"}
+  - date: N-03-28
+    type: banque
+    lignes: [{compte: "421", montant: "-2640", libelle: "Virement des salaires nets"}]
+  - date: N-03-28
+    type: banque
+    lignes:
+      - {compte: "164", montant: "-380", libelle: "Échéance d'emprunt (capital)"}
+      - {compte: "661", montant: "-42", libelle: "Échéance d'emprunt (intérêts)"}
+      - {compte: "627", montant: "-14.90", libelle: "Frais de tenue de compte"}
+  - {date: N-04-03, type: rapprochement, mois: N-03}
+  - date: N-04-03
+    type: achat
+    si: {avant: M-1-01}
+    fournisseur: FOU-SCIERIE
+    numero: "SVL-{aaaa}-0212"
+    libelle: "Plateaux de chêne et de noyer"
+    lignes:
+      - {article: PL-CHENE, quantite: 15, prix: "68", taux: NOR}
+      - {article: PL-NOYER, quantite: 6, prix: "95", taux: NOR}
+    copie: true
+    ventilation: true
+    reglement: {delai: 30}
+  - date: N-04-03
+    type: facture_plateforme
+    si: {depuis: M-1-01}
+    fournisseur: FOU-SCIERIE
+    numero: "SVL-{aaaa}-0212"
+    libelle: "Plateaux de chêne et de noyer"
+    note: "Plateaux de bois massif"
+    taux: "20"
+    lignes:
+      - {libelle: "Plateau chêne 27 mm", quantite: 15, prix: "68", unite: MTK}
+      - {libelle: "Plateau noyer 27 mm", quantite: 6, prix: "95", unite: MTK}
+    comptabiliser: {avant: M-01}
+    reglement: {delai: 30}
+  - date: N-04-05
+    type: achat
+    fournisseur: FOU-SCI
+    numero: "LOYER-{aaaa}-{mm}"
+    libelle: "Loyer {mm}/{aaaa}"
+    lignes: [{compte: "6132", montant: "1200", taux: NOR, libelle: "Loyer de l'atelier"}]
+    copie: true
+    reglement: {delai: 0}
+  - date: N-04-06
+    type: facture
+    client: CLI-MOREAU
+    objet: "Pose d'étagères"
+    categorie: mixed
+    lignes: [{article: ETAG, quantite: 2}, {article: POSE, quantite: 3}]
+    reglement: {delai: 21}
+  - date: N-04-08
+    type: devis
+    client: CLI-PAINDORE
+    objet: "Projet d'agencement n° 16"
+    categorie: mixed
+    lignes: [{article: AGENC, quantite: 11}, {article: BIBLIO, quantite: 3}, {article: POSE, quantite: 16}]
+  - date: N-04-09
+    type: achat
+    fournisseur: FOU-QUINC
+    numero: "QR-{aaaa}{mm}-52"
+    libelle: "Quincaillerie et consommables"
+    lignes:
+      - {article: QUINC, quantite: 4, prix: "38", taux: NOR}
+      - {compte: "6063", montant: "64.50", taux: NOR, libelle: "Abrasifs et lames de scie"}
+    copie: true
+    ventilation: true
+    reglement: {delai: 30}
+  - date: N-04-10
+    type: achat
+    fournisseur: FOU-ENERGIE
+    numero: "ECL-{aaaa}{mm}-4015"
+    libelle: "Électricité {mm}/{aaaa}"
+    lignes: [{compte: "6061", montant: "160", taux: NOR, libelle: "Électricité de l'atelier"}]
+    copie: true
+    reglement: {delai: 12}
+  - date: N-04-10
+    type: achat
+    fournisseur: FOU-TELECOM
+    numero: "TT-{aaaa}{mm}-88"
+    libelle: "Télécommunications {mm}/{aaaa}"
+    lignes: [{compte: "626", montant: "54.90", taux: NOR, libelle: "Téléphone et internet"}]
+    copie: true
+    reglement: {delai: 8}
+  - date: N-04-11
+    type: facture
+    client: CLI-GUINGUETTE
+    objet: Agencement
+    categorie: services
+    lignes: [{article: AGENC, quantite: 5}, {article: POSE, quantite: 12}]
+    reglement: {delai: 75}
+  - date: N-04-12
+    type: achat
+    fournisseur: FOU-ASSUR
+    numero: "MAC-{aaaa}-T2"
+    libelle: "Assurance du trimestre"
+    lignes: [{compte: "616", montant: "486", libelle: "Multirisque professionnelle (trimestre)"}]
+    copie: true
+    reglement: {delai: 10}
+  - date: N-03-28+17j
+    type: banque
+    lignes: [{compte: "431", montant: "-2140", libelle: "Prélèvement URSSAF (cotisations)"}]
+  - date: N-04-14
+    type: justificatif
+    fichier: "ticket-carburant-{aaaa}{mm}{jj}.png"
+    source: photo
+    genre: ticket
+    fournisseur: FOU-STATION
+    nom_fournisseur: "Station-service du Cher"
+    montant: "80.10"
+    reference: "T{aa}{mm}{jj}"
+    image:
+      modele: ticket
+      enseigne: "STATION DU CHER"
+      adresse: "ROUTE DE SAVONNIERES 37510 BALLAN-MIRE"
+      lignes: [{libelle: "GAZOLE 36,50 L", montant: "80.10"}]
+      tva: "13.35"
+      paiement: CARTE
+      couleur: [33, 102, 172]
+    saisie:
+      si: {avant: M-01}
+      libelle: "Carburant du camion"
+      numero: "T{aa}{mm}{jj}"
+      lignes: [{compte: "6061", montant: "66.75", taux: NOR, tva: "13.35", libelle: Gazole}]
+      reglement: {delai: 0, libelle: Carburant}
+  - date: N-04-15
+    type: declaration_tva
+    formulaire: fr_ca3
+    periodicite: month
+    periode: N-03
+    journal: divers
+    paiement: {delai: 5, compte: "44551", libelle: "TVA de {periode} (télépaiement)"}
+  - date: N-04-17
+    type: facture
+    client: CLI-VALBRENNE
+    objet: "Bibliothèques de la médiathèque"
+    categorie: mixed
+    reference_commande: "BC-{aaaa}-{mm}"
+    chorus_pro: true
+    lignes: [{article: BIBLIO, quantite: 4}, {article: POSE, quantite: 8}]
+    reglement: {delai: 40}
+  - date: N-04-20
+    type: mouvement_stock
+    libelle: "Fabrication du mois à l'atelier"
+    lignes:
+      - {article: ETAG, quantite: 4, cout: "48"}
+      - {article: TABLE, quantite: 2, cout: "260"}
+      - {article: BIBLIO, quantite: 4, cout: "430"}
+      - {article: PL-CHENE, quantite: -13}
+      - {article: PL-NOYER, quantite: -5}
+  - date: N-04-24
+    type: facture
+    client: CLI-MARINIERS
+    objet: "Étude et relevés"
+    categorie: services
+    lignes: [{article: CONCEPT, quantite: 1}, {article: POSE, quantite: 4}]
+    reglement: {delai: 30}
+  - date: N-04-28
+    type: ecriture
+    journal: divers
+    libelle: "Salaires {mm}/{aaaa}"
+    piece: "PAIE-{aaaa}{mm}"
+    lignes:
+      - {compte: "641", debit: "3400"}
+      - {compte: "645", debit: "1380"}
+      - {compte: "421", credit: "2640"}
+      - {compte: "431", credit: "2140"}
+  - date: N-04-28
+    type: banque
+    lignes: [{compte: "421", montant: "-2640", libelle: "Virement des salaires nets"}]
+  - date: N-04-28
+    type: banque
+    lignes:
+      - {compte: "164", montant: "-380", libelle: "Échéance d'emprunt (capital)"}
+      - {compte: "661", montant: "-42", libelle: "Échéance d'emprunt (intérêts)"}
+      - {compte: "627", montant: "-14.90", libelle: "Frais de tenue de compte"}
+  - {date: N-05-03, type: rapprochement, mois: N-04}
+  - date: N-05-03
+    type: achat
+    si: {avant: M-1-01}
+    fournisseur: FOU-SCIERIE
+    numero: "SVL-{aaaa}-0219"
+    libelle: "Plateaux de chêne et de noyer"
+    lignes:
+      - {article: PL-CHENE, quantite: 12, prix: "68", taux: NOR}
+      - {article: PL-NOYER, quantite: 7, prix: "95", taux: NOR}
+    copie: true
+    ventilation: true
+    reglement: {delai: 30}
+  - date: N-05-03
+    type: facture_plateforme
+    si: {depuis: M-1-01}
+    fournisseur: FOU-SCIERIE
+    numero: "SVL-{aaaa}-0219"
+    libelle: "Plateaux de chêne et de noyer"
+    note: "Plateaux de bois massif"
+    taux: "20"
+    lignes:
+      - {libelle: "Plateau chêne 27 mm", quantite: 12, prix: "68", unite: MTK}
+      - {libelle: "Plateau noyer 27 mm", quantite: 7, prix: "95", unite: MTK}
+    comptabiliser: {avant: M-01}
+    reglement: {delai: 30}
+  - date: N-05-05
+    type: achat
+    fournisseur: FOU-SCI
+    numero: "LOYER-{aaaa}-{mm}"
+    libelle: "Loyer {mm}/{aaaa}"
+    lignes: [{compte: "6132", montant: "1200", taux: NOR, libelle: "Loyer de l'atelier"}]
+    copie: true
+    reglement: {delai: 0}
+  - date: N-05-06
+    type: facture
+    client: CLI-GIRARD
+    objet: "Pose d'étagères"
+    categorie: mixed
+    lignes: [{article: ETAG, quantite: 3}, {article: POSE, quantite: 4}]
+    reglement: {delai: 21}
+  - date: N-05-08
+    type: devis
+    client: CLI-AUBERT
+    objet: "Projet d'agencement n° 17"
+    categorie: mixed
+    lignes: [{article: AGENC, quantite: 8}, {article: BIBLIO, quantite: 2}, {article: POSE, quantite: 16}]
+    acceptation:
+      delai: 7
+      acompte: "30"
+      reglement_acompte: {delai: 8}
+      facture_finale:
+        delai: 30
+        reglement: {delai: 30}
+  - date: N-05-10
+    type: achat
+    fournisseur: FOU-ENERGIE
+    numero: "ECL-{aaaa}{mm}-4016"
+    libelle: "Électricité {mm}/{aaaa}"
+    lignes: [{compte: "6061", montant: "167", taux: NOR, libelle: "Électricité de l'atelier"}]
+    copie: true
+    reglement: {delai: 12}
+  - date: N-05-10
+    type: achat
+    fournisseur: FOU-TELECOM
+    numero: "TT-{aaaa}{mm}-88"
+    libelle: "Télécommunications {mm}/{aaaa}"
+    lignes: [{compte: "626", montant: "54.90", taux: NOR, libelle: "Téléphone et internet"}]
+    copie: true
+    reglement: {delai: 8}
+  - date: N-05-11
+    type: facture
+    client: CLI-MARINIERS
+    objet: Agencement
+    categorie: services
+    lignes: [{article: AGENC, quantite: 6}, {article: POSE, quantite: 14}]
+    reglement: {delai: 35}
+  - date: N-05-14
+    type: justificatif
+    fichier: "ticket-carburant-{aaaa}{mm}{jj}.png"
+    source: photo
+    genre: ticket
+    fournisseur: FOU-STATION
+    nom_fournisseur: "Station-service du Cher"
+    montant: "58.50"
+    reference: "T{aa}{mm}{jj}"
+    image:
+      modele: ticket
+      enseigne: "STATION DU CHER"
+      adresse: "ROUTE DE SAVONNIERES 37510 BALLAN-MIRE"
+      lignes: [{libelle: "GAZOLE 37,60 L", montant: "58.50"}]
+      tva: "9.75"
+      paiement: CARTE
+      couleur: [33, 102, 172]
+    saisie:
+      si: {avant: M-01}
+      libelle: "Carburant du camion"
+      numero: "T{aa}{mm}{jj}"
+      lignes: [{compte: "6061", montant: "48.75", taux: NOR, tva: "9.75", libelle: Gazole}]
+      reglement: {delai: 0, libelle: Carburant}
+  - date: N-04-28+17j
+    type: banque
+    lignes: [{compte: "431", montant: "-2140", libelle: "Prélèvement URSSAF (cotisations)"}]
+  - date: N-05-15
+    type: declaration_tva
+    formulaire: fr_ca3
+    periodicite: month
+    periode: N-04
+    journal: divers
+    paiement: {delai: 5, compte: "44551", libelle: "TVA de {periode} (télépaiement)"}
+  - date: N-05-17
+    type: facture
+    client: CLI-MARINIERS
+    objet: "Mobilier sur mesure"
+    categorie: goods
+    lignes: [{article: TABLE, quantite: 2}, {article: BIBLIO, quantite: 2}]
+    reglement: {delai: 28}
+  - date: N-05-20
+    type: mouvement_stock
+    libelle: "Fabrication du mois à l'atelier"
+    lignes:
+      - {article: ETAG, quantite: 5, cout: "48"}
+      - {article: TABLE, quantite: 2, cout: "260"}
+      - {article: BIBLIO, quantite: 3, cout: "430"}
+      - {article: PL-CHENE, quantite: -10}
+      - {article: PL-NOYER, quantite: -6}
+  - date: N-05-24
+    type: facture
+    client: CLI-PAINDORE
+    objet: "Étude et relevés"
+    categorie: services
+    lignes: [{article: CONCEPT, quantite: 1}, {article: POSE, quantite: 5}]
+    reglement: {delai: 30}
+  - date: N-05-28
+    type: ecriture
+    journal: divers
+    libelle: "Salaires {mm}/{aaaa}"
+    piece: "PAIE-{aaaa}{mm}"
+    lignes:
+      - {compte: "641", debit: "3400"}
+      - {compte: "645", debit: "1380"}
+      - {compte: "421", credit: "2640"}
+      - {compte: "431", credit: "2140"}
+  - date: N-05-28
+    type: banque
+    lignes: [{compte: "421", montant: "-2640", libelle: "Virement des salaires nets"}]
+  - date: N-05-28
+    type: banque
+    lignes:
+      - {compte: "164", montant: "-380", libelle: "Échéance d'emprunt (capital)"}
+      - {compte: "661", montant: "-42", libelle: "Échéance d'emprunt (intérêts)"}
+      - {compte: "627", montant: "-14.90", libelle: "Frais de tenue de compte"}
+  - {date: N-06-03, type: rapprochement, mois: N-05}
+  - date: N-06-03
+    type: achat
+    si: {avant: M-1-01}
+    fournisseur: FOU-SCIERIE
+    numero: "SVL-{aaaa}-0226"
+    libelle: "Plateaux de chêne et de noyer"
+    lignes:
+      - {article: PL-CHENE, quantite: 13, prix: "68", taux: NOR}
+      - {article: PL-NOYER, quantite: 8, prix: "95", taux: NOR}
+    copie: true
+    ventilation: true
+    reglement: {delai: 30}
+  - date: N-06-03
+    type: facture_plateforme
+    si: {depuis: M-1-01}
+    fournisseur: FOU-SCIERIE
+    numero: "SVL-{aaaa}-0226"
+    libelle: "Plateaux de chêne et de noyer"
+    note: "Plateaux de bois massif"
+    taux: "20"
+    lignes:
+      - {libelle: "Plateau chêne 27 mm", quantite: 13, prix: "68", unite: MTK}
+      - {libelle: "Plateau noyer 27 mm", quantite: 8, prix: "95", unite: MTK}
+    comptabiliser: {avant: M-01}
+    reglement: {delai: 30}
+  - date: N-06-05
+    type: achat
+    fournisseur: FOU-SCI
+    numero: "LOYER-{aaaa}-{mm}"
+    libelle: "Loyer {mm}/{aaaa}"
+    lignes: [{compte: "6132", montant: "1200", taux: NOR, libelle: "Loyer de l'atelier"}]
+    copie: true
+    reglement: {delai: 0}
+  - date: N-06-06
+    type: facture
+    client: CLI-BERNARD
+    objet: "Pose d'étagères"
+    categorie: mixed
+    lignes: [{article: ETAG, quantite: 4}, {article: POSE, quantite: 5}]
+    avoir:
+      delai: 6
+      motif: "Étagère au vernis défectueux, reprise"
+      categorie: goods
+      lignes: [{article: ETAG, quantite: 1}]
+    reglement: {delai: 21}
+  - date: N-06-08
+    type: devis
+    client: CLI-GUINGUETTE
+    objet: "Projet d'agencement n° 18"
+    categorie: mixed
+    lignes: [{article: AGENC, quantite: 9}, {article: BIBLIO, quantite: 3}, {article: POSE, quantite: 16}]
+    refus: {delai: 12}
+  - date: N-06-09
+    type: achat
+    fournisseur: FOU-QUINC
+    numero: "QR-{aaaa}{mm}-78"
+    libelle: "Quincaillerie et consommables"
+    lignes:
+      - {article: QUINC, quantite: 3, prix: "38", taux: NOR}
+      - {compte: "6063", montant: "64.50", taux: NOR, libelle: "Abrasifs et lames de scie"}
+    copie: true
+    ventilation: true
+    reglement: {delai: 30}
+  - date: N-06-10
+    type: achat
+    fournisseur: FOU-ENERGIE
+    numero: "ECL-{aaaa}{mm}-4017"
+    libelle: "Électricité {mm}/{aaaa}"
+    lignes: [{compte: "6061", montant: "174", taux: NOR, libelle: "Électricité de l'atelier"}]
+    copie: true
+    reglement: {delai: 12}
+  - date: N-06-10
+    type: achat
+    fournisseur: FOU-TELECOM
+    numero: "TT-{aaaa}{mm}-88"
+    libelle: "Télécommunications {mm}/{aaaa}"
+    lignes: [{compte: "626", montant: "54.90", taux: NOR, libelle: "Téléphone et internet"}]
+    copie: true
+    reglement: {delai: 8}
+  - date: N-06-11
+    type: facture
+    client: CLI-PAINDORE
+    objet: Agencement
+    categorie: services
+    lignes: [{article: AGENC, quantite: 7}, {article: POSE, quantite: 16}]
+    reglement: {delai: 35}
+  - date: N-05-28+17j
+    type: banque
+    lignes: [{compte: "431", montant: "-2140", libelle: "Prélèvement URSSAF (cotisations)"}]
+  - date: N-06-14
+    type: justificatif
+    fichier: "ticket-carburant-{aaaa}{mm}{jj}.png"
+    source: photo
+    genre: ticket
+    fournisseur: FOU-STATION
+    nom_fournisseur: "Station-service du Cher"
+    montant: "65.70"
+    reference: "T{aa}{mm}{jj}"
+    image:
+      modele: ticket
+      enseigne: "STATION DU CHER"
+      adresse: "ROUTE DE SAVONNIERES 37510 BALLAN-MIRE"
+      lignes: [{libelle: "GAZOLE 38,70 L", montant: "65.70"}]
+      tva: "10.95"
+      paiement: CARTE
+      couleur: [33, 102, 172]
+    saisie:
+      si: {avant: M-01}
+      libelle: "Carburant du camion"
+      numero: "T{aa}{mm}{jj}"
+      lignes: [{compte: "6061", montant: "54.75", taux: NOR, tva: "10.95", libelle: Gazole}]
+      reglement: {delai: 0, libelle: Carburant}
+  - date: N-06-15
+    type: declaration_tva
+    formulaire: fr_ca3
+    periodicite: month
+    periode: N-05
+    journal: divers
+    paiement: {delai: 5, compte: "44551", libelle: "TVA de {periode} (télépaiement)"}
+  - date: N-06-17
+    type: facture
+    client: CLI-PAINDORE
+    objet: "Mobilier sur mesure"
+    categorie: goods
+    lignes: [{article: TABLE, quantite: 1}, {article: BIBLIO, quantite: 3}]
+    reglement: {delai: 28}
+  - date: N-06-20
+    type: mouvement_stock
+    libelle: "Fabrication du mois à l'atelier"
+    lignes:
+      - {article: ETAG, quantite: 6, cout: "48"}
+      - {article: TABLE, quantite: 2, cout: "260"}
+      - {article: BIBLIO, quantite: 4, cout: "430"}
+      - {article: PL-CHENE, quantite: -11}
+      - {article: PL-NOYER, quantite: -7}
+  - date: N-06-22
+    type: achat
+    fournisseur: FOU-EXPERT
+    numero: "DA-{aaaa}-{mm}"
+    libelle: "Honoraires comptables"
+    lignes: [{compte: "6226", montant: "950", taux: NOR, libelle: "Tenue et révision"}]
+    copie: true
+    reglement: {delai: 30}
+  - date: N-06-24
+    type: facture
+    client: CLI-AUBERT
+    objet: "Étude et relevés"
+    categorie: services
+    lignes: [{article: CONCEPT, quantite: 1}, {article: POSE, quantite: 6}]
+    reglement: {delai: 30}
+  - date: N-06-28
+    type: ecriture
+    journal: divers
+    libelle: "Salaires {mm}/{aaaa}"
+    piece: "PAIE-{aaaa}{mm}"
+    lignes:
+      - {compte: "641", debit: "3400"}
+      - {compte: "645", debit: "1380"}
+      - {compte: "421", credit: "2640"}
+      - {compte: "431", credit: "2140"}
+  - date: N-06-28
+    type: banque
+    lignes: [{compte: "421", montant: "-2640", libelle: "Virement des salaires nets"}]
+  - date: N-06-28
+    type: banque
+    lignes:
+      - {compte: "164", montant: "-380", libelle: "Échéance d'emprunt (capital)"}
+      - {compte: "661", montant: "-42", libelle: "Échéance d'emprunt (intérêts)"}
+      - {compte: "627", montant: "-14.90", libelle: "Frais de tenue de compte"}
+  - {date: N-07-03, type: rapprochement, mois: N-06}
+  - date: N-07-03
+    type: achat
+    si: {avant: M-1-01}
+    fournisseur: FOU-SCIERIE
+    numero: "SVL-{aaaa}-0233"
+    libelle: "Plateaux de chêne et de noyer"
+    lignes:
+      - {article: PL-CHENE, quantite: 14, prix: "68", taux: NOR}
+      - {article: PL-NOYER, quantite: 6, prix: "95", taux: NOR}
+    copie: true
+    ventilation: true
+    reglement: {delai: 30}
+  - date: N-07-03
+    type: facture_plateforme
+    si: {depuis: M-1-01}
+    fournisseur: FOU-SCIERIE
+    numero: "SVL-{aaaa}-0233"
+    libelle: "Plateaux de chêne et de noyer"
+    note: "Plateaux de bois massif"
+    taux: "20"
+    lignes:
+      - {libelle: "Plateau chêne 27 mm", quantite: 14, prix: "68", unite: MTK}
+      - {libelle: "Plateau noyer 27 mm", quantite: 6, prix: "95", unite: MTK}
+    comptabiliser: {avant: M-01}
+    reglement: {delai: 30}
+  - date: N-07-05
+    type: achat
+    fournisseur: FOU-SCI
+    numero: "LOYER-{aaaa}-{mm}"
+    libelle: "Loyer {mm}/{aaaa}"
+    lignes: [{compte: "6132", montant: "1200", taux: NOR, libelle: "Loyer de l'atelier"}]
+    copie: true
+    reglement: {delai: 0}
+  - date: N-07-06
+    type: facture
+    client: CLI-MOREAU
+    objet: "Pose d'étagères"
+    categorie: mixed
+    lignes: [{article: ETAG, quantite: 2}, {article: POSE, quantite: 3}]
+    reglement: {delai: 21}
+  - date: N-07-08
+    type: devis
+    client: CLI-MOREAU
+    objet: "Projet d'agencement n° 19"
+    categorie: mixed
+    lignes: [{article: AGENC, quantite: 10}, {article: BIBLIO, quantite: 2}, {article: POSE, quantite: 16}]
+    acceptation:
+      delai: 7
+      acompte: "30"
+      reglement_acompte: {delai: 8}
+      facture_finale:
+        delai: 30
+        reglement: {delai: 30}
+  - date: N-07-10
+    type: achat
+    fournisseur: FOU-ENERGIE
+    numero: "ECL-{aaaa}{mm}-4018"
+    libelle: "Électricité {mm}/{aaaa}"
+    lignes: [{compte: "6061", montant: "181", taux: NOR, libelle: "Électricité de l'atelier"}]
+    copie: true
+    reglement: {delai: 12}
+  - date: N-07-10
+    type: achat
+    fournisseur: FOU-TELECOM
+    numero: "TT-{aaaa}{mm}-88"
+    libelle: "Télécommunications {mm}/{aaaa}"
+    lignes: [{compte: "626", montant: "54.90", taux: NOR, libelle: "Téléphone et internet"}]
+    copie: true
+    reglement: {delai: 8}
+  - date: N-07-11
+    type: facture
+    client: CLI-AUBERT
+    objet: Agencement
+    categorie: services
+    lignes: [{article: AGENC, quantite: 5}, {article: POSE, quantite: 12}]
+    reglement: {delai: 35}
+  - date: N-07-12
+    type: achat
+    fournisseur: FOU-ASSUR
+    numero: "MAC-{aaaa}-T3"
+    libelle: "Assurance du trimestre"
+    lignes: [{compte: "616", montant: "486", libelle: "Multirisque professionnelle (trimestre)"}]
+    copie: true
+    reglement: {delai: 10}
+  - date: N-07-14
+    type: justificatif
+    fichier: "ticket-carburant-{aaaa}{mm}{jj}.png"
+    source: photo
+    genre: ticket
+    fournisseur: FOU-STATION
+    nom_fournisseur: "Station-service du Cher"
+    montant: "72.90"
+    reference: "T{aa}{mm}{jj}"
+    image:
+      modele: ticket
+      enseigne: "STATION DU CHER"
+      adresse: "ROUTE DE SAVONNIERES 37510 BALLAN-MIRE"
+      lignes: [{libelle: "GAZOLE 30,80 L", montant: "72.90"}]
+      tva: "12.15"
+      paiement: CARTE
+      couleur: [33, 102, 172]
+    saisie:
+      si: {avant: M-01}
+      libelle: "Carburant du camion"
+      numero: "T{aa}{mm}{jj}"
+      lignes: [{compte: "6061", montant: "60.75", taux: NOR, tva: "12.15", libelle: Gazole}]
+      reglement: {delai: 0, libelle: Carburant}
+  - date: N-06-28+17j
+    type: banque
+    lignes: [{compte: "431", montant: "-2140", libelle: "Prélèvement URSSAF (cotisations)"}]
+  - date: N-07-15
+    type: declaration_tva
+    formulaire: fr_ca3
+    periodicite: month
+    periode: N-06
+    journal: divers
+    paiement: {delai: 5, compte: "44551", libelle: "TVA de {periode} (télépaiement)"}
+  - date: N-07-17
+    type: facture
+    client: CLI-AUBERT
+    objet: "Mobilier sur mesure"
+    categorie: goods
+    lignes: [{article: TABLE, quantite: 1}, {article: BIBLIO, quantite: 1}]
+    reglement: {delai: 28}
+  - date: N-07-20
+    type: mouvement_stock
+    libelle: "Fabrication du mois à l'atelier"
+    lignes:
+      - {article: ETAG, quantite: 4, cout: "48"}
+      - {article: TABLE, quantite: 2, cout: "260"}
+      - {article: BIBLIO, quantite: 3, cout: "430"}
+      - {article: PL-CHENE, quantite: -12}
+      - {article: PL-NOYER, quantite: -5}
+  - date: N-07-24
+    type: facture
+    client: CLI-GUINGUETTE
+    objet: "Étude et relevés"
+    categorie: services
+    lignes: [{article: CONCEPT, quantite: 1}, {article: POSE, quantite: 4}]
+    reglement: {delai: 30}
+  - date: N-07-28
+    type: ecriture
+    journal: divers
+    libelle: "Salaires {mm}/{aaaa}"
+    piece: "PAIE-{aaaa}{mm}"
+    lignes:
+      - {compte: "641", debit: "3400"}
+      - {compte: "645", debit: "1380"}
+      - {compte: "421", credit: "2640"}
+      - {compte: "431", credit: "2140"}
+  - date: N-07-28
+    type: banque
+    lignes: [{compte: "421", montant: "-2640", libelle: "Virement des salaires nets"}]
+  - date: N-07-28
+    type: banque
+    lignes:
+      - {compte: "164", montant: "-380", libelle: "Échéance d'emprunt (capital)"}
+      - {compte: "661", montant: "-42", libelle: "Échéance d'emprunt (intérêts)"}
+      - {compte: "627", montant: "-14.90", libelle: "Frais de tenue de compte"}
+  - {date: N-08-03, type: rapprochement, mois: N-07}
+  - date: N-08-03
+    type: achat
+    si: {avant: M-1-01}
+    fournisseur: FOU-SCIERIE
+    numero: "SVL-{aaaa}-0240"
+    libelle: "Plateaux de chêne et de noyer"
+    lignes:
+      - {article: PL-CHENE, quantite: 15, prix: "68", taux: NOR}
+      - {article: PL-NOYER, quantite: 7, prix: "95", taux: NOR}
+    copie: true
+    ventilation: true
+    reglement: {delai: 30}
+  - date: N-08-03
+    type: facture_plateforme
+    si: {depuis: M-1-01}
+    fournisseur: FOU-SCIERIE
+    numero: "SVL-{aaaa}-0240"
+    libelle: "Plateaux de chêne et de noyer"
+    note: "Plateaux de bois massif"
+    taux: "20"
+    lignes:
+      - {libelle: "Plateau chêne 27 mm", quantite: 15, prix: "68", unite: MTK}
+      - {libelle: "Plateau noyer 27 mm", quantite: 7, prix: "95", unite: MTK}
+    comptabiliser: {avant: M-01}
+    reglement: {delai: 30}
+  - date: N-08-05
+    type: achat
+    fournisseur: FOU-SCI
+    numero: "LOYER-{aaaa}-{mm}"
+    libelle: "Loyer {mm}/{aaaa}"
+    lignes: [{compte: "6132", montant: "1200", taux: NOR, libelle: "Loyer de l'atelier"}]
+    copie: true
+    reglement: {delai: 0}
+  - date: N-08-06
+    type: facture
+    client: CLI-GIRARD
+    objet: "Pose d'étagères"
+    categorie: mixed
+    lignes: [{article: ETAG, quantite: 3}, {article: POSE, quantite: 4}]
+    reglement: {delai: 21}
+  - date: N-08-08
+    type: devis
+    client: CLI-GIRARD
+    objet: "Projet d'agencement n° 20"
+    categorie: mixed
+    lignes: [{article: AGENC, quantite: 11}, {article: BIBLIO, quantite: 3}, {article: POSE, quantite: 16}]
+  - date: N-08-09
+    type: achat
+    fournisseur: FOU-QUINC
+    numero: "QR-{aaaa}{mm}-104"
+    libelle: "Quincaillerie et consommables"
+    lignes:
+      - {article: QUINC, quantite: 5, prix: "38", taux: NOR}
+      - {compte: "6063", montant: "64.50", taux: NOR, libelle: "Abrasifs et lames de scie"}
+    copie: true
+    ventilation: true
+    reglement: {delai: 30}
+  - date: N-08-10
+    type: achat
+    fournisseur: FOU-ENERGIE
+    numero: "ECL-{aaaa}{mm}-4019"
+    libelle: "Électricité {mm}/{aaaa}"
+    lignes: [{compte: "6061", montant: "188", taux: NOR, libelle: "Électricité de l'atelier"}]
+    copie: true
+    reglement: {delai: 12}
+  - date: N-08-10
+    type: achat
+    fournisseur: FOU-TELECOM
+    numero: "TT-{aaaa}{mm}-88"
+    libelle: "Télécommunications {mm}/{aaaa}"
+    lignes: [{compte: "626", montant: "54.90", taux: NOR, libelle: "Téléphone et internet"}]
+    copie: true
+    reglement: {delai: 8}
+  - date: N-08-11
+    type: facture
+    client: CLI-GUINGUETTE
+    objet: Agencement
+    categorie: services
+    lignes: [{article: AGENC, quantite: 6}, {article: POSE, quantite: 14}]
+    reglement: {delai: 75}
+  - date: N-07-28+17j
+    type: banque
+    lignes: [{compte: "431", montant: "-2140", libelle: "Prélèvement URSSAF (cotisations)"}]
+  - date: N-08-14
+    type: justificatif
+    fichier: "ticket-carburant-{aaaa}{mm}{jj}.png"
+    source: photo
+    genre: ticket
+    fournisseur: FOU-STATION
+    nom_fournisseur: "Station-service du Cher"
+    montant: "80.10"
+    reference: "T{aa}{mm}{jj}"
+    image:
+      modele: ticket
+      enseigne: "STATION DU CHER"
+      adresse: "ROUTE DE SAVONNIERES 37510 BALLAN-MIRE"
+      lignes: [{libelle: "GAZOLE 31,90 L", montant: "80.10"}]
+      tva: "13.35"
+      paiement: CARTE
+      couleur: [33, 102, 172]
+    saisie:
+      si: {avant: M-01}
+      libelle: "Carburant du camion"
+      numero: "T{aa}{mm}{jj}"
+      lignes: [{compte: "6061", montant: "66.75", taux: NOR, tva: "13.35", libelle: Gazole}]
+      reglement: {delai: 0, libelle: Carburant}
+  - date: N-08-15
+    type: declaration_tva
+    formulaire: fr_ca3
+    periodicite: month
+    periode: N-07
+    journal: divers
+    paiement: {delai: 5, compte: "44551", libelle: "TVA de {periode} (télépaiement)"}
+  - date: N-08-17
+    type: facture
+    client: CLI-GUINGUETTE
+    objet: "Mobilier sur mesure"
+    categorie: goods
+    lignes: [{article: TABLE, quantite: 2}, {article: BIBLIO, quantite: 2}]
+    reglement: {delai: 80}
+  - date: N-08-20
+    type: mouvement_stock
+    libelle: "Fabrication du mois à l'atelier"
+    lignes:
+      - {article: ETAG, quantite: 5, cout: "48"}
+      - {article: TABLE, quantite: 2, cout: "260"}
+      - {article: BIBLIO, quantite: 4, cout: "430"}
+      - {article: PL-CHENE, quantite: -13}
+      - {article: PL-NOYER, quantite: -6}
+  - date: N-08-24
+    type: facture
+    client: CLI-MOREAU
+    objet: "Étude et relevés"
+    categorie: services
+    lignes: [{article: CONCEPT, quantite: 1}, {article: POSE, quantite: 5}]
+    reglement: {delai: 30}
+  - date: N-08-28
+    type: ecriture
+    journal: divers
+    libelle: "Salaires {mm}/{aaaa}"
+    piece: "PAIE-{aaaa}{mm}"
+    lignes:
+      - {compte: "641", debit: "3400"}
+      - {compte: "645", debit: "1380"}
+      - {compte: "421", credit: "2640"}
+      - {compte: "431", credit: "2140"}
+  - date: N-08-28
+    type: banque
+    lignes: [{compte: "421", montant: "-2640", libelle: "Virement des salaires nets"}]
+  - date: N-08-28
+    type: banque
+    lignes:
+      - {compte: "164", montant: "-380", libelle: "Échéance d'emprunt (capital)"}
+      - {compte: "661", montant: "-42", libelle: "Échéance d'emprunt (intérêts)"}
+      - {compte: "627", montant: "-14.90", libelle: "Frais de tenue de compte"}
+  - {date: N-09-03, type: rapprochement, mois: N-08}
+  - date: N-09-03
+    type: achat
+    si: {avant: M-1-01}
+    fournisseur: FOU-SCIERIE
+    numero: "SVL-{aaaa}-0247"
+    libelle: "Plateaux de chêne et de noyer"
+    lignes:
+      - {article: PL-CHENE, quantite: 12, prix: "68", taux: NOR}
+      - {article: PL-NOYER, quantite: 8, prix: "95", taux: NOR}
+    copie: true
+    ventilation: true
+    reglement: {delai: 30}
+  - date: N-09-03
+    type: facture_plateforme
+    si: {depuis: M-1-01}
+    fournisseur: FOU-SCIERIE
+    numero: "SVL-{aaaa}-0247"
+    libelle: "Plateaux de chêne et de noyer"
+    note: "Plateaux de bois massif"
+    taux: "20"
+    lignes:
+      - {libelle: "Plateau chêne 27 mm", quantite: 12, prix: "68", unite: MTK}
+      - {libelle: "Plateau noyer 27 mm", quantite: 8, prix: "95", unite: MTK}
+    comptabiliser: {avant: M-01}
+    reglement: {delai: 30}
+  - date: N-09-05
+    type: achat
+    fournisseur: FOU-SCI
+    numero: "LOYER-{aaaa}-{mm}"
+    libelle: "Loyer {mm}/{aaaa}"
+    lignes: [{compte: "6132", montant: "1200", taux: NOR, libelle: "Loyer de l'atelier"}]
+    copie: true
+    reglement: {delai: 0}
+  - date: N-09-06
+    type: facture
+    client: CLI-BERNARD
+    objet: "Pose d'étagères"
+    categorie: mixed
+    lignes: [{article: ETAG, quantite: 4}, {article: POSE, quantite: 5}]
+    avoir:
+      delai: 6
+      motif: "Étagère au vernis défectueux, reprise"
+      categorie: goods
+      lignes: [{article: ETAG, quantite: 1}]
+    reglement: {delai: 21}
+  - date: N-09-08
+    type: devis
+    client: CLI-BERNARD
+    objet: "Projet d'agencement n° 21"
+    categorie: mixed
+    lignes: [{article: AGENC, quantite: 8}, {article: BIBLIO, quantite: 2}, {article: POSE, quantite: 16}]
+    acceptation:
+      delai: 7
+      acompte: "30"
+      reglement_acompte: {delai: 8}
+      facture_finale:
+        delai: 30
+        reglement: {delai: 30}
+  - date: N-09-10
+    type: achat
+    fournisseur: FOU-ENERGIE
+    numero: "ECL-{aaaa}{mm}-4020"
+    libelle: "Électricité {mm}/{aaaa}"
+    lignes: [{compte: "6061", montant: "160", taux: NOR, libelle: "Électricité de l'atelier"}]
+    copie: true
+    reglement: {delai: 12}
+  - date: N-09-10
+    type: achat
+    fournisseur: FOU-TELECOM
+    numero: "TT-{aaaa}{mm}-88"
+    libelle: "Télécommunications {mm}/{aaaa}"
+    lignes: [{compte: "626", montant: "54.90", taux: NOR, libelle: "Téléphone et internet"}]
+    copie: true
+    reglement: {delai: 8}
+  - date: N-09-11
+    type: facture
+    client: CLI-MARINIERS
+    objet: Agencement
+    categorie: services
+    lignes: [{article: AGENC, quantite: 7}, {article: POSE, quantite: 16}]
+    reglement: {delai: 35}
+  - date: N-08-28+17j
+    type: banque
+    lignes: [{compte: "431", montant: "-2140", libelle: "Prélèvement URSSAF (cotisations)"}]
+  - date: N-09-14
+    type: justificatif
+    fichier: "ticket-carburant-{aaaa}{mm}{jj}.png"
+    source: photo
+    genre: ticket
+    fournisseur: FOU-STATION
+    nom_fournisseur: "Station-service du Cher"
+    montant: "58.50"
+    reference: "T{aa}{mm}{jj}"
+    image:
+      modele: ticket
+      enseigne: "STATION DU CHER"
+      adresse: "ROUTE DE SAVONNIERES 37510 BALLAN-MIRE"
+      lignes: [{libelle: "GAZOLE 32,00 L", montant: "58.50"}]
+      tva: "9.75"
+      paiement: CARTE
+      couleur: [33, 102, 172]
+    saisie:
+      si: {avant: M-01}
+      libelle: "Carburant du camion"
+      numero: "T{aa}{mm}{jj}"
+      lignes: [{compte: "6061", montant: "48.75", taux: NOR, tva: "9.75", libelle: Gazole}]
+      reglement: {delai: 0, libelle: Carburant}
+  - date: N-09-15
+    type: declaration_tva
+    formulaire: fr_ca3
+    periodicite: month
+    periode: N-08
+    journal: divers
+    paiement: {delai: 5, compte: "44551", libelle: "TVA de {periode} (télépaiement)"}
+  - date: N-09-17
+    type: facture
+    client: CLI-MOREAU
+    objet: "Mobilier sur mesure"
+    categorie: goods
+    lignes: [{article: TABLE, quantite: 1}, {article: BIBLIO, quantite: 3}]
+    reglement: {delai: 28}
+  - date: N-09-20
+    type: mouvement_stock
+    libelle: "Fabrication du mois à l'atelier"
+    lignes:
+      - {article: ETAG, quantite: 6, cout: "48"}
+      - {article: TABLE, quantite: 2, cout: "260"}
+      - {article: BIBLIO, quantite: 3, cout: "430"}
+      - {article: PL-CHENE, quantite: -10}
+      - {article: PL-NOYER, quantite: -7}
+  - date: N-09-22
+    type: achat
+    fournisseur: FOU-EXPERT
+    numero: "DA-{aaaa}-{mm}"
+    libelle: "Honoraires comptables"
+    lignes: [{compte: "6226", montant: "950", taux: NOR, libelle: "Tenue et révision"}]
+    copie: true
+    reglement: {delai: 30}
+  - date: N-09-24
+    type: facture
+    client: CLI-GIRARD
+    objet: "Étude et relevés"
+    categorie: services
+    lignes: [{article: CONCEPT, quantite: 1}, {article: POSE, quantite: 6}]
+    reglement: {delai: 30}
+  - date: N-09-28
+    type: ecriture
+    journal: divers
+    libelle: "Salaires {mm}/{aaaa}"
+    piece: "PAIE-{aaaa}{mm}"
+    lignes:
+      - {compte: "641", debit: "3400"}
+      - {compte: "645", debit: "1380"}
+      - {compte: "421", credit: "2640"}
+      - {compte: "431", credit: "2140"}
+  - date: N-09-28
+    type: banque
+    lignes: [{compte: "421", montant: "-2640", libelle: "Virement des salaires nets"}]
+  - date: N-09-28
+    type: banque
+    lignes:
+      - {compte: "164", montant: "-380", libelle: "Échéance d'emprunt (capital)"}
+      - {compte: "661", montant: "-42", libelle: "Échéance d'emprunt (intérêts)"}
+      - {compte: "627", montant: "-14.90", libelle: "Frais de tenue de compte"}
+  - {date: N-10-03, type: rapprochement, mois: N-09}
+  - date: N-10-03
+    type: achat
+    si: {avant: M-1-01}
+    fournisseur: FOU-SCIERIE
+    numero: "SVL-{aaaa}-0254"
+    libelle: "Plateaux de chêne et de noyer"
+    lignes:
+      - {article: PL-CHENE, quantite: 13, prix: "68", taux: NOR}
+      - {article: PL-NOYER, quantite: 6, prix: "95", taux: NOR}
+    copie: true
+    ventilation: true
+    reglement: {delai: 30}
+  - date: N-10-03
+    type: facture_plateforme
+    si: {depuis: M-1-01}
+    fournisseur: FOU-SCIERIE
+    numero: "SVL-{aaaa}-0254"
+    libelle: "Plateaux de chêne et de noyer"
+    note: "Plateaux de bois massif"
+    taux: "20"
+    lignes:
+      - {libelle: "Plateau chêne 27 mm", quantite: 13, prix: "68", unite: MTK}
+      - {libelle: "Plateau noyer 27 mm", quantite: 6, prix: "95", unite: MTK}
+    comptabiliser: {avant: M-01}
+    reglement: {delai: 30}
+  - date: N-10-05
+    type: achat
+    fournisseur: FOU-SCI
+    numero: "LOYER-{aaaa}-{mm}"
+    libelle: "Loyer {mm}/{aaaa}"
+    lignes: [{compte: "6132", montant: "1200", taux: NOR, libelle: "Loyer de l'atelier"}]
+    copie: true
+    reglement: {delai: 0}
+  - date: N-10-06
+    type: facture
+    client: CLI-MOREAU
+    objet: "Pose d'étagères"
+    categorie: mixed
+    lignes: [{article: ETAG, quantite: 2}, {article: POSE, quantite: 3}]
+    reglement: {delai: 21}
+  - date: N-10-08
+    type: devis
+    client: CLI-MARINIERS
+    objet: "Projet d'agencement n° 22"
+    categorie: mixed
+    lignes: [{article: AGENC, quantite: 9}, {article: BIBLIO, quantite: 3}, {article: POSE, quantite: 16}]
+    refus: {delai: 12}
+  - date: N-10-09
+    type: achat
+    fournisseur: FOU-QUINC
+    numero: "QR-{aaaa}{mm}-130"
+    libelle: "Quincaillerie et consommables"
+    lignes:
+      - {article: QUINC, quantite: 4, prix: "38", taux: NOR}
+      - {compte: "6063", montant: "64.50", taux: NOR, libelle: "Abrasifs et lames de scie"}
+    copie: true
+    ventilation: true
+    reglement: {delai: 30}
+  - date: N-10-10
+    type: achat
+    fournisseur: FOU-ENERGIE
+    numero: "ECL-{aaaa}{mm}-4021"
+    libelle: "Électricité {mm}/{aaaa}"
+    lignes: [{compte: "6061", montant: "167", taux: NOR, libelle: "Électricité de l'atelier"}]
+    copie: true
+    reglement: {delai: 12}
+  - date: N-10-10
+    type: achat
+    fournisseur: FOU-TELECOM
+    numero: "TT-{aaaa}{mm}-88"
+    libelle: "Télécommunications {mm}/{aaaa}"
+    lignes: [{compte: "626", montant: "54.90", taux: NOR, libelle: "Téléphone et internet"}]
+    copie: true
+    reglement: {delai: 8}
+  - date: N-10-11
+    type: facture
+    client: CLI-PAINDORE
+    objet: Agencement
+    categorie: services
+    lignes: [{article: AGENC, quantite: 5}, {article: POSE, quantite: 12}]
+    reglement: {delai: 35}
+  - date: N-10-12
+    type: achat
+    fournisseur: FOU-ASSUR
+    numero: "MAC-{aaaa}-T4"
+    libelle: "Assurance du trimestre"
+    lignes: [{compte: "616", montant: "486", libelle: "Multirisque professionnelle (trimestre)"}]
+    copie: true
+    reglement: {delai: 10}
+  - date: N-10-14
+    type: justificatif
+    fichier: "ticket-carburant-{aaaa}{mm}{jj}.png"
+    source: photo
+    genre: ticket
+    fournisseur: FOU-STATION
+    nom_fournisseur: "Station-service du Cher"
+    montant: "65.70"
+    reference: "T{aa}{mm}{jj}"
+    image:
+      modele: ticket
+      enseigne: "STATION DU CHER"
+      adresse: "ROUTE DE SAVONNIERES 37510 BALLAN-MIRE"
+      lignes: [{libelle: "GAZOLE 33,10 L", montant: "65.70"}]
+      tva: "10.95"
+      paiement: CARTE
+      couleur: [33, 102, 172]
+    saisie:
+      si: {avant: M-01}
+      libelle: "Carburant du camion"
+      numero: "T{aa}{mm}{jj}"
+      lignes: [{compte: "6061", montant: "54.75", taux: NOR, tva: "10.95", libelle: Gazole}]
+      reglement: {delai: 0, libelle: Carburant}
+  - date: N-09-28+17j
+    type: banque
+    lignes: [{compte: "431", montant: "-2140", libelle: "Prélèvement URSSAF (cotisations)"}]
+  - date: N-10-15
+    type: declaration_tva
+    formulaire: fr_ca3
+    periodicite: month
+    periode: N-09
+    journal: divers
+    paiement: {delai: 5, compte: "44551", libelle: "TVA de {periode} (télépaiement)"}
+  - date: N-10-17
+    type: facture
+    client: CLI-VALBRENNE
+    objet: "Bibliothèques de la médiathèque"
+    categorie: mixed
+    reference_commande: "BC-{aaaa}-{mm}"
+    chorus_pro: true
+    lignes: [{article: BIBLIO, quantite: 4}, {article: POSE, quantite: 8}]
+    reglement: {delai: 40}
+  - date: N-10-18
+    type: achat
+    fournisseur: FOU-GARNIER
+    numero: "HG-{aaaa}-10"
+    libelle: "Honoraires d'architecte d'intérieur"
+    lignes: [{compte: "6226", montant: "1650", libelle: "Plans d'aménagement intérieur"}]
+    copie: true
+    reglement: {delai: 20}
+  - date: N-10-20
+    type: mouvement_stock
+    libelle: "Fabrication du mois à l'atelier"
+    lignes:
+      - {article: ETAG, quantite: 4, cout: "48"}
+      - {article: TABLE, quantite: 2, cout: "260"}
+      - {article: BIBLIO, quantite: 4, cout: "430"}
+      - {article: PL-CHENE, quantite: -11}
+      - {article: PL-NOYER, quantite: -5}
+  - date: N-10-24
+    type: facture
+    client: CLI-BERNARD
+    objet: "Étude et relevés"
+    categorie: services
+    lignes: [{article: CONCEPT, quantite: 1}, {article: POSE, quantite: 4}]
+    reglement: {delai: 30}
+  - date: N-10-28
+    type: ecriture
+    journal: divers
+    libelle: "Salaires {mm}/{aaaa}"
+    piece: "PAIE-{aaaa}{mm}"
+    lignes:
+      - {compte: "641", debit: "3400"}
+      - {compte: "645", debit: "1380"}
+      - {compte: "421", credit: "2640"}
+      - {compte: "431", credit: "2140"}
+  - date: N-10-28
+    type: banque
+    lignes: [{compte: "421", montant: "-2640", libelle: "Virement des salaires nets"}]
+  - date: N-10-28
+    type: banque
+    lignes:
+      - {compte: "164", montant: "-380", libelle: "Échéance d'emprunt (capital)"}
+      - {compte: "661", montant: "-42", libelle: "Échéance d'emprunt (intérêts)"}
+      - {compte: "627", montant: "-14.90", libelle: "Frais de tenue de compte"}
+  - {date: N-11-03, type: rapprochement, mois: N-10}
+  - date: N-11-03
+    type: achat
+    si: {avant: M-1-01}
+    fournisseur: FOU-SCIERIE
+    numero: "SVL-{aaaa}-0261"
+    libelle: "Plateaux de chêne et de noyer"
+    lignes:
+      - {article: PL-CHENE, quantite: 14, prix: "68", taux: NOR}
+      - {article: PL-NOYER, quantite: 7, prix: "95", taux: NOR}
+    copie: true
+    ventilation: true
+    reglement: {delai: 30}
+  - date: N-11-03
+    type: facture_plateforme
+    si: {depuis: M-1-01}
+    fournisseur: FOU-SCIERIE
+    numero: "SVL-{aaaa}-0261"
+    libelle: "Plateaux de chêne et de noyer"
+    note: "Plateaux de bois massif"
+    taux: "20"
+    lignes:
+      - {libelle: "Plateau chêne 27 mm", quantite: 14, prix: "68", unite: MTK}
+      - {libelle: "Plateau noyer 27 mm", quantite: 7, prix: "95", unite: MTK}
+    comptabiliser: {avant: M-01}
+    reglement: {delai: 30}
+  - date: N-11-05
+    type: achat
+    fournisseur: FOU-SCI
+    numero: "LOYER-{aaaa}-{mm}"
+    libelle: "Loyer {mm}/{aaaa}"
+    lignes: [{compte: "6132", montant: "1200", taux: NOR, libelle: "Loyer de l'atelier"}]
+    copie: true
+    reglement: {delai: 0}
+  - date: N-11-06
+    type: facture
+    client: CLI-GIRARD
+    objet: "Pose d'étagères"
+    categorie: mixed
+    lignes: [{article: ETAG, quantite: 3}, {article: POSE, quantite: 4}]
+    reglement: {delai: 21}
+  - date: N-11-08
+    type: devis
+    client: CLI-PAINDORE
+    objet: "Projet d'agencement n° 23"
+    categorie: mixed
+    lignes: [{article: AGENC, quantite: 10}, {article: BIBLIO, quantite: 2}, {article: POSE, quantite: 16}]
+    acceptation:
+      delai: 7
+      acompte: "30"
+      reglement_acompte: {delai: 8}
+      facture_finale:
+        delai: 30
+        reglement: {delai: 30}
+  - date: N-11-10
+    type: achat
+    fournisseur: FOU-ENERGIE
+    numero: "ECL-{aaaa}{mm}-4022"
+    libelle: "Électricité {mm}/{aaaa}"
+    lignes: [{compte: "6061", montant: "264", taux: NOR, libelle: "Électricité de l'atelier"}]
+    copie: true
+    reglement: {delai: 12}
+  - date: N-11-10
+    type: achat
+    fournisseur: FOU-TELECOM
+    numero: "TT-{aaaa}{mm}-88"
+    libelle: "Télécommunications {mm}/{aaaa}"
+    lignes: [{compte: "626", montant: "54.90", taux: NOR, libelle: "Téléphone et internet"}]
+    copie: true
+    reglement: {delai: 8}
+  - date: N-11-11
+    type: facture
+    client: CLI-AUBERT
+    objet: Agencement
+    categorie: services
+    lignes: [{article: AGENC, quantite: 6}, {article: POSE, quantite: 14}]
+    reglement: {delai: 35}
+  - date: N-10-28+17j
+    type: banque
+    lignes: [{compte: "431", montant: "-2140", libelle: "Prélèvement URSSAF (cotisations)"}]
+  - date: N-11-14
+    type: justificatif
+    fichier: "ticket-carburant-{aaaa}{mm}{jj}.png"
+    source: photo
+    genre: ticket
+    fournisseur: FOU-STATION
+    nom_fournisseur: "Station-service du Cher"
+    montant: "72.90"
+    reference: "T{aa}{mm}{jj}"
+    image:
+      modele: ticket
+      enseigne: "STATION DU CHER"
+      adresse: "ROUTE DE SAVONNIERES 37510 BALLAN-MIRE"
+      lignes: [{libelle: "GAZOLE 34,20 L", montant: "72.90"}]
+      tva: "12.15"
+      paiement: CARTE
+      couleur: [33, 102, 172]
+    saisie:
+      si: {avant: M-01}
+      libelle: "Carburant du camion"
+      numero: "T{aa}{mm}{jj}"
+      lignes: [{compte: "6061", montant: "60.75", taux: NOR, tva: "12.15", libelle: Gazole}]
+      reglement: {delai: 0, libelle: Carburant}
+  - date: N-11-15
+    type: declaration_tva
+    formulaire: fr_ca3
+    periodicite: month
+    periode: N-10
+    journal: divers
+    paiement: {delai: 5, compte: "44551", libelle: "TVA de {periode} (télépaiement)"}
+  - date: N-11-17
+    type: facture
+    client: CLI-BERNARD
+    objet: "Mobilier sur mesure"
+    categorie: goods
+    lignes: [{article: TABLE, quantite: 2}, {article: BIBLIO, quantite: 2}]
+    reglement: {delai: 28}
+  - date: N-11-20
+    type: mouvement_stock
+    libelle: "Fabrication du mois à l'atelier"
+    lignes:
+      - {article: ETAG, quantite: 5, cout: "48"}
+      - {article: TABLE, quantite: 2, cout: "260"}
+      - {article: BIBLIO, quantite: 3, cout: "430"}
+      - {article: PL-CHENE, quantite: -12}
+      - {article: PL-NOYER, quantite: -6}
+  - date: N-11-24
+    type: facture
+    client: CLI-MARINIERS
+    objet: "Étude et relevés"
+    categorie: services
+    lignes: [{article: CONCEPT, quantite: 1}, {article: POSE, quantite: 5}]
+    reglement: {delai: 30}
+  - date: N-11-28
+    type: ecriture
+    journal: divers
+    libelle: "Salaires {mm}/{aaaa}"
+    piece: "PAIE-{aaaa}{mm}"
+    lignes:
+      - {compte: "641", debit: "3400"}
+      - {compte: "645", debit: "1380"}
+      - {compte: "421", credit: "2640"}
+      - {compte: "431", credit: "2140"}
+  - date: N-11-28
+    type: banque
+    lignes: [{compte: "421", montant: "-2640", libelle: "Virement des salaires nets"}]
+  - date: N-11-28
+    type: banque
+    lignes:
+      - {compte: "164", montant: "-380", libelle: "Échéance d'emprunt (capital)"}
+      - {compte: "661", montant: "-42", libelle: "Échéance d'emprunt (intérêts)"}
+      - {compte: "627", montant: "-14.90", libelle: "Frais de tenue de compte"}
+  - {date: N-12-03, type: rapprochement, mois: N-11}
+  - date: N-12-03
+    type: achat
+    si: {avant: M-1-01}
+    fournisseur: FOU-SCIERIE
+    numero: "SVL-{aaaa}-0268"
+    libelle: "Plateaux de chêne et de noyer"
+    lignes:
+      - {article: PL-CHENE, quantite: 15, prix: "68", taux: NOR}
+      - {article: PL-NOYER, quantite: 8, prix: "95", taux: NOR}
+    copie: true
+    ventilation: true
+    reglement: {delai: 30}
+  - date: N-12-03
+    type: facture_plateforme
+    si: {depuis: M-1-01}
+    fournisseur: FOU-SCIERIE
+    numero: "SVL-{aaaa}-0268"
+    libelle: "Plateaux de chêne et de noyer"
+    note: "Plateaux de bois massif"
+    taux: "20"
+    lignes:
+      - {libelle: "Plateau chêne 27 mm", quantite: 15, prix: "68", unite: MTK}
+      - {libelle: "Plateau noyer 27 mm", quantite: 8, prix: "95", unite: MTK}
+    comptabiliser: {avant: M-01}
+    reglement: {delai: 30}
+  - date: N-12-05
+    type: achat
+    fournisseur: FOU-SCI
+    numero: "LOYER-{aaaa}-{mm}"
+    libelle: "Loyer {mm}/{aaaa}"
+    lignes: [{compte: "6132", montant: "1200", taux: NOR, libelle: "Loyer de l'atelier"}]
+    copie: true
+    reglement: {delai: 0}
+  - date: N-12-06
+    type: facture
+    client: CLI-BERNARD
+    objet: "Pose d'étagères"
+    categorie: mixed
+    lignes: [{article: ETAG, quantite: 4}, {article: POSE, quantite: 5}]
+    avoir:
+      delai: 6
+      motif: "Étagère au vernis défectueux, reprise"
+      categorie: goods
+      lignes: [{article: ETAG, quantite: 1}]
+    reglement: {delai: 21}
+  - date: N-12-08
+    type: devis
+    client: CLI-AUBERT
+    objet: "Projet d'agencement n° 24"
+    categorie: mixed
+    lignes: [{article: AGENC, quantite: 11}, {article: BIBLIO, quantite: 3}, {article: POSE, quantite: 16}]
+  - date: N-12-09
+    type: achat
+    fournisseur: FOU-QUINC
+    numero: "QR-{aaaa}{mm}-156"
+    libelle: "Quincaillerie et consommables"
+    lignes:
+      - {article: QUINC, quantite: 3, prix: "38", taux: NOR}
+      - {compte: "6063", montant: "64.50", taux: NOR, libelle: "Abrasifs et lames de scie"}
+    copie: true
+    ventilation: true
+    reglement: {delai: 30}
+  - date: N-12-10
+    type: achat
+    fournisseur: FOU-ENERGIE
+    numero: "ECL-{aaaa}{mm}-4023"
+    libelle: "Électricité {mm}/{aaaa}"
+    lignes: [{compte: "6061", montant: "271", taux: NOR, libelle: "Électricité de l'atelier"}]
+    copie: true
+    reglement: {delai: 12}
+  - date: N-12-10
+    type: achat
+    fournisseur: FOU-TELECOM
+    numero: "TT-{aaaa}{mm}-88"
+    libelle: "Télécommunications {mm}/{aaaa}"
+    lignes: [{compte: "626", montant: "54.90", taux: NOR, libelle: "Téléphone et internet"}]
+    copie: true
+    reglement: {delai: 8}
+  - date: N-12-11
+    type: facture
+    client: CLI-GUINGUETTE
+    objet: Agencement
+    categorie: services
+    lignes: [{article: AGENC, quantite: 7}, {article: POSE, quantite: 16}]
+    reglement: {delai: 75}
+  - date: N-12-14
+    type: justificatif
+    fichier: "ticket-carburant-{aaaa}{mm}{jj}.png"
+    source: photo
+    genre: ticket
+    fournisseur: FOU-STATION
+    nom_fournisseur: "Station-service du Cher"
+    montant: "80.10"
+    reference: "T{aa}{mm}{jj}"
+    image:
+      modele: ticket
+      enseigne: "STATION DU CHER"
+      adresse: "ROUTE DE SAVONNIERES 37510 BALLAN-MIRE"
+      lignes: [{libelle: "GAZOLE 35,30 L", montant: "80.10"}]
+      tva: "13.35"
+      paiement: CARTE
+      couleur: [33, 102, 172]
+    saisie:
+      si: {avant: M-01}
+      libelle: "Carburant du camion"
+      numero: "T{aa}{mm}{jj}"
+      lignes: [{compte: "6061", montant: "66.75", taux: NOR, tva: "13.35", libelle: Gazole}]
+      reglement: {delai: 0, libelle: Carburant}
+  - date: N-11-28+17j
+    type: banque
+    lignes: [{compte: "431", montant: "-2140", libelle: "Prélèvement URSSAF (cotisations)"}]
+  - date: N-12-15
+    type: declaration_tva
+    formulaire: fr_ca3
+    periodicite: month
+    periode: N-11
+    journal: divers
+    paiement: {delai: 5, compte: "44551", libelle: "TVA de {periode} (télépaiement)"}
+  - date: N-12-17
+    type: facture
+    client: CLI-MARINIERS
+    objet: "Mobilier sur mesure"
+    categorie: goods
+    lignes: [{article: TABLE, quantite: 1}, {article: BIBLIO, quantite: 3}]
+    reglement: {delai: 28}
+  - date: N-12-20
+    type: mouvement_stock
+    libelle: "Fabrication du mois à l'atelier"
+    lignes:
+      - {article: ETAG, quantite: 6, cout: "48"}
+      - {article: TABLE, quantite: 2, cout: "260"}
+      - {article: BIBLIO, quantite: 4, cout: "430"}
+      - {article: PL-CHENE, quantite: -13}
+      - {article: PL-NOYER, quantite: -7}
+  - date: N-12-22
+    type: achat
+    fournisseur: FOU-EXPERT
+    numero: "DA-{aaaa}-{mm}"
+    libelle: "Honoraires comptables"
+    lignes: [{compte: "6226", montant: "950", taux: NOR, libelle: "Tenue et révision"}]
+    copie: true
+    reglement: {delai: 30}
+  - date: N-12-24
+    type: facture
+    client: CLI-PAINDORE
+    objet: "Étude et relevés"
+    categorie: services
+    lignes: [{article: CONCEPT, quantite: 1}, {article: POSE, quantite: 6}]
+    reglement: {delai: 30}
+  - date: N-12-28
+    type: ecriture
+    journal: divers
+    libelle: "Salaires {mm}/{aaaa}"
+    piece: "PAIE-{aaaa}{mm}"
+    lignes:
+      - {compte: "641", debit: "3400"}
+      - {compte: "645", debit: "1380"}
+      - {compte: "421", credit: "2640"}
+      - {compte: "431", credit: "2140"}
+  - date: N-12-28
+    type: banque
+    lignes: [{compte: "421", montant: "-2640", libelle: "Virement des salaires nets"}]
+  - date: N-12-28
+    type: banque
+    lignes:
+      - {compte: "164", montant: "-380", libelle: "Échéance d'emprunt (capital)"}
+      - {compte: "661", montant: "-42", libelle: "Échéance d'emprunt (intérêts)"}
+      - {compte: "627", montant: "-14.90", libelle: "Frais de tenue de compte"}
+  - {date: N+1-01-03, type: rapprochement, mois: N-12}
+  - date: N-12-28+17j
+    type: banque
+    lignes: [{compte: "431", montant: "-2140", libelle: "Prélèvement URSSAF (cotisations)"}]
+recentes:
+  - date: M-2-04
+    type: bon_de_livraison
+    si: {depuis: N-01-01}
+    client: CLI-DECOVAL
+    notes: "Livraison n° 1 du mois"
+    categorie: mixed
+    lignes: [{article: ETAG, quantite: 3}, {article: POSE, quantite: 4}]
+  - date: M-2-13
+    type: bon_de_livraison
+    si: {depuis: N-01-01}
+    client: CLI-DECOVAL
+    notes: "Livraison n° 2 du mois"
+    categorie: mixed
+    lignes: [{article: ETAG, quantite: 3}, {article: POSE, quantite: 4}]
+  - date: M-2-21
+    type: bon_de_livraison
+    si: {depuis: N-01-01}
+    client: CLI-DECOVAL
+    notes: "Livraison n° 3 du mois"
+    categorie: mixed
+    lignes: [{article: ETAG, quantite: 3}, {article: POSE, quantite: 4}]
+  - date: M-2-31
+    type: fin_de_mois
+    si: {depuis: N-01-01}
+  - date: M-2-31+1j
+    type: recapitulatives
+    si: {depuis: N-01-01}
+    reglement: {delai: 20}
+  - date: M-1-04
+    type: bon_de_livraison
+    si: {depuis: N-01-01}
+    client: CLI-DECOVAL
+    notes: "Livraison n° 1 du mois"
+    categorie: mixed
+    lignes: [{article: ETAG, quantite: 3}, {article: POSE, quantite: 4}]
+    ref: livraison-m1-1
+  - date: M-1-13
+    type: bon_de_livraison
+    si: {depuis: N-01-01}
+    client: CLI-DECOVAL
+    notes: "Livraison n° 2 du mois"
+    categorie: mixed
+    lignes: [{article: ETAG, quantite: 3}, {article: POSE, quantite: 4}]
+  - date: M-1-21
+    type: bon_de_livraison
+    si: {depuis: N-01-01}
+    client: CLI-DECOVAL
+    notes: "Livraison n° 3 du mois"
+    categorie: mixed
+    lignes: [{article: ETAG, quantite: 3}, {article: POSE, quantite: 4}]
+  - date: M-1-25
+    type: bon_de_retour
+    si: {depuis: N-01-01}
+    bon: livraison-m1-1
+    motif: damaged
+    notes: "Étagère au vernis rayé, reprise"
+    categorie: goods
+    lignes: [{article: ETAG, quantite: 1}]
+  - date: M-1-31
+    type: fin_de_mois
+    si: {depuis: N-01-01}
+  - date: M-04
+    type: bon_de_livraison
+    si: {depuis: N-01-01}
+    client: CLI-DECOVAL
+    notes: "Livraison n° 1 du mois"
+    categorie: mixed
+    lignes: [{article: ETAG, quantite: 3}, {article: POSE, quantite: 4}]
+  - date: M-13
+    type: bon_de_livraison
+    si: {depuis: N-01-01}
+    client: CLI-DECOVAL
+    notes: "Livraison n° 2 du mois"
+    categorie: mixed
+    lignes: [{article: ETAG, quantite: 3}, {article: POSE, quantite: 4}]
+  - date: M-21
+    type: bon_de_livraison
+    si: {depuis: N-01-01}
+    client: CLI-DECOVAL
+    notes: "Livraison n° 3 du mois"
+    categorie: mixed
+    lignes: [{article: ETAG, quantite: 3}, {article: POSE, quantite: 4}]
+fin:
+  - type: rejet_reglement
+    clients: [CLI-MARINIERS, CLI-PAINDORE, CLI-AUBERT, CLI-GUINGUETTE]
+    motif: insufficient_funds
+    texte: "Virement retourné par la banque du client"
+    frais: "15"
+    refacturer: true
+    taux_frais: HC
+  - {type: relances, envoyer: 1}
+  - {type: synchronisation_plateforme}
+  - {type: synchronisation_plateforme}
+  - type: teledeclarations
+    declarations:
+      - {nature: liasse, exercice: N-1}
+      - {nature: das2, annee: N-1}
+      - {nature: vat_ca3, derniere_de: "N"}
+  - {type: crm, fichier: "crm.yml"}
+  - {type: modeles, langue: fr, defaut: odt, rendre_derniere_facture: true}
