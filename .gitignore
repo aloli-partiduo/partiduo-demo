@@ -11,3 +11,5 @@
 /.bundle/
 /demo-identifiants.txt
 /demo.stop
+# Override local du développement (scripts/override-local.sh), jamais versionné.
+/shard.override.yml

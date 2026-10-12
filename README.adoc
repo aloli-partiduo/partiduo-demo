@@ -29,9 +29,8 @@ de facturation électronique, TELEDEC, Chorus Pro, URSSAF, courriel — sont
 * PostgreSQL *18*, joignable par le socket Unix `/tmp/.s.PGSQL.5432`
   (autre répertoire : `PGHOST`), avec le droit de créer des bases pour
   l'utilisateur courant ; clients `createdb`, `dropdb`, `psql` ;
-* les dépôts voisins, comme pour les autres dépôts de Partiduo : les dépôts
-  `partiduo-*` à côté de celui-ci, les shards maison (`marten`, `authn`,
-  `pdf`…) deux niveaux au-dessus (`../../<nom>`) ;
+* le cœur, l'interface, les extensions et les shards maison sont pris sur
+  GitHub ; pour les copies de travail voisines, voir <<_développement_local>> ;
 * `SKIP_MARTEN_CLI_PRECOMPILATION=1` pour `shards install` (le script le
   positionne) ;
 * facultatif : `vipsthumbnail` ou `magick` (vignettes des justificatifs),
@@ -226,8 +225,36 @@ télédéclarations accusées. Le nom de la base doit contenir « test » et
 
 CI GitHub (`.github/workflows/ci.yml`) : format, Ameba, garde-fou de
 mention du logiciel d'origine, syntaxe des scripts, specs sur PostgreSQL 18,
-compilation de la distribution ; `scripts/ci-checkout-deps.sh` clone les
-dépôts voisins. Lancement manuel possible (`workflow_dispatch`).
+compilation de la distribution ; `shard.lock` ne doit contenir aucune
+dépendance `path:`. Lancement manuel possible (`workflow_dispatch`).
+
+== Développement local
+
+`shard.yml` et `shard.lock` référencent les shards maison sur GitHub
+(`aloli-crystal/*` et `aloli-partiduo/*`), suivis par branche. Le verrou
+versionné ne contient aucune dépendance `path:` : les ports FreeBSD et la CI
+l'exigent.
+
+Pour travailler sur les copies de travail voisines (`../../prod-crystal/<nom>`
+et `../partiduo-<dépôt>`), lancer :
+
+[source,sh]
+----
+scripts/override-local.sh
+----
+
+Le script génère un `shard.override.yml` *local et non versionné* (ignoré par
+git), installe les shards, puis remet `shard.lock` à son état versionné.
+Une copie de travail absente reste prise sur GitHub.
+
+Pour régénérer le verrou versionné, supprimer d'abord l'override local :
+
+[source,sh]
+----
+rm -f shard.override.yml
+SKIP_MARTEN_CLI_PRECOMPILATION=1 shards update
+scripts/override-local.sh   # retour au mode local
+----
 
 == Limites
 
@@ -246,7 +273,7 @@ dépôts voisins. Lancement manuel possible (`workflow_dispatch`).
 [source]
 ----
 scripts/demo                 # lancement en une commande (sh)
-scripts/ci-checkout-deps.sh  # dépôts voisins pour la CI
+scripts/override-local.sh    # mode local : override non versionné
 src/partiduo-demo.cr         # composition : interface, cœur, extensions
 src/main.cr                  # bin/partiduo-demo : charge un dossier et le sert
 src/demo/                    # dossiers (atelier, micro, liberal), agenda, images, simulateurs

@@ -1,5 +1,5 @@
 name: partiduo-demo
-version: 0.1.1
+version: 0.1.2
 
 description: |
   Distribution locale de démonstration de Partiduo : le cœur, l'interface
@@ -26,31 +26,43 @@ targets:
 dependencies:
   # Le cœur : registre, événements et contrat Partiduo::Api.
   partiduo:
-    path: ../partiduo-app
+    github: aloli-partiduo/partiduo-app
+    branch: development
   # L'interface Bulma, qui monte les interfaces des extensions.
   partiduo-ui-bulma:
-    path: ../partiduo-ui-bulma
+    github: aloli-partiduo/partiduo-ui-bulma
+    branch: development
   # Extensions composées (voir README.adoc, « Extensions »).
   partiduo-document:
-    path: ../partiduo-document
+    github: aloli-partiduo/partiduo-document
+    branch: development
   partiduo-einvoicing:
-    path: ../partiduo-einvoicing
+    github: aloli-partiduo/partiduo-einvoicing
+    branch: development
   partiduo-superpdp:
-    path: ../partiduo-superpdp
+    github: aloli-partiduo/partiduo-superpdp
+    branch: development
   partiduo-esalink:
-    path: ../partiduo-esalink
+    github: aloli-partiduo/partiduo-esalink
+    branch: development
   partiduo-choruspro:
-    path: ../partiduo-choruspro
+    github: aloli-partiduo/partiduo-choruspro
+    branch: development
   partiduo-teledec:
-    path: ../partiduo-teledec
+    github: aloli-partiduo/partiduo-teledec
+    branch: development
   partiduo-urssaf:
-    path: ../partiduo-urssaf
+    github: aloli-partiduo/partiduo-urssaf
+    branch: development
   partiduo-crm:
-    path: ../partiduo-crm
+    github: aloli-partiduo/partiduo-crm
+    branch: development
   partiduo-modeles:
-    path: ../partiduo-modeles
+    github: aloli-partiduo/partiduo-modeles
+    branch: development
   marten:
-    path: ../../prod-crystal/marten
+    github: aloli-crystal/marten
+    branch: production
 
 development_dependencies:
   ameba:
