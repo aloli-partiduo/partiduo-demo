@@ -1,5 +1,5 @@
 name: partiduo-demo
-version: 0.1.0
+version: 0.1.1
 
 description: |
   Distribution locale de démonstration de Partiduo : le cœur, l'interface
@@ -50,7 +50,7 @@ dependencies:
   partiduo-modeles:
     path: ../partiduo-modeles
   marten:
-    path: ../../marten
+    path: ../../prod-crystal/marten
 
 development_dependencies:
   ameba:
