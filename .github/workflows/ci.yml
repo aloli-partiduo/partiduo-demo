@@ -42,29 +42,16 @@ jobs:
         run: mkdir -p bin && crystal build lib/ameba/bin/ameba.cr -o bin/ameba && bin/ameba
 
   specs:
-    name: Specs
+    # La démonstration compile le cœur et toutes les extensions d'un bloc :
+    # exécuter ses specs dépasse la mémoire et le temps d'un exécuteur GitHub
+    # gratuit (étape interrompue après 28 minutes). La CI vérifie donc les
+    # types seulement ; les specs complètes se jouent sur le poste, et chaque
+    # extension garde sa propre CI complète (option A, 12 octobre 2026).
+    name: Specs et distribution (types)
     runs-on: ubuntu-latest
-    services:
-      postgres:
-        image: postgres:18
-        ports:
-          - 5432:5432
-        env:
-          POSTGRES_USER: partiduo
-          POSTGRES_PASSWORD: partiduo
-          POSTGRES_DB: partiduo_test_demo
-        options: >-
-          --health-cmd "pg_isready -U partiduo"
-          --health-interval 5s
-          --health-timeout 5s
-          --health-retries 10
-    env:
-      # En CI seulement, PostgreSQL est un service joignable en TCP. Le nom
-      # de la base contient « test » (specs) et « demo » (chargement).
-      DATABASE_URL: postgres://partiduo:partiduo@localhost:5432/partiduo_test_demo
     steps:
       - uses: actions/checkout@v4
-      - name: Mémoire d'échange (la compilation des specs dépasse 6 Go)
+      - name: Mémoire d'échange (l'analyse des types dépasse 6 Go)
         run: |
           sudo fallocate -l 12G /swap-ci && sudo chmod 600 /swap-ci
           sudo mkswap /swap-ci && sudo swapon /swap-ci && free -h
@@ -77,12 +64,9 @@ jobs:
         run: sudo apt-get update && sudo apt-get install -y --no-install-recommends libyaml-dev libssl-dev libgmp-dev libxml2-dev libpcre2-dev lld
       - name: Shards
         run: shards install
-      - name: Specs
-        run: crystal spec --order random --no-debug --threads 1 --link-flags=-fuse-ld=lld
+      - name: Specs (types, sans génération de code)
+        timeout-minutes: 25
+        run: crystal build --no-codegen -o /dev/null $(find spec -name '*_spec.cr')
       - name: Vérification de la distribution (types, sans génération de code)
-        # Les specs compilent déjà le code de toutes les extensions composées ;
-        # une compilation complète du programme dépassait la mémoire et le
-        # temps de l'exécuteur. On vérifie seulement que le point d'entrée
-        # se compile (analyse des types), en quelques minutes.
         timeout-minutes: 20
         run: crystal build src/main.cr --no-codegen

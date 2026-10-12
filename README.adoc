@@ -224,9 +224,12 @@ télédéclarations accusées. Le nom de la base doit contenir « test » et
 « demo ».
 
 CI GitHub (`.github/workflows/ci.yml`) : format, Ameba, garde-fou de
-mention du logiciel d'origine, syntaxe des scripts, specs sur PostgreSQL 18,
-compilation de la distribution ; `shard.lock` ne doit contenir aucune
+mention du logiciel d'origine, syntaxe des scripts, analyse des types des
+specs et de la distribution ; `shard.lock` ne doit contenir aucune
 dépendance `path:`. Lancement manuel possible (`workflow_dispatch`).
+Exécuter les specs de la démonstration dépasse la mémoire et le temps d'un
+exécuteur GitHub gratuit : elles se jouent *sur le poste* (commande
+ci-dessus) avant chaque envoi ; chaque extension garde sa propre CI complète.
 
 == Développement local
 
