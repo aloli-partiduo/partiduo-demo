@@ -59,7 +59,7 @@ module PartiduoDemo
           "format" => "entier!", "comptabilite" => "@comptabilite", "facturation" => "@param_facturation",
           "analytique" => "@param_analytique", "micro" => "@param_micro", "liberal" => "@param_liberal",
           "einv" => "@plateforme", "choruspro" => "@plateforme", "teledec" => "@teledec", "urssaf" => "@plateforme",
-          "bankimport" => "@bankimport",
+          "bankimport" => "@bankimport", "perso" => "@perso",
         },
         "comptabilite"      => {"journal_achats" => "@journal_achats"},
         "journal_achats"    => {"compte_defaut" => "compte!"},
@@ -90,14 +90,35 @@ module PartiduoDemo
           "libelle_contient" => "texte", "montant" => "montant", "sens" => "enum:any|in|out", "compte" => "compte",
           "tiers" => "code", "position" => "entier",
         },
-        "operations"     => {"format" => "entier!", "operations" => "operations", "recentes" => "operations", "fin" => "operations"},
-        "condition"      => {"depuis" => "date", "avant" => "date"},
-        "reglement"      => {"delai" => "entier!", "mode" => "enum:banque|encaissement", "moyen" => "enum:card|cash|cheque|transfer", "libelle" => "texte"},
-        "delai"          => {"delai" => "entier!"},
-        "ligne_ecriture" => {"compte" => "compte!", "debit" => "montant", "credit" => "montant", "tiers" => "code", "libelle" => "texte"},
-        "ligne_banque"   => {"compte" => "compte", "tiers" => "code", "montant" => "montant!", "libelle" => "texte"},
-        "ligne_stock"    => {"article" => "code!", "quantite" => "quantite!", "cout" => "montant"},
-        "ligne_achat"    => {
+        "perso" => {
+          "membres" => "@membre_perso[]", "comptes" => "@compte_perso[]", "categories" => "@categorie_perso[]",
+          "etiquettes" => "@etiquette_perso[]",
+        },
+        "membre_perso" => {"email" => "courriel!", "prenom" => "texte!", "role" => "enum:adult|minor|advisor"},
+        "compte_perso" => {
+          "nature" => "enum:current|savings|life_insurance|pea|securities|mortgage|other_debt|property!", "libelle" => "texte!",
+          "compte" => "compte", "etablissement" => "texte", "genre" => "enum:residence|real_estate|vehicle|other",
+          "taux" => "montant", "plafond" => "montant", "ouverture" => "date", "titulaires" => "[texte]", "solde_ouverture" => "montant",
+        },
+        "categorie_perso" => {
+          "libelle" => "texte!", "sens" => "enum:expense|income", "parent" => "texte", "parent_compte" => "compte",
+          "etiquette" => "enum:donation|home_employment|home_employment_aid|professional_expenses|rental_income|rental_charges",
+        },
+        "etiquette_perso" => {
+          "compte"    => "compte!",
+          "etiquette" => "enum:donation|home_employment|home_employment_aid|professional_expenses|rental_income|rental_charges!",
+        },
+        "assurance_perso"    => {"mode" => "enum:fixed|initial|remaining!", "valeur" => "montant!"},
+        "ligne_budget_perso" => {"categorie" => "compte!", "montant" => "montant!", "periode" => "enum:monthly|annual"},
+        "ligne_titre_perso"  => {"titre" => "texte!", "quantite" => "montant!", "cours" => "montant!"},
+        "operations"         => {"format" => "entier!", "operations" => "operations", "recentes" => "operations", "fin" => "operations"},
+        "condition"          => {"depuis" => "date", "avant" => "date"},
+        "reglement"          => {"delai" => "entier!", "mode" => "enum:banque|encaissement", "moyen" => "enum:card|cash|cheque|transfer", "libelle" => "texte"},
+        "delai"              => {"delai" => "entier!"},
+        "ligne_ecriture"     => {"compte" => "compte!", "debit" => "montant", "credit" => "montant", "tiers" => "code", "libelle" => "texte"},
+        "ligne_banque"       => {"compte" => "compte", "tiers" => "code", "montant" => "montant!", "libelle" => "texte"},
+        "ligne_stock"        => {"article" => "code!", "quantite" => "quantite!", "cout" => "montant"},
+        "ligne_achat"        => {
           "article" => "code", "quantite" => "quantite", "prix" => "montant", "compte" => "compte", "montant" => "montant",
           "taux" => "code", "tva" => "montant", "libelle" => "texte",
         },
@@ -224,7 +245,26 @@ module PartiduoDemo
         "import_releve"              => {
           "journal" => "enum:banque", "fichier" => "texte!", "format" => "texte", "transferer" => "bool", "pointage" => "@pointage",
         },
-        "prevision" => {"nom" => "texte!", "debut" => "periode!", "fin" => "periode!", "categories" => "@categorie_prevision[]!"},
+        "prevision"     => {"nom" => "texte!", "debut" => "periode!", "fin" => "periode!", "categories" => "@categorie_prevision[]!"},
+        "perso_emprunt" => {
+          "compte" => "texte!", "compte_payeur" => "texte!", "capital" => "montant!", "taux" => "montant!", "echeances" => "entier!",
+          "premiere_echeance" => "date!", "differe" => "entier", "type_differe" => "enum:none|partial|total",
+          "assurance" => "@assurance_perso", "categorie_interets" => "compte!", "categorie_assurance" => "compte",
+        },
+        "perso_recurrente" => {
+          "compte" => "texte!", "sens" => "enum:expense|income|transfer", "beneficiaire" => "texte!", "montant" => "montant!",
+          "estime" => "bool", "frequence" => "enum:monthly|quarterly|yearly|days", "intervalle" => "entier", "premiere" => "date",
+          "derniere" => "date", "jour_ouvre" => "bool", "categorie" => "compte", "vers" => "texte", "membre" => "courriel",
+        },
+        "perso_valorisation" => {"compte" => "texte!", "valeur" => "montant", "lignes" => "@ligne_titre_perso[]", "note" => "texte"},
+        "perso_budget"       => {"annee" => "annee!", "lignes" => "@ligne_budget_perso[]!"},
+        "perso_deplacements" => {
+          "annee" => "annee!", "puissance" => "entier!", "kilometres" => "entier!", "libelle" => "texte", "membre" => "courriel",
+        },
+        "perso_operation" => {
+          "compte" => "texte!", "sens" => "enum:expense|income|transfer", "montant" => "montant!", "categorie" => "compte",
+          "vers" => "texte", "beneficiaire" => "texte", "membre" => "courriel", "note" => "texte",
+        },
       } of String => Fields
     end
   end

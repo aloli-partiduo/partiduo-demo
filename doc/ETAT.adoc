@@ -8,7 +8,7 @@
   (`dossiers/<code>/`, format 1, link:format-dossiers.adoc[]) : `atelier`
   (entreprise), `micro` (auto-entrepreneur), `liberal` (profession
   libérale), convertis des scénarios Crystal d'origine à grands totaux
-  inchangés, et `foyer` (budget familial, type `household`), nouveau.
+  inchangés, et `foyer` (finances d'un foyer, type `household`, extension PERSO).
 * Validateur léger (`src/validation/`, `bin/partiduo-demo-valider`) :
   schéma, références, équilibres, relevés, cohérence des totaux attendus,
   aucun secret ; bibliothèque standard de Crystal seulement ; specs.
@@ -43,11 +43,25 @@ facturé en fin de mois) ; montants en chaînes décimales ; opérations de fin
 `after_today`.
 
 D-DEMO-008 — Foyer sur l'existant::
-`partiduo-perso` n'étant pas porté, le dossier `foyer` n'utilise que la
+`partiduo-perso` n'étant pas porté, le dossier `foyer` n'utilisait que la
 Comptabilité (plan réduit d'un foyer), BANKIMPORT (relevés CSV fictifs dont
 les années s'écrivent `{N-1}`, `{N}`, règles de catégorisation) et les
-prévisions budgétaires. Budgets par catégorie, patrimoine net et
-récurrences viendront avec `partiduo-perso`.
+prévisions budgétaires. Complété par D-DEMO-009.
+
+D-DEMO-009 — Foyer tenu par PERSO (13 octobre 2026)::
+Le dossier `foyer` active l'extension `perso` : membres, comptes du foyer
+repris des comptes du plan (livret A, assurance-vie, prêt, maison),
+catégories propres (`parametres.yml`, section `perso`) ; emprunt et son
+tableau, opérations récurrentes rapprochées des relevés importés,
+valorisations, budget de l'année par catégorie (qui remplace la prévision
+saisie à la main : c'est elle, vue de la Comptabilité), déplacements, une
+opération saisie au jour du chargement (`operations.yml`, types
+`perso_*`). Ajout compatible du format 1 ; le validateur contrôle les
+références (comptes du foyer, membres, titulaires) et recalcule les
+nombres de comptes, de catégories budgétées et de valorisations ; capital
+restant dû et échéances rapprochées sont vérifiés au chargement
+(`perso_emprunt`, `perso_echeances`). Aucune écriture du dossier n'est
+modifiée : les grands totaux comptables restent les mêmes.
 
 D-DEMO-001 — Provisionnement dans le processus::
 `bin/partiduo-provision` produit des fichiers de service (nginx, systemd,

@@ -16,8 +16,14 @@ module PartiduoDemo
         "justificatif" => "document", "micro_recette" => "micro", "micro_achat" => "micro", "urssaf_mandat" => "urssaf",
         "urssaf_declaration" => "urssaf", "liberal_recette" => "liberal", "liberal_depense" => "liberal",
         "liberal_immobilisation" => "liberal", "liberal_cloture" => "liberal", "teledeclarations" => "teledec",
-        "crm" => "crm", "modeles" => "modeles", "import_releve" => "bankimport",
+        "crm" => "crm", "modeles" => "modeles", "import_releve" => "bankimport", "perso_emprunt" => "perso",
+        "perso_recurrente" => "perso", "perso_valorisation" => "perso", "perso_budget" => "perso",
+        "perso_deplacements" => "perso", "perso_operation" => "perso",
       }
+
+      # Compte du foyer repris d'office au provisionnement d'un dossier foyer
+      # avec PERSO : le journal financier du plan réduit.
+      PERSO_CURRENT_ACCOUNT = "Compte courant"
 
       # Modules d'entreprise refusés dans un foyer (ADR-011 A3).
       HOUSEHOLD_EXCLUDED = %w[invoicing micro liberal stock followup analytic]
@@ -26,7 +32,7 @@ module PartiduoDemo
       PARAMETERS = {
         "facturation" => "invoicing", "analytique" => "analytic", "micro" => "micro", "liberal" => "liberal",
         "einv" => "einv", "choruspro" => "choruspro", "teledec" => "teledec", "urssaf" => "urssaf", "bankimport" => "bankimport",
-        "comptabilite" => "accounting",
+        "comptabilite" => "accounting", "perso" => "perso",
       }
 
       @refs = {} of String => String
@@ -100,12 +106,44 @@ module PartiduoDemo
             error("referentiel.yml", "tiers #{@dossier.text(party, "code")} : nom ou personne attendu")
           end
         end
+        perso_parameters
         formats = @dossier.list(@dossier.parameters["bankimport"]?, "formats")
         formats.each do |format|
           columns = format["colonnes"]?
           amount = columns.try(&.["montant"]?)
           split = columns.try(&.["debit"]?) && columns.try(&.["credit"]?)
           error("parametres.yml", "format #{@dossier.text(format, "nom")} : colonne montant, ou débit et crédit") unless amount || split
+        end
+      end
+
+      # Membres du foyer parmi les utilisateurs, titulaires parmi les membres,
+      # comptes et catégories en un seul exemplaire, parent déclaré avant.
+      private def perso_parameters : Nil
+        perso = @dossier.parameters["perso"]? || return
+        users = @dossier.list(@dossier.identity, "utilisateurs").compact_map { |user| @dossier.text(user, "email") }.to_set
+        unique(@dossier.list(perso, "membres"), "email", "parametres.yml : perso.membres")
+        unique(@dossier.list(perso, "comptes"), "libelle", "parametres.yml : perso.comptes")
+        @dossier.list(perso, "membres").each do |member|
+          email = @dossier.text(member, "email") || next
+          error("parametres.yml", "membre du foyer #{email} : pas un utilisateur du dossier") unless users.includes?(email)
+        end
+        @dossier.list(perso, "comptes").each do |account|
+          @dossier.list(account, "titulaires").each do |holder|
+            unless perso_members.includes?(holder.as_s?)
+              error("parametres.yml", "compte #{@dossier.text(account, "libelle")} : titulaire #{holder.as_s?} n'est pas un membre du foyer")
+            end
+          end
+          if (@dossier.text(account, "nature") == "property") != !account["genre"]?.nil?
+            error("parametres.yml", "compte #{@dossier.text(account, "libelle")} : genre pour un bien seulement, et obligatoire")
+          end
+        end
+        created = Set(String).new
+        @dossier.list(perso, "categories").each do |category|
+          label = @dossier.text(category, "libelle") || next
+          parent = @dossier.text(category, "parent")
+          error("parametres.yml", "catégorie #{label} : parent ou parent_compte, pas les deux") if parent && category["parent_compte"]?
+          error("parametres.yml", "catégorie #{label} : parent « #{parent} » non déclaré avant") if parent && !created.includes?(parent)
+          created << label
         end
       end
 
@@ -152,6 +190,38 @@ module PartiduoDemo
         when "import_releve"   then statement(where, operation)
         when "justificatif"    then receipt(where, operation)
         end
+        perso(where, operation) if type.starts_with?("perso_")
+      end
+
+      # Opération du foyer : comptes du foyer (déclarés ou le compte courant
+      # repris d'office), membres, sens et contrepartie.
+      private def perso(where : String, operation : YAML::Any) : Nil
+        accounts = perso_accounts
+        %w[compte compte_payeur vers].each do |key|
+          label = @dossier.text(operation, key) || next
+          error(where, "#{key} « #{label} » : pas un compte du foyer") unless accounts.includes?(label)
+        end
+        @dossier.text(operation, "membre").try do |email|
+          error(where, "membre #{email} : pas un membre du foyer") unless perso_members.includes?(email)
+        end
+        type = @dossier.text(operation, "type")
+        return unless type.in?("perso_recurrente", "perso_operation")
+        transfer = @dossier.text(operation, "sens") == "transfer"
+        if transfer && (operation["vers"]?.nil? || operation["categorie"]?)
+          error(where, "virement : vers (compte du foyer) attendu, sans catégorie")
+        elsif !transfer && (operation["categorie"]?.nil? || operation["vers"]?)
+          error(where, "dépense ou recette : catégorie attendue, sans vers")
+        end
+      end
+
+      private def perso_accounts : Set(String)
+        labels = @dossier.list(@dossier.parameters["perso"]?, "comptes").compact_map { |item| @dossier.text(item, "libelle") }.to_set
+        labels << PERSO_CURRENT_ACCOUNT
+        labels
+      end
+
+      private def perso_members : Set(String)
+        @dossier.list(@dossier.parameters["perso"]?, "membres").compact_map { |item| @dossier.text(item, "email") }.to_set
       end
 
       private def party(where : String, operation : YAML::Any, key : String, category : String) : Nil
@@ -245,6 +315,7 @@ module PartiduoDemo
         file = @dossier.text(operation, "fichier") || return
         error(where, "relevé #{file} introuvable") unless safe?(file) && File.exists?(File.join(@dossier.directory, file))
         name = @dossier.text(operation, "format")
+        perso_parameters
         formats = @dossier.list(@dossier.parameters["bankimport"]?, "formats")
         if name && formats.none? { |format| @dossier.text(format, "nom") == name }
           error(where, "format CSV « #{name} » absent de parametres.yml")

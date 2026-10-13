@@ -1,10 +1,11 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-# Dossier « foyer » : budget familial fictif du foyer Lemoine (type household, ADR-011 A3).
+# Dossier « foyer » : budget familial fictif du foyer Lemoine (type household, ADR-011 A3),
+# finances du foyer tenues par l'extension PERSO (ADR-011).
 format: 1
 code: foyer
 profil: foyer
 type: household
-description: "Budget familial : deux adultes, compte courant, livret, assurance-vie et prêt immobilier, recettes et dépenses par catégorie"
+description: "Finances d'un foyer : deux adultes, compte courant, livret, assurance-vie, prêt immobilier et maison ; recettes et dépenses par catégorie, échéancier, budget, patrimoine"
 societe:
   nom: "Foyer Lemoine"
   rue: "rue de Bourgogne"
@@ -16,14 +17,19 @@ societe:
   regime: fr
   langue: fr
 modules: [accounting]
-extensions: [bankimport]
+extensions: [bankimport, perso]
 exercices: [N-1, "N"]
 utilisateurs:
   - {email: "julie@foyer.demo.test", prenom: Julie, nom: Lemoine, profil: ADMIN, role: member}
   - {email: "thomas@foyer.demo.test", prenom: Thomas, nom: Lemoine, profil: ADMIN, role: member}
 parcours:
-  - "Tableau de bord du foyer : trésorerie du compte courant, relevés importés"
+  - "Tableau de bord du foyer en « Recettes et dépenses » : trésorerie, patrimoine net, échéances, budget"
+  - "Opérations (menu Mon foyer) : recettes et dépenses par catégorie, sans numéro de compte ; corriger une opération garde sa version d'origine"
+  - "Comptes : livret A, assurance-vie (valorisations, plus-value latente), prêt immobilier et son tableau d'amortissement, maison"
+  - "Échéancier : salaires, prélèvements et virements d'épargne rapprochés des relevés importés, soldes prévisionnels"
+  - "Budgets : budget de l'année par catégorie, réalisé et dépassements ; Patrimoine : patrimoine net par nature et par membre"
+  - "Déclaration de revenus : dons, emploi à domicile, frais kilométriques de l'année précédente, en PDF et CSV"
   - "Relevés bancaires (menu Relevés bancaires) : un relevé CSV par mois importé, lignes catégorisées par les règles, transférées et pointées"
   - "Comptabilité : balance (recettes et dépenses par catégorie, classes 6 et 7), patrimoine en comptes de bilan (livret A, assurance-vie, prêt immobilier, résidence)"
-  - "Prévisions (menu Éditions) : budget de l'année par catégorie, estimé et réel mois par mois"
+  - "Prévisions (menu Éditions, interface Comptabilité) : le budget du foyer y figure comme une prévision"
   - "Règles de catégorisation et format CSV de la banque (menu Paramètres)"

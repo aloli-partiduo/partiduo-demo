@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # Paramètres du dossier « foyer » : format CSV de la banque et règles de catégorisation
-# de l'import des relevés (extension BANKIMPORT).
+# de l'import des relevés (extension BANKIMPORT) ; membres, comptes et catégories du
+# foyer (extension PERSO).
 format: 1
 bankimport:
   formats:
@@ -47,3 +48,19 @@ bankimport:
     - {libelle_contient: "DGFIP IMPOT", compte: "6901"}
     - {libelle_contient: "RESTOS DU COEUR", compte: "601"}
     - {libelle_contient: "COTISATION CARTE", compte: "604"}
+perso:
+  membres:
+    - {email: "julie@foyer.demo.test", prenom: Julie}
+    - {email: "thomas@foyer.demo.test", prenom: Thomas}
+  comptes:
+    - {nature: savings, libelle: "Livret A", compte: "514001", etablissement: "Banque du Val de Loire", taux: "3", plafond: "22950", titulaires: ["julie@foyer.demo.test"]}
+    - {nature: life_insurance, libelle: "Assurance-vie Generali", compte: "2711", etablissement: "Generali", titulaires: ["thomas@foyer.demo.test"]}
+    - {nature: mortgage, libelle: "Prêt immobilier", compte: "164", etablissement: "Crédit Agricole"}
+    - {nature: property, genre: residence, libelle: "Maison d'Orléans", compte: "213"}
+  categories:
+    - {libelle: "Animaux", sens: expense}
+    - {libelle: "Vétérinaire", sens: expense, parent: "Animaux"}
+    - {libelle: "Remboursements de santé", sens: income, parent_compte: "70"}
+  etiquettes:
+    - {compte: "601", etiquette: donation}
+    - {compte: "602", etiquette: home_employment}

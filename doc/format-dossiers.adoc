@@ -93,7 +93,7 @@ societe: {nom: "…", forme_juridique: SARL, capital: "20000", siren: "847 315 6
           rue: "…", numero: "14", code_postal: "37100", ville: Tours, pays: FR, courriel: "…@….test",
           regime: fr, langue: fr}
 modules: [accounting, invoicing, analytic, stock, followup]
-extensions: [document, einv, teledec, crm, modeles, choruspro]
+extensions: [document, einv, teledec, crm, modeles, choruspro]   # foyer : [bankimport, perso]
 exercices: [N-1, N]           # exercices créés avant les opérations
 utilisateurs:                 # le premier porte les opérations ; mots de passe générés au chargement
   - {email: gerante@atelier.demo.test, prenom: Sophie, nom: Lambert, profil: ADMIN, role: member}
@@ -149,11 +149,29 @@ bankimport:
              encodage: utf-8, lignes_entete: 1, format_date: dd/mm/yyyy, separateur_decimal: comma,
              colonnes: {date: 1, libelle: 2, debit: 3, credit: 4, reference: 5}}]
   regles:  [{libelle_contient: "ECHEANCE PRET", compte: "164"}]
+perso:                                          # finances du foyer (extension perso)
+  membres:    [{email: julie@foyer.demo.test, prenom: Julie, role: adult}]      # adult, minor, advisor
+  comptes:                                      # le « Compte courant » est repris d'office
+    - {nature: savings, libelle: "Livret A", compte: "514001", etablissement: "…", taux: "3", plafond: "22950",
+       titulaires: [julie@foyer.demo.test]}     # compte : compte du plan repris ; sinon créé
+    - {nature: property, genre: residence, libelle: "Maison", compte: "213"}
+  categories: [{libelle: "Animaux", sens: expense}, {libelle: "Vétérinaire", parent: "Animaux"},
+               {libelle: "Remboursements de santé", sens: income, parent_compte: "70"}]
+  etiquettes: [{compte: "601", etiquette: donation}]
 ----
 
 `plateforme` vaut toujours `simulee` : une démonstration ne joint aucun
 service réel. Chaque section exige le module ou l'extension correspondant
 dans `dossier.yml`.
+
+Section `perso` : natures `current`, `savings`, `life_insurance`, `pea`,
+`securities`, `mortgage`, `other_debt`, `property` (avec `genre` :
+`residence`, `real_estate`, `vehicle`, `other`) ; une catégorie se réfère à
+son parent par libellé (`parent`, déclaré avant) ou par le compte du plan
+(`parent_compte`) ; étiquettes fiscales `donation`, `home_employment`,
+`home_employment_aid`, `professional_expenses`, `rental_income`,
+`rental_charges`. Les opérations et les attendus désignent un compte du
+foyer par son libellé et une catégorie par son compte du plan.
 
 === operations.yml
 
@@ -201,6 +219,12 @@ l'opération : règlement, avoir, acceptation d'un devis…
 |`liberal_recette`, `liberal_depense`, `liberal_immobilisation`, `liberal_cloture` |livre-journal par rubrique de la 2035 (`rubrique`, `part_privee`), immobilisations, clôture d'un `exercice`
 |`import_releve` |relevé CSV (`fichier`, `format`) importé par BANKIMPORT, lignes catégorisées par les règles puis transférées (`transferer`), relevé pointé (`pointage: {reference, solde_debut, solde_fin}`)
 |`prevision` |prévision budgétaire `nom`, de `debut` à `fin` (périodes), `categories: [{libelle, elements: [{libelle, formule, montant}]}]`
+|`perso_emprunt` |emprunt du compte de dette `compte`, réglé par `compte_payeur` : `capital`, `taux` (% annuel), `echeances`, `premiere_echeance`, `differe`, `type_differe`, `assurance: {mode: fixed \| initial \| remaining, valeur}`, `categorie_interets`, `categorie_assurance` ; tableau d'amortissement calculé
+|`perso_recurrente` |opération récurrente de l'échéancier : `compte`, `sens` (`expense`, `income`, `transfer`), `beneficiaire`, `montant`, `estime`, `frequence` (`monthly`, `quarterly`, `yearly`, `days` + `intervalle`), `premiere` (date de l'opération par défaut), `derniere`, `jour_ouvre`, `categorie` ou `vers`, `membre` ; les lignes importées la rapprochent
+|`perso_valorisation` |valeur d'un placement ou d'un bien à la date de l'opération : `valeur`, ou `lignes: [{titre, quantite, cours}]`, `note`
+|`perso_budget` |budget de l'`annee` (prévision de la Comptabilité) : `lignes: [{categorie, montant, periode: monthly \| annual}]`
+|`perso_deplacements` |déplacements professionnels de l'`annee` : `puissance`, `kilometres`, `libelle`, `membre`
+|`perso_operation` |opération saisie en recettes et dépenses : `compte`, `sens`, `montant`, `categorie` ou `vers`, `beneficiaire`, `membre`, `note`
 |`rejet_reglement` |virement retourné : le règlement le plus récent d'un des `clients`, `motif`, `frais`, `refacturer`, `taux_frais`
 |`relances` |relances proposées au jour, les `envoyer` premières envoyées
 |`synchronisation_plateforme` |relève de la plateforme agréée simulée
@@ -237,7 +261,12 @@ controles:
 |`urssaf_declarations` |`nombre` de déclarations acceptées, `payees` |oui
 |`liberal_journal` |`recettes` et `depenses` du livre-journal |oui
 |`exercice_liberal` |`etat` de l'exercice (`open`, `closed`, `locked`) |oui
-|`previsions` |`nombre` de prévisions |oui
+|`previsions` |`nombre` de prévisions (budgets du foyer compris) |oui
+|`perso_comptes` |`nombre` de comptes du foyer |oui
+|`perso_budget` |`nombre` de catégories budgétées de l'exercice |oui
+|`perso_valorisations` |`nombre` de valorisations saisies |oui
+|`perso_emprunt` |capital restant dû au 31 décembre de l'exercice (`montant`), selon le tableau |non
+|`perso_echeances` |au moins `minimum` échéances de l'exercice confirmées ou rapprochées |non
 |===
 
 == Valider, charger, vérifier
@@ -261,3 +290,7 @@ DATABASE_URL='postgres:///partiduo_demo_atelier_verif?host=/tmp' \
 
 Toute évolution incompatible change le numéro (`format: 2`) dans tous les
 fichiers, le chargeur de la distribution et le validateur, ensemble.
+
+* 13 octobre 2026 : ajout compatible des finances du foyer (extension
+  `perso`) : section `perso` de `parametres.yml`, opérations `perso_*`,
+  contrôles `perso_*` ; une prévision compte aussi les budgets du foyer.

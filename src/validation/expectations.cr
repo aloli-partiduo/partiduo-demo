@@ -26,6 +26,7 @@ module PartiduoDemo
         "liberal_depense"        => [""],
         "liberal_immobilisation" => [""],
         "liberal_cloture"        => [""],
+        "perso_operation"        => %w[5 6 7 1 2],
       }
 
       record Sale, day : Time, kind : String, lines : Array({String, BigDecimal, BigDecimal})
@@ -56,9 +57,27 @@ module PartiduoDemo
         when "urssaf_declarations" then compare(where, control, "nombre", count_type("urssaf_declaration", "periode", control))
         when "liberal_journal"     then liberal(control, where)
         when "exercice_liberal"    then liberal_year(control, where)
-        when "previsions"          then compare(where, control, "nombre", executed("prevision").size.to_s)
+        when "previsions"          then compare(where, control, "nombre", (executed("prevision").size + executed("perso_budget").size).to_s)
+        when "perso_comptes"       then compare(where, control, "nombre", perso_accounts.to_s)
+        when "perso_budget"        then compare(where, control, "nombre", perso_budget_lines(control))
+        when "perso_valorisations" then compare(where, control, "nombre", executed("perso_valorisation").size.to_s)
+        when "perso_emprunt"       then skip(where, "capital restant dû du tableau d'amortissement : vérifié au chargement seulement")
+        when "perso_echeances"     then skip(where, "échéances rapprochées des relevés : vérifié au chargement seulement")
         else                            @dossier.error(@dossier.relative(where), "type de contrôle inconnu « #{type} »")
         end
+      end
+
+      # Comptes du foyer : ceux de `parametres.yml`, et le compte courant
+      # repris d'office au provisionnement.
+      private def perso_accounts : Int32
+        @dossier.list(@dossier.parameters["perso"]?, "comptes").size + 1
+      end
+
+      # Lignes du budget de l'année du contrôle.
+      private def perso_budget_lines(control : YAML::Any) : String
+        year = year(control) || return "?"
+        budgets = executed("perso_budget").select { |(_, operation)| @dossier.text(operation, "annee").try { |text| @dossier.dates.year(text) } == year }
+        budgets.sum { |(_, operation)| @dossier.list(operation, "lignes").size }.to_s
       end
 
       private def year(control : YAML::Any) : Int32?

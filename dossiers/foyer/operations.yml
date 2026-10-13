@@ -1,7 +1,9 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-# Opérations datées du dossier « foyer » : situation d'ouverture, relevés du
-# compte courant importés chaque mois (fichiers de releves/, années
-# écrites {N-1} et {N}), intérêts de fin d'année, budget de l'année N.
+# Opérations datées du dossier « foyer » : situation d'ouverture, emprunt et
+# opérations récurrentes du foyer (PERSO), relevés du compte courant importés
+# chaque mois (fichiers de releves/, années écrites {N-1} et {N}) et
+# rapprochés des échéances prévues, intérêts de fin d'année, valorisations,
+# budget de l'année N par catégorie, déplacements de l'année N-1.
 # Format : doc/format-dossiers.adoc.
 format: 1
 operations:
@@ -17,6 +19,34 @@ operations:
       - {compte: "2711", debit: "31500.00"}
       - {compte: "164", credit: "168000.00"}
       - {compte: "10", credit: "122750.00"}
+  - date: N-1-01-01
+    type: perso_valorisation
+    compte: "Maison d'Orléans"
+    valeur: "245000"
+    note: "Prix d'achat"
+  - date: N-1-01-01
+    type: perso_emprunt
+    compte: "Prêt immobilier"
+    compte_payeur: "Compte courant"
+    capital: "168000"
+    taux: "1.95"
+    echeances: 176
+    premiere_echeance: N-1-01-05
+    assurance: {mode: fixed, valeur: "21.69"}
+    categorie_interets: "6101"
+    categorie_assurance: "6101"
+  - {date: N-1-01-01, type: perso_recurrente, compte: "Compte courant", sens: income, beneficiaire: "Salaire de Julie (Ateliers du Loiret)", montant: "2450", categorie: "701", membre: "julie@foyer.demo.test"}
+  - {date: N-1-01-01, type: perso_recurrente, compte: "Compte courant", sens: income, beneficiaire: "Salaire de Thomas (Centre hospitalier)", montant: "2080", categorie: "701", membre: "thomas@foyer.demo.test"}
+  - {date: N-1-01-01, type: perso_recurrente, compte: "Compte courant", beneficiaire: "Garde d'enfants (CESU)", montant: "220", premiere: N-1-01-04, categorie: "602"}
+  - {date: N-1-01-01, type: perso_recurrente, compte: "Compte courant", beneficiaire: "EDF", montant: "150", estime: true, premiere: N-1-01-06, categorie: "6103"}
+  - {date: N-1-01-01, type: perso_recurrente, compte: "Compte courant", beneficiaire: "Orléans Métropole, eau", montant: "39.40", premiere: N-1-01-08, categorie: "6104"}
+  - {date: N-1-01-01, type: perso_recurrente, compte: "Compte courant", beneficiaire: "MAIF habitation", montant: "41.80", premiere: N-1-01-10, categorie: "6105"}
+  - {date: N-1-01-01, type: perso_recurrente, compte: "Compte courant", beneficiaire: "MAIF automobile", montant: "52.30", premiere: N-1-01-10, categorie: "6303"}
+  - {date: N-1-01-01, type: perso_recurrente, compte: "Compte courant", beneficiaire: "Orange, box et mobiles", montant: "64.98", premiere: N-1-01-12, categorie: "68"}
+  - {date: N-1-01-01, type: perso_recurrente, compte: "Compte courant", sens: transfer, beneficiaire: "Épargne sur le livret A", montant: "600", premiere: N-1-01-15, vers: "Livret A"}
+  - {date: N-1-01-01, type: perso_recurrente, compte: "Compte courant", sens: transfer, beneficiaire: "Versement sur l'assurance-vie", montant: "250", premiere: N-1-01-15, vers: "Assurance-vie Generali"}
+  - {date: N-1-01-01, type: perso_recurrente, compte: "Compte courant", beneficiaire: "Abonnement TAO", montant: "31", premiere: N-1-01-16, categorie: "6304"}
+  - {date: N-1-01-01, type: perso_recurrente, compte: "Compte courant", sens: income, beneficiaire: "CAF du Loiret", montant: "148.52", premiere: N-1-01-18, categorie: "705"}
   - date: N-1-02-02
     type: import_releve
     journal: banque
@@ -112,6 +142,28 @@ operations:
     libelle: "Revalorisation de l'assurance-vie {aaaa}"
     piece: "AV-{aaaa}"
     lignes: [{compte: "2711", debit: "832.40"}, {compte: "704", credit: "832.40"}]
+  - date: N-1-06-30
+    type: perso_valorisation
+    compte: "Assurance-vie Generali"
+    valeur: "33950.00"
+    note: "Relevé semestriel {mm}/{aaaa}"
+  - date: N-1-12-31
+    type: perso_valorisation
+    compte: "Assurance-vie Generali"
+    valeur: "35710.25"
+    note: "Relevé annuel {aaaa}"
+  - date: N-1-12-31
+    type: perso_valorisation
+    compte: "Maison d'Orléans"
+    valeur: "249500"
+    note: "Estimation de l'agence"
+  - date: N-1-12-31
+    type: perso_deplacements
+    annee: N-1
+    membre: "thomas@foyer.demo.test"
+    puissance: 5
+    kilometres: 8200
+    libelle: "Clio de Thomas, trajets domicile-hôpital"
   - date: N-01-02
     type: import_releve
     journal: banque
@@ -120,42 +172,26 @@ operations:
     transferer: true
     pointage: {reference: "Relevé 12/{N-1}", solde_debut: "10360.37", solde_fin: "12340.50"}
   - date: N-01-05
-    type: prevision
-    nom: "Budget du foyer {aaaa}"
-    debut: N-01
-    fin: N-12
-    categories:
-      - libelle: Logement
-        elements:
-          - {libelle: "Échéance du prêt immobilier", formule: "[164]", montant: "1120"}
-          - {libelle: "Énergie", formule: "[6103]", montant: "115"}
-          - {libelle: Eau, formule: "[6104]", montant: "40"}
-          - {libelle: "Assurance habitation", formule: "[6105]", montant: "42"}
-          - {libelle: "Travaux et entretien", formule: "[6106]", montant: "40"}
-      - libelle: "Vie courante"
-        elements:
-          - {libelle: Alimentation, formule: "[62]", montant: "700"}
-          - {libelle: "Santé", formule: "[64]", montant: "45"}
-          - {libelle: "Enfants et scolarité", formule: "[65]", montant: "85"}
-          - {libelle: "Garde d'enfants", formule: "[602]", montant: "220"}
-          - {libelle: Communication, formule: "[68]", montant: "65"}
-          - {libelle: Habillement, formule: "[67]", montant: "40"}
-      - libelle: Transport
-        elements:
-          - {libelle: Carburant, formule: "[6301]", montant: "130"}
-          - {libelle: "Entretien du véhicule", formule: "[6302]", montant: "50"}
-          - {libelle: "Assurance automobile", formule: "[6303]", montant: "53"}
-          - {libelle: "Transports en commun", formule: "[6304]", montant: "31"}
-      - libelle: "Loisirs et vacances"
-        elements: [{libelle: "Sorties, cadeaux et vacances", formule: "[66]", montant: "220"}]
-      - libelle: "Épargne"
-        elements:
-          - {libelle: "Livret A", formule: "[514001]", montant: "600"}
-          - {libelle: Assurance-vie, formule: "[2711]", montant: "250"}
-      - libelle: Recettes
-        elements:
-          - {libelle: Salaires, formule: "[701]", montant: "4530"}
-          - {libelle: "Allocations familiales", formule: "[705]", montant: "148.52"}
+    type: perso_budget
+    annee: "N"
+    lignes:
+      - {categorie: "6103", montant: "115"}
+      - {categorie: "6104", montant: "40"}
+      - {categorie: "6105", montant: "42"}
+      - {categorie: "6106", montant: "40"}
+      - {categorie: "62", montant: "700"}
+      - {categorie: "64", montant: "45"}
+      - {categorie: "65", montant: "85"}
+      - {categorie: "602", montant: "220"}
+      - {categorie: "68", montant: "65"}
+      - {categorie: "67", montant: "40"}
+      - {categorie: "6301", montant: "130"}
+      - {categorie: "6302", montant: "50"}
+      - {categorie: "6303", montant: "53"}
+      - {categorie: "6304", montant: "31"}
+      - {categorie: "66", montant: "2640", periode: annual}
+      - {categorie: "701", montant: "4530"}
+      - {categorie: "705", montant: "148.52"}
   - date: N-02-02
     type: import_releve
     journal: banque
@@ -258,3 +294,5 @@ operations:
     format: "Banque du Val de Loire"
     transferer: true
     pointage: {reference: "Relevé 12/{N}", solde_debut: "21029.99", solde_fin: "22978.04"}
+fin:
+  - {type: perso_operation, compte: "Compte courant", montant: "23.50", categorie: "62", beneficiaire: "Marché du Martroi", membre: "julie@foyer.demo.test", note: "Saisie à la main dans « Recettes et dépenses »"}

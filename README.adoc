@@ -66,15 +66,16 @@ exercice précédent clôturé et sa 2035 transmise au TELEDEC simulé
 
 |`foyer` +
 http://foyer.partiduo.localhost:8303/
-|*Budget familial* : foyer Lemoine à Orléans, deux adultes ; dossier de type
-`household` (ADR-011 A3), plan réduit d'un foyer
-|Compte courant, livret A, assurance-vie, prêt immobilier et résidence en
-comptes de bilan ; une année de relevés CSV fictifs (`dossiers/foyer/releves/`)
-importés par l'extension BANKIMPORT, catégorisés par des règles (salaires,
-logement, énergie, alimentation, transport, santé, enfants, loisirs,
-impôts…), transférés et pointés ; intérêts de fin d'année ; budget de
-l'année par catégorie dans les *prévisions* de la Comptabilité. Aucune
-extension d'entreprise.
+|*Finances d'un foyer* : foyer Lemoine à Orléans, deux adultes ; dossier de type
+`household` (ADR-011 A3), plan réduit d'un foyer, extension PERSO
+|Compte courant, livret A, assurance-vie, prêt immobilier et maison, en
+comptes du foyer ; une année de relevés CSV fictifs (`dossiers/foyer/releves/`)
+importés par l'extension BANKIMPORT, catégorisés par des règles, transférés
+et pointés ; opérations récurrentes (salaires, prélèvements, épargne) et
+échéances du prêt rapprochées des relevés ; tableau d'amortissement du
+prêt ; budget de l'année par catégorie ; valorisations de l'assurance-vie et
+de la maison, patrimoine net ; déplacements de l'année précédente pour les
+frais réels. Aucune extension d'entreprise.
 |===
 
 Les adresses ci-dessus supposent les quatre dossiers lancés dans cet ordre :
@@ -86,19 +87,11 @@ expert-comptable (profil comptable) et un commercial ; `micro` et
 `liberal`, l'exploitant ; `foyer`, les deux adultes. Adresses et mots de
 passe : `demo-identifiants.txt`.
 
-=== Ce qui viendra avec partiduo-perso
+=== Le foyer avec partiduo-perso
 
-Le dossier `foyer` n'utilise que l'existant (Comptabilité, plan réduit d'un
-foyer, BANKIMPORT, prévisions). L'extension `partiduo-perso`, pas encore
-portée, y ajoutera :
-
-* des *budgets par catégorie* propres au foyer (enveloppes mensuelles,
-  alertes de dépassement), au lieu des prévisions de la Comptabilité ;
-* le *patrimoine net* (biens, placements et dettes valorisés dans le temps) ;
-* les *récurrences* (opérations attendues chaque mois : salaires,
-  échéances, abonnements), rapprochées des relevés importés.
-
-Le dossier sera alors complété dans ses fichiers de données.
+Le dossier `foyer` se présente en « Recettes et dépenses » (interface par
+défaut d'un foyer, ADR-011 D4) : les catégories y remplacent les numéros de
+compte ; la comptabilité reste lisible dans l'interface « Comptabilité ».
 
 == Lancer, arrêter, réinitialiser
 
@@ -182,10 +175,14 @@ Recettes et dépenses par rubrique, livre-journal, immobilisations, 2035
 sur l'exercice en cours, exercice précédent verrouillé.
 
 `foyer` ::
-Tableau de bord, *Relevés bancaires* (historique des imports, lignes
-transférées, relevés pointés ; formats et règles sous Paramètres), balance
-par catégorie (classes 6 et 7) et comptes de bilan, *Prévisions* (Éditions :
-budget de l'année, estimé et réel mois par mois).
+Tableau de bord du foyer (trésorerie, patrimoine net, échéances, budget),
+*Opérations* (par catégorie ; corriger une opération garde sa version
+d'origine), *Comptes* (livret, assurance-vie et ses valorisations, prêt et
+son tableau d'amortissement, maison), *Relevés à traiter*, *Échéancier*
+(échéances rapprochées des relevés, soldes prévisionnels), *Budgets*,
+*Patrimoine*, *Déclaration de revenus* (dons, emploi à domicile, frais
+kilométriques ; PDF et CSV) ; dans l'interface « Comptabilité » : balance
+par catégorie, relevés pointés, *Prévisions* (le budget du foyer).
 
 == Données des dossiers
 

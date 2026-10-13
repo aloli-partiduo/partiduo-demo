@@ -1,5 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-# Grands totaux attendus du dossier « foyer » (exercice N-1 complet).
+# Grands totaux attendus du dossier « foyer » (exercice N-1 complet), et
+# finances du foyer tenues par PERSO.
 format: 1
 controles:
   - {type: balance_equilibree, exercice: N-1}
@@ -12,3 +13,8 @@ controles:
   - {type: solde_comptes, exercice: N-1, prefixe: "6", sens: debit, montant: "26476.74"}
   - {type: releves, exercice: N-1, nombre: 12}
   - {type: previsions, nombre: 1}
+  - {type: perso_comptes, nombre: 5}
+  - {type: perso_budget, exercice: "N", nombre: 17}
+  - {type: perso_valorisations, nombre: 4}
+  - {type: perso_emprunt, exercice: N-1, montant: "158007.29"}
+  - {type: perso_echeances, exercice: N-1, minimum: 100}

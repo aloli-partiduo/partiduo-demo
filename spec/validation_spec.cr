@@ -37,6 +37,8 @@ describe PartiduoDemo::Validation do
     notes.should contain("atelier/attendus.yml : controles[3] (solde_comptes) : montant recalculé : 141156.00")
     notes.should contain("atelier/attendus.yml : controles[4] (solde_comptes) : montant recalculé : 28231.20")
     notes.should contain("atelier/attendus.yml : controles[6] (factures) : nombre recalculé : 54")
+    notes.should contain("foyer/attendus.yml : controles[10] (perso_comptes) : nombre recalculé : 5")
+    notes.should contain("foyer/attendus.yml : controles[11] (perso_budget) : nombre recalculé : 17")
   end
 
   it "reste conforme quel que soit le jour du chargement, à partir de février" do
@@ -90,5 +92,16 @@ describe PartiduoDemo::Validation do
   it "refuse un module d'entreprise dans un foyer" do
     check = altered("foyer", "dossier.yml", &.sub("modules: [accounting]", "modules: [accounting, invoicing]"))
     errors_of(check).should contain("modules d'entreprise refusés dans un foyer : invoicing")
+  end
+
+  it "refuse des finances du foyer incohérentes : compte, membre ou titulaire inconnus, PERSO absent" do
+    check = altered("foyer", "operations.yml", &.sub(%(vers: "Livret A"}), %(vers: "Livret B"})))
+    errors_of(check).should contain("vers « Livret B » : pas un compte du foyer")
+    check = altered("foyer", "parametres.yml", &.sub(%(titulaires: ["thomas@foyer.demo.test"]), %(titulaires: ["leo@foyer.demo.test"])))
+    errors_of(check).should contain("titulaire leo@foyer.demo.test n'est pas un membre du foyer")
+    check = altered("foyer", "dossier.yml", &.sub("extensions: [bankimport, perso]", "extensions: [bankimport]"))
+    errors_of(check).should contain("section « perso » sans « perso » dans dossier.yml")
+    check = altered("foyer", "attendus.yml", &.sub("{type: perso_comptes, nombre: 5}", "{type: perso_comptes, nombre: 6}"))
+    errors_of(check).should contain("nombre attendu 6, recalculé 5")
   end
 end
